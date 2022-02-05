@@ -27,7 +27,7 @@ void read_json(){
 		}); entry = entry->next)
 		{
 			fprintf(yaml_file, "%s: %s\n", key, json_object_get_string(value));
-			printf("%s : %s\n", key, json_object_get_string(value));
+			//printf("%s : %s\n", key, json_object_get_string(value));
 		}
 
 
@@ -46,7 +46,7 @@ size_t got_data(char *buffer, size_t itemsize, size_t nitems, void* ignorethis){
     	}
     	else{
     		fprintf(json_file, "%c", buffer[i]);
-    		printf("%c", buffer[i]);
+    		//printf("%c", buffer[i]);
     	}
     }
     fclose(json_file);
