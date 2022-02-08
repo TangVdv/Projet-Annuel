@@ -2,13 +2,16 @@
 #include <stdio.h>
 #include <string.h>
 #include<json-c/json.h>
+#include <sqlite3.h>
 
 CURL *curl;
+sqlite3 *db;
+sqlite3_stmt *res;
 
 void read_json(){
 	FILE *yaml_file;
 	FILE *json_file;
-	yaml_file = fopen("yaml_file.yaml", "w");
+	yaml_file = fopen("data.yaml", "w");
 	json_file = fopen("curl.json", "r");
 	char *key;
 	char buffer[5000];
@@ -57,6 +60,15 @@ size_t got_data(char *buffer, size_t itemsize, size_t nitems, void* ignorethis){
 int main(){
 	remove("curl.json");
 
+	int rc = sqlite3_open("Projet.database", &db); // Ouvre la base de donnée
+
+    // Check si la base de donnée existe
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(db));
+        sqlite3_close(db);
+        return 1;
+    }
+
 	curl = curl_easy_init();
     if(curl){
         curl_easy_setopt(curl, CURLOPT_URL, "https://api.github.com/users/TangVdv");
@@ -66,6 +78,10 @@ int main(){
         curl_easy_perform(curl);
         curl_easy_cleanup(curl);
     }
+
+    sqlite3_finalize(res); // Supprime le "statement" de la base de donnée
+    sqlite3_close(db); // Ferme la base de donnée
+
     read_json();
     return 0;
 }
