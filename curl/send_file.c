@@ -8,11 +8,15 @@ sqlite3 *db;
 sqlite3_stmt *res;
 
 int getData(void *NotUsed, int rowCount, char **rowValue, char **rowName){
-	//TODO : add code
+  char name[2][50] = {"nom", "stock"};
+	yaml_file = fopen("data.yaml", "w");
+  for (int i = 0; i < strlen(name); ++i)
+  {
+    fprintf(yaml_file, "%s: %s", name[i], rowValue[i]);
+  }
 }
 
 int main(){
-	yaml_file = fopen("data.yaml", "w");
 
 	int rc = sqlite3_open("Projet.database", &db); // Ouvre la base de donnée
 
@@ -24,8 +28,10 @@ int main(){
     }
 
     // TODO : Change query
-    char *sql = "";
+    char *sql = "SELECT nom, stock FROM Produit";
     sqlite3_exec(db, sql, getData, 0,&err_msg);
+
+    yaml_file = fopen("data.yaml", "r");
 
 	curl = curl_easy_init();
     if(curl){
