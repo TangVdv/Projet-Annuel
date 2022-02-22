@@ -6,11 +6,9 @@
     <link rel="stylesheet" href="../lib/bootstrap.min.css">
   </head>
   <body>
-    <header class="site-header sticky-top py-1 bg-dark">
-      <nav class="d-flex justify-content-center">
-        <h1 class="text-light">HEADER</h1>
-      </nav>
-    </header>
+    <?php
+    include("../includes/header.php");
+     ?>
     <main>
       <div class="row row-cols-md-3 justify-content-center">
         <?php
@@ -43,5 +41,8 @@
         ?>
       </div>
     </main>
+    <?php
+    include("../includes/footer.php");
+     ?>
   </body>
 </html>

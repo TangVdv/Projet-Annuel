@@ -4,7 +4,12 @@
     <meta charset="utf-8">
     <title></title>
   </head>
+  <?php
+  include("includes/header.php");
+   ?>
   <body>
-    <a href="market/index.php">Boutique</a>
   </body>
+  <?php
+  include("includes/footer.php")
+  ?>
 </html>
