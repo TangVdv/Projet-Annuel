@@ -2,7 +2,7 @@
 <html lang="fr" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <link href="../lib/bootstrap.min.css" rel="stylesheet">
+    <link href="../../lib/bootstrap.min.css" rel="stylesheet">
     <title>Header</title>
     <style>
       header {
@@ -15,7 +15,7 @@
     <header class="py-3 border-bottom">
       <div class="container d-flex flex-wrap justify-content-center">
         <a href="/" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
-          <img src="../img/logo_loyaltycard.png" width="40%">
+          <img src="../../img/logo_loyaltycard.png" width="40%">
         </a>
         <ul class="nav">
           <li class="nav-item"><a href="#" class="nav-link text-white px-2">Compte</a></li>
@@ -35,6 +35,7 @@
           <li class="nav-item"><a href="#" class="nav-link link-dark px-2">Pricing</a></li>
           <li class="nav-item"><a href="#" class="nav-link link-dark px-2">FAQs</a></li>
           <li class="nav-item"><a href="#" class="nav-link link-dark px-2">About</a></li>
+          <li class="nav-item"><a href="../../admin/index.php" class="nav-link link-dark px-2 text-danger">Admin</a></li>
         </ul>
 
       </div>
