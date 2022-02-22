@@ -8,7 +8,7 @@
   </head>
   <body style="background: #EAF9FF">
     <?php
-      //include("db_connection.php");
+      include("db_connection.php");
       //Display errors
       /*
       ini_set('display_errors', 1);
@@ -18,35 +18,38 @@
 
     ?>
     <div class="mx-auto" style="width: 60rem; height: 500px; display: block;">
-      <?php
-        /*
-        $req = 'SELECT image, nom, prix, reduction
-                  FROM PRODUIT
-                  INNER JOIN ACHETE ON produit.id_produit = achete.id_produit
-                  INNER JOIN UTILISATEUR ON achete.id_utilisateur = 1 ';*/
 
-        /*$req = 'SELECT image, nom, prix, reduction
-                  FROM PRODUIT
-                  INNER JOIN ACHETE ON produit.id_produit = achete.id_produit
-                  WHERE achete.id_utilisateur = 1 ';
-
-        foreach ($db->query($req) as $row) {
-
-          echo $row['image'] . "\n";
-          echo $row['nom'] . "\n";
-          echo  $row['prix'] . "\n";
-          echo $row['reduction'] . "\n";
-          $image = $row['image'];
-          $nom = $row['nom'];
-          $prix = $row['prix'];
-          $reduction = $row['reduction'];
-        }*/
-
-       ?>
 
        <h1 class="">Votre panier :</h1>
 
-       <ul class="list-group">
+       <ul id="liste" class="list-group rounded-3">
+         <?php
+          $doc = new DOMDocument();
+          $liste = $doc->getElementById("liste");
+
+           $req = 'SELECT image, nom, prix, reduction
+                     FROM PRODUIT
+                     INNER JOIN ACHETE ON produit.id_produit = achete.id_produit
+                     WHERE achete.id_utilisateur = 1 ';
+
+           foreach ($db->query($req) as $row) {
+             /*
+             echo $row['image'] . "\n";
+             echo $row['nom'] . "\n";
+             echo  $row['prix'] . "\n";
+             echo $row['reduction'] . "\n";*/
+             $image = $row['image'];
+             $nom = $row['nom'];
+             $prix = $row['prix'];
+             $reduction = $row['reduction'];
+
+             $li = $doc->createElement("li");
+             $li->setAttribute("class", "list-group-item d-flex justify-content-between align-items-center");
+             $liste->appendChild($li);
+           }
+
+          ?>
+        <!--
         <li class="list-group-item d-flex justify-content-between align-items-center">
           <img src="cart_item.png">
           <p>Nom</p>
@@ -58,22 +61,9 @@
           <p>Nom</p>
           <p>Prix</p>
           <p>Réduction</p>
-        </li><li class="list-group-item d-flex justify-content-between align-items-center">
-          <img src="cart_item.png">
-          <p>Nom</p>
-          <p>Prix</p>
-          <p>Réduction</p>
-        </li><li class="list-group-item d-flex justify-content-between align-items-center">
-          <img src="cart_item.png">
-          <p>Nom</p>
-          <p>Prix</p>
-          <p>Réduction</p>
-        </li><li class="list-group-item d-flex justify-content-between align-items-center">
-          <img src="cart_item.png">
-          <p>Nom</p>
-          <p>Prix</p>
-          <p>Réduction</p>
+
         </li>
+      -->
        </ul>
     </div>
   </body>
