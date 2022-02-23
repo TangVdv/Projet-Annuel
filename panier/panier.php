@@ -21,8 +21,20 @@
     ?>
     <div class="mx-auto" style="width: 60rem; height: 500px; display: block;">
 
+      <div class="d-flex justify-content-between d-flex align-items-end">
+        <?php
+          $req = 'SELECT prix_total
+                      FROM PANIER
+                      WHERE id_utilisateur = 1';
+          $req = $db->query($req);
+          $row = $req->fetch(PDO::FETCH_OBJ);
+          $prix_total = $row->prix_total;
 
-       <h1 class="">Votre panier :</h1>
+         ?>
+        <h1 class="">Votre panier :</h1>
+        <h2>Total : <?php echo $prix_total . "€" ?></h2>
+      </div>
+
 
        <ul id="liste" class="list-group rounded-3">
          <?php
