@@ -17,9 +17,8 @@
       <div class="mx-4">
           <ul>
             <?php
-            include("../../includes/bdd.php");
-            $db = OpenDb();
-            $res = SelectAll("Produit", $db);
+            include("productModel.php");
+            $res = ProductModel::SelectProduct();
             while ($row = $res->fetch(PDO::FETCH_OBJ)) {
             ?>
             <div id=<?php echo $row->id_produit; ?> class='text-center btn'>

@@ -15,13 +15,12 @@
                 <th>Name</th>
                 <th>Username</th>
                 <th>Email</th>
-                <th>Actions</th>
+                <th>Action</th>
               </tr>
             </thead>
             <?php
-            include("../../includes/bdd.php");
-            $db = OpenDb();
-            $res = SelectAll("utilisateur", $db);
+            include("AccountModel.php");
+            $res = AccountModel::SelectAccount();
             while ($row = $res->fetch(PDO::FETCH_OBJ)){?>
             <tbody class='text-center'>
               <tr>
@@ -29,8 +28,7 @@
                 <td><?php echo $row->prenom ?></td>
                 <td><?php echo $row->email ?></td>
                 <td>
-                  <button type='button' class='btn btn-primary btn-sm mx-1'>Editer</button>
-                  <button type='button' class='btn btn-danger btn-sm mx-1'>Supprimer</button>
+                  <a class="btn btn-danger btn-sm mx-1" href=<?php echo "checkAccount.php?id=".$row->id_utilisateur; ?>>Supprimer</a>
 
                   <div class='modal fade' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>
 										<div class='modal-dialog'>

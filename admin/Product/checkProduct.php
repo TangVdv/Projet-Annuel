@@ -1,6 +1,5 @@
 <?php
-session_start();
-include('../../includes/bdd.php');
+include('productModel.php');
 
 if(isset($_FILES['img']) && !empty($_FILES['img']['name'])){
 
@@ -49,16 +48,19 @@ else {
   $filename = "test.png";
 }
 
+$image = $filename;
 $name =  $_POST['name'];
 $description = $_POST['description'];
 $price = $_POST['price'];
 $stock = $_POST['stock'];
 
-$column = array("nom", "prix", "reduction", "stock");
-$value = array($name, $price, 0, $stock);
-
-$db = OpenDb();
-InsertValues("produit", $column, $value, $db);
+productModel::AddProduct([
+  "image" => $image,
+  "name" => $name,
+  "description" => $description,
+  "price" => $price,
+  "stock" => $stock
+]);
 
 header('location:index.php');
 ?>

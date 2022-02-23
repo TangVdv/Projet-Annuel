@@ -12,9 +12,8 @@
     <main>
       <div class="row row-cols-md-3 justify-content-center">
         <?php
-        include("../includes/bdd.php");
-        $db = OpenDb();
-        $res = SelectAll("Produit", $db);
+        include("marketModel.php");
+        $res = addToCartModel::SelectProduct();
         while ($row = $res->fetch(PDO::FETCH_OBJ)) {
         ?>
             <div class="row mb-2">
@@ -31,7 +30,10 @@
                       </div>
                   </div>
                   <div class="text-end m-2">
-                      <a href=<?php echo "check_addToCart.php?id=".$row->id_produit; ?> type="button" class="btn btn-primary">Ajouter au panier</a>
+                      <a type="button" class="btn btn-primary" href=<?php echo 'checkProduct.php?id_produit='.$row->id_produit.'&id_panier=1' ?>>Ajouter au panier</a>
+                      <?php
+                        //addToCartModel::InsertProduct(['id_produit' => $row->id_produit, 'id_panier' => 1])
+                       ?>
                   </div>
                 </div>
               </div>

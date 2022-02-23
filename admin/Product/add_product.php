@@ -9,7 +9,7 @@
   <body>
     <div class="w-50" style="margin: auto;">
         <h3 class="my-4">Ajouter un produit </h3>
-        <form class="" action="check_add_product.php" method="post" enctype="multipart/form-data">
+        <form class="" action="checkProduct.php" method="post" enctype="multipart/form-data">
           <div class="mb-3">
             <label class="form-label">Nom</label>
             <input type="text" class="form-control" name="name" id="name">
