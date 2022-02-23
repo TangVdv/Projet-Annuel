@@ -31,21 +31,18 @@
                      FROM PRODUIT
                      INNER JOIN ACHETE ON produit.id_produit = achete.id_produit
                      WHERE achete.id_utilisateur = 1 ';
+          $req = $db->query($req);
 
-           foreach ($db->query($req) as $row) {
-             /*
-             echo $row['image'] . "\n";
-             echo $row['nom'] . "\n";
-             echo  $row['prix'] . "\n";
-             echo $row['reduction'] . "\n";*/
-             $image = $row['image'];
-             $nom = $row['nom'];
-             $prix = $row['prix'];
-             $reduction = $row['reduction'];
+           while ($row = $req->fetch(PDO::FETCH_OBJ)){
+             ?>
+             <li class="list-group-item d-flex justify-content-between align-items-center">
+               <img src="<?php echo "image/products/".$row->image; ?>">
+               <p><?php echo $row->nom; ?></p>
+               <p><?php echo $row->prix . " €"; ?></p>
+               <p><?php echo $row->reduction . "%"; ?></p>
+             </li>
 
-             $li = $doc->createElement("li");
-             $li->setAttribute("class", "list-group-item d-flex justify-content-between align-items-center");
-             $liste->appendChild($li);
+             <?php
            }
 
           ?>
