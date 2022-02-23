@@ -8,6 +8,8 @@
   </head>
   <body style="background: #EAF9FF">
     <?php
+      include("../includes/header.php");
+
       include("db_connection.php");
       //Display errors
       /*
@@ -36,7 +38,7 @@
            while ($row = $req->fetch(PDO::FETCH_OBJ)){
              ?>
              <li class="list-group-item d-flex justify-content-between align-items-center">
-               <img src="<?php echo "image/products/".$row->image; ?>">
+               <img src="<?php echo "../image/products/".$row->image; ?>">
                <p><?php echo $row->nom; ?></p>
                <p><?php echo $row->prix . " €"; ?></p>
                <p><?php echo $row->reduction . "%"; ?></p>
@@ -63,5 +65,8 @@
       -->
        </ul>
     </div>
+    <?php
+      include("../includes/footer.php");
+    ?>
   </body>
 </html>
