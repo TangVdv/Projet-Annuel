@@ -34,6 +34,9 @@
         <h1 class="">Votre panier :</h1>
         <h2>Total : <?php echo $prix_total . "€" ?></h2>
       </div>
+      <?php
+        include("manageQuantity.php");
+       ?>
 
 
        <ul id="liste" class="list-group rounded-3">
@@ -41,10 +44,10 @@
           $doc = new DOMDocument();
           $liste = $doc->getElementById("liste");
 
-           $req = 'SELECT image, nom, prix, reduction
-                     FROM PRODUIT
-                     INNER JOIN ACHETE ON produit.id_produit = achete.id_produit
-                     WHERE achete.id_utilisateur = 1 ';
+          $req = 'SELECT produit.id_produit, image, nom, prix, reduction, quantite
+                    FROM PRODUIT
+                    INNER JOIN ACHETE ON produit.id_produit = achete.id_produit
+                    WHERE achete.id_utilisateur = 1';
           $req = $db->query($req);
 
            while ($row = $req->fetch(PDO::FETCH_OBJ)){
@@ -54,6 +57,12 @@
                <p><?php echo $row->nom; ?></p>
                <p><?php echo $row->prix . " €"; ?></p>
                <p><?php echo $row->reduction . "%"; ?></p>
+               <div class="d-flex flex-column">
+                 <button type="button" class="btn btn-primary" onclick="increaseQuantity(<?php echo $row->id_produit; ?>);">+</button>
+                 <p><?php echo $row->quantite; ?></p>
+                 <button type="button" class="btn btn-primary" onclick="decreaseQuantity(<?php echo $row->id_produit; ?>)">-</button>
+               </div>
+               <button href=<?php echo "deleteProduct.php?id=".$row->id_produit; ?> type="button" class="btn btn-danger" onclick="">Supprimer</button>
              </li>
 
              <?php
