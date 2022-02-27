@@ -15,7 +15,7 @@
   </head>
   <body style="background: #EAF9FF">
     <?php
-      include("../includes/header.php");
+      include("includes/header_logo.php");
     ?>
     <div style="width: 60rem" class="container">
       <div class="bg-light py-5 container text-center border-bottom">
@@ -48,8 +48,5 @@
         <a style="background-color: #004579" class="btn btn-lg btn-primary btn-block" href="sign_in.php">Créer un compte</a>
       </div>
     </div>
-    <?php
-      include("../includes/footer.php");
-    ?>
   </body>
 </html>
