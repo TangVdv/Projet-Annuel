@@ -1,10 +1,5 @@
 <?php
 
-if (!isset($_GET["id"]) || empty($_GET["id"])){
-  echo "None id found";
-  die;
-}
-
 class CompagnyModel{
   public static function selectCompagny(){
     include("../../includes/bdd.php");
@@ -18,6 +13,11 @@ class CompagnyModel{
   public static function selectSpecificCompagny(){
     include("../../includes/bdd.php");
 
+    if (!isset($_GET["id"]) || empty($_GET["id"])){
+      echo "None id found";
+      die;
+    }
+
     $id = $_GET["id"];
 
     $query = $db->prepare("SELECT nom from entreprise where id_entreprise = :id");
@@ -30,7 +30,7 @@ class CompagnyModel{
 
   public static function selectProductAsCompagny(){
     include("../../includes/bdd.php");
-
+    
     $id = $_GET["id"];
 
     $query = $db->prepare("SELECT * from produit INNER JOIN dispose ON produit.id_produit = dispose.id_produit WHERE dispose.id_entreprise = :id");
