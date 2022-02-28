@@ -20,7 +20,7 @@
             </thead>
             <?php
             include("AccountModel.php");
-            $res = AccountModel::SelectAccount();
+            $res = accountModel::SelectAccount();
             while ($row = $res->fetch(PDO::FETCH_OBJ)){?>
             <tbody class='text-center'>
               <tr>
@@ -29,24 +29,6 @@
                 <td><?php echo $row->email ?></td>
                 <td>
                   <a class="btn btn-danger btn-sm mx-1" href=<?php echo "checkAccount.php?id=".$row->id_utilisateur; ?>>Supprimer</a>
-
-                  <div class='modal fade' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>
-										<div class='modal-dialog'>
-											<div class='modal-content bg-dark'>
-												<div class='modal-header'>
-													<h5 class='modal-title text-light'>Suppression d'un utilisateur</h5>
-													<button type='button' class='btn-close btn-close-white' data-bs-dismiss='modal' aria-label='Close'></button>
-												</div>
-												<div class='modal-body text-light'>
-													Voulez vous vraiment supprimer cet utilisateur ?
-												</div>
-												<div class='modal-footer'>
-													<button type='button' class='btn btn-danger'  data-bs-dismiss='modal'>OUI</button>
-													<button type='button' class='btn btn-primary' data-bs-dismiss='modal' aria-label='Close'>NON</button>
-												</div>
-											</div>
-										</div>
-									</div>
                 </td>
               </tr>
             </tbody>
@@ -58,8 +40,5 @@
      </div>
 
     </div>
-
-    <script src="../admin.js" charset="utf-8"></script>
-    <script src="../bootstrap.bundle.min.js" charset="utf-8"></script>
   </body>
 </html>

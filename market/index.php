@@ -21,7 +21,7 @@
                 <div class="col g-0 border rounded mb-4 shadow-sm">
                   <div class="text-center">
                     <div class="col">
-                      <img class="bd-placeholder-img" width="300" height="400" src=<?php echo "../image/products/".$row->image; ?> alt="">
+                      <img class="bd-placeholder-img" width="300" height="400" src=<?php echo "../img/products/".$row->image; ?> alt="">
                     </div>
                     <div class="col p-4 d-flex flex-column position-static">
                         <h4 class="mb-0"><?php echo $row->nom; ?></h4>

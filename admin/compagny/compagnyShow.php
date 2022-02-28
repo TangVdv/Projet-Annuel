@@ -21,7 +21,7 @@
     <div class="d-flex flex-wrap border border-1 rounded m-4">
       <div class="mx-4">
             <?php
-            $res = CompagnyModel::selectProductAsCompagny();
+            $res = compagnyModel::selectProductAsCompagny();
             while ($row = $res->fetch(PDO::FETCH_OBJ)) {
             ?>
             <div id=<?php echo $row->id_produit; ?> class='text-center btn'>

@@ -1,5 +1,5 @@
 <?php
-class ProductModel{
+class productModel{
   public static function AddProduct($ProductToAdd){
     include("../../includes/bdd.php");
 
@@ -18,6 +18,22 @@ class ProductModel{
     $query = $db->query("SELECT * FROM Produit");
 
     return $query;
+  }
+
+  public static function DeleteProduct(){
+    include("../../includes/bdd.php");
+
+    $id = $_GET['id'];
+
+    $query = $db->prepare("DELETE FROM dispose WHERE id_produit = :id)");
+    $query->execute([
+      "id" => $id
+    ]);
+
+    $query = $db->prepare("DELETE FROM produit WHERE id_produit = :id");
+    $query->execute([
+      "id" => $id
+    ]);
   }
 }
 

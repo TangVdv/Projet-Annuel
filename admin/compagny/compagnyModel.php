@@ -1,6 +1,6 @@
 <?php
 
-class CompagnyModel{
+class compagnyModel{
   public static function selectCompagny(){
     include("../../includes/bdd.php");
 
@@ -30,7 +30,7 @@ class CompagnyModel{
 
   public static function selectProductAsCompagny(){
     include("../../includes/bdd.php");
-    
+
     $id = $_GET["id"];
 
     $query = $db->prepare("SELECT * from produit INNER JOIN dispose ON produit.id_produit = dispose.id_produit WHERE dispose.id_entreprise = :id");

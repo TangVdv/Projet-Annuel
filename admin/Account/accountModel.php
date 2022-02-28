@@ -1,6 +1,6 @@
 <?php
 
-class AccountModel{
+class accountModel{
   public static function SelectAccount(){
       include("../../includes/bdd.php");
 

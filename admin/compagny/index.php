@@ -12,7 +12,7 @@
       <?php
       include("compagnyModel.php");
 
-      $res = CompagnyModel::selectCompagny();
+      $res = compagnyModel::selectCompagny();
 
       while($row = $res->fetch(PDO::FETCH_OBJ)){ ?>
         <div class="">
@@ -21,4 +21,5 @@
       <?php } ?>
     </div>
   </body>
+  <?php include("../../includes/footer.php"); ?>
 </html>
