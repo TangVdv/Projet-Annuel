@@ -70,7 +70,11 @@
                  <input type="submit" name="minus"
                   class="btn btn-primary" value="-" />
                </form>
-               <button href=<?php echo "deleteProduct.php?id=".$row->id_produit; ?> type="button" class="btn btn-danger" onclick="">Supprimer</button>
+               <form action="deleteProduct.php" method="post" class="d-flex flex-column">
+                 <input type = "text" name = "idProduit" value = "<?php echo $row->id_produit; ?>" hidden>
+                 <input type="submit" name="Suppr"
+                  class="btn btn-danger" value="Supprimer" onclick=""/>
+               </form>
              </li>
 
              <?php

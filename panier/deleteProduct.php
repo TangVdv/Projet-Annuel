@@ -1,14 +1,14 @@
 <?php
 
-  include("db_connection.php");
+include("db_connection.php");
 
-  $id = $_GET['id']
-
-  $query = $db->prepare("DELETE FROM ACHETE WHERE id_produit = :id;");
-  $query->execute([
-    "id" => $id
+if(isset($_POST['Suppr']) && isset($_POST['idProduit'])){
+  $req = $db->prepare('DELETE FROM achete WHERE id_utilisateur = :id_utilisateur AND id_produit = :id_produit');
+  $req->execute([
+    "id_utilisateur" => "1",
+    "id_produit" => htmlspecialchars($_POST["idProduit"])
   ]);
+}
 
-  header('Location: panier.php');
-  exit;
+header('location:panier.php');
  ?>
