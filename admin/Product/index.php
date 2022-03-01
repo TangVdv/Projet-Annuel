@@ -11,7 +11,7 @@
 
     <div class="w-50 col flex-wrap" id="article_reload"style="margin: auto;">
       <div class="d-flex justify-content-center">
-        <button class="btn btn-success btn-lg m-4" onClick="document.location.href="add_product.php"">Ajouter un Produit</button>
+        <a class="btn btn-success btn-lg m-4" href="addProduct.php">Ajouter un Produit</a>
       </div>
     </div>
     <div class="d-flex flex-wrap">
@@ -71,7 +71,7 @@
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Annuler</button>
                     </div>
                     <div>
-                      <a class="btn btn-danger" href=<?php echo "checkProduct.php?id=".$row->id_produit; ?>>Supprimer</a>
+                      <a class="btn btn-danger" href=<?php echo "checkDeleteProduct.php?id=".$row->id_produit; ?>>Supprimer</a>
                     </div>
                   </div>
                 </div>

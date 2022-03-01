@@ -20,12 +20,28 @@ class productModel{
     return $query;
   }
 
+  public static function SelectSpecificProduct($id){
+    include("../../includes/bdd.php");
+
+    $query = $db->prepare("SELECT * FROM produit WHERE id_produit = :id");
+    $query->execute([
+      "id" => $id
+    ]);
+
+    return $query;
+  }
+
   public static function DeleteProduct(){
     include("../../includes/bdd.php");
 
     $id = $_GET['id'];
 
-    $query = $db->prepare("DELETE FROM dispose WHERE id_produit = :id)");
+    $res = productModel::SelectSpecificProduct($id);
+    $row = $res->fetch(PDO::FETCH_OBJ);
+    $path = "../../img/products/".$row->image;
+    unlink($path);
+
+    $query = $db->prepare("DELETE FROM dispose WHERE id_produit = :id");
     $query->execute([
       "id" => $id
     ]);
@@ -34,8 +50,9 @@ class productModel{
     $query->execute([
       "id" => $id
     ]);
+
+    header("location:index.php");
   }
 }
 
-
- ?>
+?>
