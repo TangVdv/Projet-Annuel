@@ -3,12 +3,19 @@ class productModel{
   public static function AddProduct($ProductToAdd){
     include("../../includes/bdd.php");
 
-    $query = $db->prepare( "INSERT INTO Produit(image, nom, prix, stock) VALUES(:image, :name, :price, :stock);" );
+    $query = $db->prepare( "INSERT INTO Produit(image, nom, description, prix, stock) VALUES(:image, :name, :description, :price, :stock);" );
     $query->execute([
         "image" => $ProductToAdd["image"],
         "name" => $ProductToAdd["name"],
+        "description" => $ProductToAdd["description"],
         "price" => $ProductToAdd["price"],
         "stock" => $ProductToAdd["stock"]
+    ]);
+
+    $query = $db->prepare( "INSERT INTO dispose(id_entreprise, id_produit) VALUES(:id_entreprise, (SELECT id_produit FROM produit WHERE nom = :name));" );
+    $query->execute([
+        "id_entreprise" => $ProductToAdd["id_entreprise"],
+        "name" => $ProductToAdd["name"]
     ]);
   }
 

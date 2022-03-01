@@ -27,8 +27,31 @@
             <input type="number" class="form-control" name="stock" id="stock">
           </div>
           <div class="mb-3">
+            <label class="form-label">Entreprise</label>
+            <select class="form-select" name="compagny" id="compagny">
+              <option value="">Choisir une entreprise</option>
+              <?php
+              include("../compagny/compagnyModel.php");
+
+              $res = compagnyModel::selectCompagny();
+              while($row = $res->fetch(PDO::FETCH_OBJ)){
+                echo "<option value=".$row->id_entreprise.">".$row->nom."</option>";
+              }
+              ?>
+            </select>
+          </div>
+          <div class="mb-3">
             <label class="form-label">Image</label>
             <input type="file" id="image" name="img" accept="image/png, image/jpeg">
+          </div>
+          <div>
+            <p class="text-danger">
+            <?php
+              if(isset($_GET["message"]) || !empty($_GET["message"])){
+                  echo $_GET["message"];
+              }
+            ?>
+            </p>
           </div>
           <div class="mb-3 w-25">
               <input type="submit" class="form-control btn btn-primary" id="submit_modif">

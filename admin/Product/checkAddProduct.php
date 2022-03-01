@@ -1,6 +1,27 @@
 <?php
 include('productModel.php');
 
+if(!isset($_POST["name"]) || empty($_POST["name"])){
+  header("location:addProduct.php?message=Veuillez renseigner le nom du produit");
+  die;
+}
+
+if(!isset($_POST["price"]) || empty($_POST["price"])){
+  header("location:addProduct.php?message=Veuillez renseigner le prix du produit");
+  die;
+}
+
+if(!isset($_POST["stock"]) || empty($_POST["stock"])){
+  header("location:addProduct.php?message=Veuillez renseigner le nombre de produit en stock");
+  die;
+}
+
+$compagny_id = filter_input(INPUT_POST, 'compagny', FILTER_SANITIZE_STRING);
+if (!isset($compagny_id) || empty($compagny_id)){
+  header("location:addProduct.php?message=Veuillez renseigner une entreprise");
+  die;
+}
+
 if(isset($_FILES['img']) && !empty($_FILES['img']['name'])){
 
   // Vérifier le type de fichier
@@ -11,7 +32,7 @@ if(isset($_FILES['img']) && !empty($_FILES['img']['name'])){
 
   if(!in_array($_FILES['img']['type'], $acceptable)){
       // Redirection vers la page d'inscription avec un message d'erreur
-      header('location:index.php?message=Format de fichier incorrect.');
+      header('location:addProduct.php?message=Format de fichier incorrect');
       exit;
   }
   // Vérifier la taille du fichier
@@ -20,7 +41,7 @@ if(isset($_FILES['img']) && !empty($_FILES['img']['name'])){
 
   if($_FILES['img']['size'] > $maxSize){
     // Redirection vers la page d'inscription avec un message d'erreur
-    header('location:index.php?message=Le fichier est trop volumineux.');
+    header('location:addProduct.php?message=Le fichier est trop volumineux');
     exit;
   }
 
@@ -45,7 +66,8 @@ if(isset($_FILES['img']) && !empty($_FILES['img']['name'])){
   move_uploaded_file($_FILES['img']['tmp_name'], $destination);
 }
 else {
-  header("location:index.php?message=can't send image");
+  header("location:addProduct.php?message=Vous devez choisir une image");
+  die;
 }
 
 $image = $filename;
@@ -59,7 +81,8 @@ productModel::AddProduct([
   "name" => $name,
   "description" => $description,
   "price" => $price,
-  "stock" => $stock
+  "stock" => $stock,
+  "id_entreprise" => $compagny_id
 ]);
 
 header('location:index.php');
