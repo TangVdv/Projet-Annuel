@@ -31,7 +31,7 @@ if(isset($_POST['plus']) && isset($_POST['idProduit'])){
       "id_produit" => htmlspecialchars($_POST["idProduit"])
     ]);
   }
-  //header('location:../panier.php?message=Quantité réduite avec succès&type=success');
+  header('location:../panier.php?message=Quantité réduite avec succès&type=success');
 
 }else{
   header('location:../panier.php?message=Une erreur est survenue&type=danger');
