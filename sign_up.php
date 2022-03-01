@@ -14,7 +14,7 @@
 
     <div style="width: 60rem" class="container">
       <div class="bg-light py-5 container text-center border-bottom">
-        <form action="verif/verif_sign_up" method="post">
+        <form action="verif/sign_up_verif.php" method="post">
           <div class="border-bottom">
             <h1 class="h3 mb-3 font-weight-normal">Vos identifiants :</h1>
 
