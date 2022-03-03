@@ -18,7 +18,18 @@
           <img src="../img/logo_loyaltycard.png" width="40%">
         </a>
         <ul class="nav">
-          <li class="nav-item"><a href="#" class="nav-link text-white px-2">Compte</a></li>
+          <?php
+          session_start();
+
+          if (isset($_SESSION['email'])) {
+      				echo "<li class='nav-item'><a href='#' class='nav-link text-white px-2'>Compte</a> </li>";
+              echo "<li class='nav-item'><a href='../panier/panier.php' class='nav-link text-white px-2'>Panier</a> </li>";
+      			}
+      		else{
+      				echo "<li class='nav-item'><a href='../sign_in.php' class='nav-link text-white px-2'>Connexion</a> </li>";
+      				echo "<li class='nav-item'><a href='../sign_up.php' class='nav-link text-white px-2'>Inscription</a> </li>";
+      			}
+            ?>
         </ul>
         <form class="w-100 me-3">
           <input type="search" class="form-control" placeholder="Vous cherchez un produit ?" aria-label="Search">

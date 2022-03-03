@@ -20,10 +20,8 @@
   }
 
   /* Faut pas utiliser de SELECt *, je sais*/
-  $req = $db->prepare('SELECT email, mot_de_passe FROM utilisateur WHERE id_utilisateur = :id_utilisateur');
-  $req->execute([
-    "id_utilisateur" => "1"
-  ]);
+  $req = $db->prepare('SELECT email, mot_de_passe FROM utilisateur');
+  $req->execute();
 
   $trimword = trim($_POST['mot_de_passe']);
   $hashword = hash('sha256', $trimword);
@@ -34,15 +32,14 @@
 		header('location:../sign_in.php?message=Email ou mot de passe invalide.&type=danger');
 	}
 
-	else if ($row['active'] == '0') {
+	/*else if ($row['active'] == '0') {
 		header('location:../sign_in.php?message=Your account is not activated buddy.&type=danger');
-	}
+	}*/
 
 	else {
 		session_start();
 		$_SESSION['email'] = $_POST['email'];
-		//$_SESSION['id_utilisateur'] = $row['id_utilisateur'];
-		//$_SESSION['username'] = $row['username'];
+		$_SESSION['id_utilisateur'] = $row['id_utilisateur'];
 		header('location:../includes/header.php?message=Vous êtes connecté&type=success');
 		exit;
 	}
