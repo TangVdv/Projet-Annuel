@@ -6,7 +6,7 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   </head>
-  <body style="background: #EAF9FF">
+  <body class="gap-3" style="background: #EAF9FF">
     <?php
       include("../includes/header.php");
 
@@ -22,7 +22,7 @@
     ?>
     <div class="mx-auto" style="width: 60rem; height: 500px; display: block;">
 
-      <div class="d-flex justify-content-between d-flex align-items-end">
+      <div class="d-flex justify-content-between d-flex align-items-end mb-3">
         <?php
           $req = 'SELECT prix_total
                       FROM PANIER
@@ -40,7 +40,7 @@
        ?>
 
 
-       <ul id="liste" class="list-group rounded-3">
+       <ul id="liste" class="list-group rounded-3 gap-3">
          <?php
           $prix_total = 0;
           $doc = new DOMDocument();
@@ -79,16 +79,20 @@
 
              <?php
            }
+
            $req = $db->prepare('UPDATE PANIER SET prix_total = :prix_total WHERE id_utilisateur = :id_utilisateur');
            $req->execute([
              "prix_total" => $prix_total,
              "id_utilisateur" => "1"
            ]);
           ?>
+          <div class="d-flex justify-content-end">
+            <a class="btn btn-success" href="#">Finaliser la commande</a>
+          </div>
 
           <script>
           //Edit total price
-            var prix = <?php echo json_encode($prix_total . "€"); ?>;
+            var prix = <?php echo json_encode("Prix total : " . $prix_total . "€"); ?>;
             document.getElementById("prix_total").innerHTML = prix;
           </script>
         <!--
