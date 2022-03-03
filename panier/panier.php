@@ -23,36 +23,26 @@
     <div class="mx-auto" style="width: 60rem; height: 500px; display: block;">
 
       <div class="d-flex justify-content-between d-flex align-items-end mb-3">
-        <?php
-          $req = 'SELECT prix_total
-                      FROM PANIER
-                      WHERE id_utilisateur = 1';
-          $req = $db->query($req);
-          $row = $req->fetch(PDO::FETCH_OBJ);
-          $prix_total = $row->prix_total;
 
-         ?>
         <h1 class="">Votre panier :</h1>
         <h2 id="prix_total"></h2>
       </div>
-      <?php
-        //include("manageQuantity.php");
-       ?>
-
-
-       <ul id="liste" class="list-group rounded-3 gap-3">
+       <ul class="list-group rounded-3 gap-3">
          <?php
           $prix_total = 0;
-          $doc = new DOMDocument();
-          $liste = $doc->getElementById("liste");
+          //Sélectionne tous les produits dans le panier de l'utilisateur
+          $req = $db->prepare('SELECT produit.id_produit, image, nom, prix, reduction, quantite
+                                FROM PRODUIT
+                                INNER JOIN ACHETE ON produit.id_produit = achete.id_produit
+                                WHERE achete.id_utilisateur = 1');
+                 $req->execute([
+                   //"id_utilisateur" => $_SESSION['id_utilisateur']
+                 ]);
 
-          $req = 'SELECT produit.id_produit, image, nom, prix, reduction, quantite
-                    FROM PRODUIT
-                    INNER JOIN ACHETE ON produit.id_produit = achete.id_produit
-                    WHERE achete.id_utilisateur = 1';
-          $req = $db->query($req);
+
 
            while ($row = $req->fetch(PDO::FETCH_OBJ)){
+             //Calcul du prix total mis à jour à chaque row
              $prix_total += ($row->prix - $row->prix / $row->reduction) * $row->quantite;
              ?>
              <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -65,7 +55,7 @@
                  <input type="submit" name="plus"
                   class="btn btn-primary" value="+" onclick=""/>
 
-                 <p id=""><?php echo $row->quantite; ?></p>
+                 <p><?php echo $row->quantite; ?></p>
 
                  <input type="submit" name="minus"
                   class="btn btn-primary" value="-" />
@@ -84,6 +74,7 @@
            $req->execute([
              "prix_total" => $prix_total,
              "id_utilisateur" => "1"
+             //"id_utilisateur" => $_SESSION['id_utilisateur']
            ]);
           ?>
           <div class="d-flex justify-content-end">
@@ -95,21 +86,6 @@
             var prix = <?php echo json_encode("Prix total : " . $prix_total . "€"); ?>;
             document.getElementById("prix_total").innerHTML = prix;
           </script>
-        <!--
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          <img src="cart_item.png">
-          <p>Nom</p>
-          <p>Prix</p>
-          <p>Réduction</p>
-        </li>
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          <img src="cart_item.png">
-          <p>Nom</p>
-          <p>Prix</p>
-          <p>Réduction</p>
-
-        </li>
-      -->
        </ul>
     </div>
     <?php
