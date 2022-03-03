@@ -31,7 +31,7 @@
           $prix_total = $row->prix_total;
 
          ?>
-        <h1 class="">Votre panier :</h1>
+        <h1 class="font-weight-normal">Votre panier :</h1>
         <h2>Total : <?php echo $prix_total . "€" ?></h2>
       </div>
 

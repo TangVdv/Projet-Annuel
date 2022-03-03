@@ -19,15 +19,17 @@
   	exit;
   }
 
-  /* Faut pas utiliser de SELECt *, je sais*/
+  /* SELECT les identifiants*/
   $req = $db->prepare('SELECT email, mot_de_passe FROM utilisateur');
   $req->execute();
 
+  // Trim et hash
   $trimword = trim($_POST['mot_de_passe']);
   $hashword = hash('sha256', $trimword);
 
+  // Boucle pour comparer l'input à ce qu'il y a dans la bdd
   foreach ($req as $row) {
-
+    // Dans le cas ou ça marche pas
 	if ( ( $_POST['email'] != $row['email'] ) || ( $hashword != $row['mot_de_passe'] ) ){
 		header('location:../sign_in.php?message=Email ou mot de passe invalide.&type=danger');
 	}
@@ -35,7 +37,7 @@
 	/*else if ($row['active'] == '0') {
 		header('location:../sign_in.php?message=Your account is not activated buddy.&type=danger');
 	}*/
-
+  // Dans le cas ou ça marche
 	else {
 		session_start();
 		$_SESSION['email'] = $_POST['email'];
