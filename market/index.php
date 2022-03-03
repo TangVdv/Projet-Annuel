@@ -30,10 +30,11 @@
                       </div>
                   </div>
                   <div class="text-end m-2">
+                    <?php if ($row->stock <= 0) {?>
+                      <a type="button" class="btn btn-primary disabled">Rupture de stock</a>
+                    <?php }else{?>
                       <a type="button" class="btn btn-primary" href=<?php echo 'checkProduct.php?id_produit='.$row->id_produit.'&id_panier=1' ?>>Ajouter au panier</a>
-                      <?php
-                        //addToCartModel::InsertProduct(['id_produit' => $row->id_produit, 'id_panier' => 1])
-                       ?>
+                    <?php } ?>
                   </div>
                 </div>
               </div>

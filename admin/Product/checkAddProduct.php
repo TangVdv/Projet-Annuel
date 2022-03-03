@@ -11,7 +11,7 @@ if(!isset($_POST["price"]) || empty($_POST["price"])){
   die;
 }
 
-if(!isset($_POST["stock"]) || empty($_POST["stock"])){
+if(!isset($_POST["stock"])){
   header("location:addProduct.php?message=Veuillez renseigner le nombre de produit en stock");
   die;
 }

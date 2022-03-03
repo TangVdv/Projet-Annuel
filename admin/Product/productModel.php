@@ -48,6 +48,11 @@ class productModel{
     $path = "../../img/products/".$row->image;
     unlink($path);
 
+    $query = $db->prepare("DELETE FROM stock WHERE id_produit = :id");
+    $query->execute([
+      "id" => $id
+    ]);
+
     $query = $db->prepare("DELETE FROM dispose WHERE id_produit = :id");
     $query->execute([
       "id" => $id
