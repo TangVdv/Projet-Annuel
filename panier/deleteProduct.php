@@ -1,6 +1,6 @@
 <?php
 
-include("db_connection.php");
+include("../includes/bdd.php");
 
 //Si l'utilisateur a appuyé sur le bouton Supprimer
 if(isset($_POST['Suppr']) && isset($_POST['idProduit'])){

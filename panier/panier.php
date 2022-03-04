@@ -11,7 +11,7 @@
       include("../includes/header.php");
 
 
-      include("db_connection.php");
+      include("../includes/bdd.php");
       //Display errors
       /*
       ini_set('display_errors', 1);
@@ -46,7 +46,7 @@
              $prix_total += ($row->prix - $row->prix / $row->reduction) * $row->quantite;
              ?>
              <li class="list-group-item d-flex justify-content-between align-items-center">
-               <img src="<?php echo "../image/products/".$row->image; ?>">
+               <img src="<?php echo "../img/products/".$row->image; ?>">
                <p><?php echo $row->nom; ?></p>
                <p><?php echo ($row->prix - $row->prix / $row->reduction) * $row->quantite . " €"; ?></p>
                <p><?php echo $row->reduction . "%"; ?></p>
