@@ -1,4 +1,3 @@
-<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="fr" dir="ltr">
   <head>
@@ -68,7 +67,7 @@
                         </tr>
                       </tbody>
                     </table>
-                  </div>              
+                  </div>
                 </div>
               </div>
             </div>

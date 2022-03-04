@@ -1,10 +1,8 @@
-<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="fr" dir="ltr">
   <head>
     <meta charset="utf-8">
     <title>Admin site</title>
-    <script src="../../lib/bootstrap.min.js" charset="utf-8"></script>
   </head>
   <?php include("../../includes/header.php"); ?>
   <body>

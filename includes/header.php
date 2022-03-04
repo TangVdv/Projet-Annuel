@@ -2,8 +2,8 @@
 <html lang="fr" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <link href="../lib/bootstrap.min.css" rel="stylesheet">
-    <script src="../lib/bootstrap.min.js" charset="utf-8"></script>
+    <link href="../../lib/bootstrap.min.css" rel="stylesheet">
+    <script src="../../lib/bootstrap.min.js" charset="utf-8"></script>
     <title>Header</title>
     <style>
       header {
@@ -16,7 +16,7 @@
     <header class="py-3 border-bottom">
       <div class="container d-flex flex-wrap justify-content-center">
         <a href="/" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
-          <img src="../img/logo_loyaltycard.png" width="40%">
+          <img src="../../img/logo_loyaltycard.png" width="40%">
         </a>
         <ul class="nav">
           <?php
