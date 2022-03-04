@@ -1,5 +1,5 @@
 <?php
-  $db = new PDO('mysql:host=localhost;dbname=pa', 'root', 'root' ,[PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+  include("../includes/bdd.php");
 
   // Set un cookie si l'utilisateur est connecté
   if (isset($_POST['email']) && !empty($_POST['email'])){
@@ -19,7 +19,6 @@
   	exit;
   }
 
-  /* Faut pas utiliser de SELECt *, je sais*/
   $req = $db->prepare('SELECT email, mot_de_passe FROM utilisateur WHERE id_utilisateur = :id_utilisateur');
   $req->execute([
     "id_utilisateur" => "1"

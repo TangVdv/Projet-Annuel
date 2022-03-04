@@ -2,7 +2,8 @@
 <html lang="fr" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <link href="../../lib/bootstrap.min.css" rel="stylesheet">
+    <link href="../lib/bootstrap.min.css" rel="stylesheet">
+    <script src="../lib/bootstrap.min.js" charset="utf-8"></script>
     <title>Header</title>
     <style>
       header {
@@ -26,8 +27,8 @@
               echo "<li class='nav-item'><a href='../panier/panier.php' class='nav-link text-white px-2'>Panier</a> </li>";
       			}
       		else{
-      				echo "<li class='nav-item'><a href='../sign_in.php' class='nav-link text-white px-2'>Connexion</a> </li>";
-      				echo "<li class='nav-item'><a href='../sign_up.php' class='nav-link text-white px-2'>Inscription</a> </li>";
+      				echo "<li class='nav-item'><a href='../signIn-Up/sign_in.php' class='nav-link text-white px-2'>Connexion</a> </li>";
+      				echo "<li class='nav-item'><a href='../SignIn-Up/sign_up.php' class='nav-link text-white px-2'>Inscription</a> </li>";
       			}
             ?>
         </ul>
