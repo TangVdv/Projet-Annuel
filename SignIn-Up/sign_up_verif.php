@@ -23,17 +23,20 @@
   $adresse = $_POST['adresse'];
 
   // Vérif pour voir si l'utilisateur à déja un compte
-  $req = $db->query('SELECT email FROM UTILISATEUR');
-  while ($row = $req->fetch(PDO::FETCH_OBJ)){
-      if ($row->email === $email) {
-        header('Location:sign_up.php?Email déja existant&type=danger');
-      }
+  $req = $db->prepare('SELECT count(*) as total FROM UTILISATEUR WHERE email = :email');
+  $req->execute([
+    "email" => $email
+  ]);
+  $row = $req->fetch(PDO::FETCH_OBJ);
+  if($row->total != 0){
+    header('Location:sign_up.php?message=Email déja existant&type=danger');
   }
 
   // Ajout des infos dans la bdd
-  $req = $db->prepare('INSERT INTO utilisateur(nom, prenom, numero, email, mot_de_passe, adresse, pts_fidelite, solde_euro)
-                            VALUES(:nom, :prenom, :numero, :email, :mot_de_passe, :adresse, :pts_fidelite, :solde_euro)');
-  $req->execute([
+  $req = $db->prepare('INSERT INTO utilisateur(admin, nom, prenom, numero, email, mot_de_passe, adresse, pts_fidelite, solde_euro)
+                            VALUES(0, :nom, :prenom, :numero, :email, :mot_de_passe, :adresse, :pts_fidelite, :solde_euro)');
+
+  $res = $req->execute([
     "nom" => $nom,
     "prenom" => $prenom,
     "numero" => $numero,
@@ -44,13 +47,22 @@
     "solde_euro" => 0.0
   ]);
 
-  echo $nom." ; ".$prenom." ; ".$numero." ; ".$email." ; ".$password." ; ".$adresse;
-  die;
+  if(!$res){
+    header('Location:sign_up.php?message=Erreur lors de la création du compte ; '. print_r($db->errorInfo()));
+  }
+  else {
+    $req = $db->prepare('SELECT id_utilisateur FROM UTILISATEUR WHERE email = :email AND mot_de_passe = :password');
+    $req->execute([
+      "email" => $email,
+      "password" => $password
+    ]);
+    $row = $req->fetch(PDO::FETCH_OBJ);
 
-  session_start();
-  $_SESSION['email'] = $_POST['email'];
-  $_SESSION['id_utilisateur'] = $row['id_utilisateur'];
-  header('Location:../index.php?Compte créé avec succès&type=success');
+    session_start();
+    $_SESSION['email'] = $_POST['email'];
+    $_SESSION['id_utilisateur'] = $row->id_utilisateur;
+    header('Location:../index.php?Compte créé avec succès&type=success');
+  }
 
 /*
   $req = $db->prepare('SELECT id_utilisateur FROM UTILISATEUR  WHERE email=:email');

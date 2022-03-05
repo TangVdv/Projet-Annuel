@@ -1,16 +1,16 @@
 <?php
 
 class addToCartModel{
-  public static function InsertProduct($ProductToAdd){
+  public static function InsertProduct($ProductId){
     include("../includes/bdd.php");
+    session_start();
 
-    $ProductId = $ProductToAdd["id_produit"];
-    $CartId = $ProductToAdd["id_panier"];
+    $UserId = $_SESSION["id_utilisateur"];
 
-    $query = $db->prepare( "INSERT INTO ajoute(id_produit, id_panier) VALUES(:ProductId, :CartId);" );
+    $query = $db->prepare("INSERT INTO achete(id_produit, id_utilisateur, quantite) VALUES (:ProductId, :UserId, 1) ON DUPLICATE KEY UPDATE quantite = quantite + 1");
     $query->execute([
         "ProductId" => $ProductId,
-        "CartId" => $CartId
+        "UserId" => $UserId
     ]);
   }
 

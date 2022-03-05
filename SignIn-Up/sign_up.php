@@ -51,6 +51,15 @@
               <label for="inputAddress"></label>
               <input type="text" class="form-control" id="inputAddress" placeholder="Adresse" name="adresse">
             </div>
+            <div>
+              <p class="text-danger">
+              <?php
+                if(isset($_GET["message"]) || !empty($_GET["message"])){
+                    echo $_GET["message"];
+                }
+              ?>
+              </p>
+            </div>
 
           <button class="btn btn-lg btn-primary btn-block my-5" style="background-color: #004579" type="submit">Inscription</button>
         </form>

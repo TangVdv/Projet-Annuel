@@ -23,6 +23,7 @@
           session_start();
 
           if (isset($_SESSION['email'])) {
+              echo "<li class='nav-item'><a href='../signIn-Up/logOut.php' class='nav-link text-white px-2'>Déconnexion</a> </li>";
       				echo "<li class='nav-item'><a href='#' class='nav-link text-white px-2'>Compte</a> </li>";
               echo "<li class='nav-item'><a href='../panier/panier.php' class='nav-link text-white px-2'>Panier</a> </li>";
       			}

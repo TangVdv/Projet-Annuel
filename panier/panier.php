@@ -8,7 +8,6 @@
     <?php
       include("../includes/header.php");
 
-
       include("../includes/bdd.php");
       //Display errors
       /*
@@ -28,25 +27,32 @@
        <ul class="list-group rounded-3 gap-3">
          <?php
           $prix_total = 0;
+
           //Sélectionne tous les produits dans le panier de l'utilisateur
           $req = $db->prepare('SELECT produit.id_produit, image, nom, prix, reduction, quantite
                                 FROM PRODUIT
                                 INNER JOIN ACHETE ON produit.id_produit = achete.id_produit
-                                WHERE achete.id_utilisateur = 1');
+                                WHERE achete.id_utilisateur = :id_utilisateur');
                  $req->execute([
-                   //"id_utilisateur" => $_SESSION['id_utilisateur']
+                   "id_utilisateur" => $_SESSION['id_utilisateur']
                  ]);
 
 
 
            while ($row = $req->fetch(PDO::FETCH_OBJ)){
              //Calcul du prix total mis à jour à chaque row
-             $prix_total += ($row->prix - $row->prix / $row->reduction) * $row->quantite;
+             if($row->reduction > 0){
+               $prix = ($row->prix - $row->prix / $row->reduction) * $row->quantite;
+             }
+             else {
+               $prix = $row->prix * $row->quantite;
+             }
+             $prix_total += $prix;
              ?>
              <li class="list-group-item d-flex justify-content-between align-items-center">
-               <img src="<?php echo "../img/products/".$row->image; ?>">
+               <img src="<?php echo "../img/products/".$row->image; ?>" width="100" height="100">
                <p><?php echo $row->nom; ?></p>
-               <p><?php echo ($row->prix - $row->prix / $row->reduction) * $row->quantite . " €"; ?></p>
+               <p><?php echo $prix . " €"; ?></p>
                <p><?php echo $row->reduction . "%"; ?></p>
                <form action="quantity/manageQuantity.php" method="post" class="d-flex flex-column">
                  <input type = "text" name = "idProduit" value = "<?php echo $row->id_produit; ?>" hidden>
@@ -65,16 +71,7 @@
                </form>
              </li>
 
-             <?php
-           }
-
-           $req = $db->prepare('UPDATE PANIER SET prix_total = :prix_total WHERE id_utilisateur = :id_utilisateur');
-           $req->execute([
-             "prix_total" => $prix_total,
-             "id_utilisateur" => "1"
-             //"id_utilisateur" => $_SESSION['id_utilisateur']
-           ]);
-          ?>
+             <?php } ?>
           <div class="d-flex justify-content-end">
             <a class="btn btn-success" href="#">Finaliser la commande</a>
           </div>
