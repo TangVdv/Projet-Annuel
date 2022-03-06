@@ -52,7 +52,7 @@
              <li class="list-group-item d-flex justify-content-between align-items-center">
                <img src="<?php echo "../img/products/".$row->image; ?>" width="100" height="100">
                <p><?php echo $row->nom; ?></p>
-               <p><?php echo $prix . " €"; ?></p>
+               <p><?php echo $prix / $row->quantite . " €"; ?></p>
                <p><?php echo $row->reduction . "%"; ?></p>
                <form action="quantity/manageQuantity.php" method="post" class="d-flex flex-column">
                  <input type = "text" name = "idProduit" value = "<?php echo $row->id_produit; ?>" hidden>
