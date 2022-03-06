@@ -6,64 +6,63 @@
 CURL *curl;
 sqlite3 *db;
 sqlite3_stmt *res;
+char *err_msg = 0;
+FILE *yaml_file;
 
 int getData(void *NotUsed, int rowCount, char **rowValue, char **rowName){
-  char name[2][50] = {"nom", "stock"};
-	yaml_file = fopen("data.yaml", "w");
-  for (int i = 0; i < strlen(name); ++i)
+  char name[2][50] = {"nom", "prix"};
+	yaml_file = fopen("data.yaml", "a+");
+  for (int i = 0; i < strlen(name[0]); ++i)
   {
     fprintf(yaml_file, "%s: %s", name[i], rowValue[i]);
   }
 }
 
 int main(){
-
-	int rc = sqlite3_open("Projet.database", &db); // Ouvre la base de donnée
-
-    // Check si la base de donnée existe
+	int rc = sqlite3_open("loyaltycard.db", &db); // Ouvre la base de donnée
+	// Check si la base de donnée existe
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(db));
         sqlite3_close(db);
         return 1;
     }
+    yaml_file = fopen("data.yaml", "w");
 
-    // TODO : Change query
-    char *sql = "SELECT nom, stock FROM Produit";
+
+	//VENTE
+	fprintf(yaml_file, "vente:\n");
+
+    char *sql = "SELECT nom, prix FROM PRODUIT INNER JOIN HISTORIQUE_ACHAT ON historique_achat.id_produit  = produit.id_produit WHERE CAST(date_achat AS DATE) = CAST( GETDATE() AS DATE)";
     sqlite3_exec(db, sql, getData, 0,&err_msg);
 
-    yaml_file = fopen("data.yaml", "r");
+
+    //APPROVISIONNEMENT
+    fprintf(yaml_file, "approvisionnement:\n");
+
+    sql = "SELECT nom, prix FROM PRODUIT INNER JOIN STOCK ON stock.id_produit = produit.id_produit WHERE CAST(stock.date_ajout AS DATE) = CAST( GETDATE() AS DATE)";
+    sqlite3_exec(db, sql, getData, 0,&err_msg);
+
 
 	curl = curl_easy_init();
     if(curl){
-        curl_easy_setopt(curl, CURLOPT_URL, "https://api.github.com/users/TangVdv");
-        curl_easy_setopt(curl, CURLOPT_USERAGENT, "Projet-Annuel");
-        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, got_data);
 
         curl_easy_perform(curl);
         curl_easy_cleanup(curl);
     }
-    /* upload to this place */
+
+    //upload to this place 
     curl_easy_setopt(curl, CURLOPT_URL,"./");
  
-    /* tell it to "upload" to the URL */
+    //tell it to "upload" to the URL 
     curl_easy_setopt(curl, CURLOPT_UPLOAD, 1L);
  
-    /* set where to read from (on Windows you need to use READFUNCTION too) */
+    //set where to read from (on Windows you need to use READFUNCTION too)
     curl_easy_setopt(curl, CURLOPT_READDATA, yaml_file);
  
-    /* and give the size of the upload (optional) */
-    curl_easy_setopt(curl, CURLOPT_INFILESIZE_LARGE,
-                     (curl_off_t)file_info.st_size);
- 
-    /* enable verbose for easier tracing */
+    //enable verbose for easier tracing
     curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
  
-    res = curl_easy_perform(curl);
-    /* Check for errors */
-    if(res != CURLE_OK) {
-      fprintf(stderr, "curl_easy_perform() failed: %s\n",
-              curl_easy_strerror(res));
-    }
+    curl_easy_perform(curl);
 
     sqlite3_finalize(res); // Supprime le "statement" de la base de donnée
     sqlite3_close(db); // Ferme la base de donnée

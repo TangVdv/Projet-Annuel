@@ -3,7 +3,7 @@
 #include "xlsxwriter.h"
 
 int main(int argc, char **argv) {
-  FILE *fp = fopen("yaml_file.yaml", "r");
+  FILE *fp = fopen("data.yaml", "r");
     if(fp == NULL) {
        perror("Unable to open file!");
         exit(1);
