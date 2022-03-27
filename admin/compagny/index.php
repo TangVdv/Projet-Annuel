@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <title>Admin site</title>
-    <link href="../../Site_Public/Bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
   </head>
-  <?php include("../../includes/header.php"); ?>
+  <?php include("../includes/header.php"); ?>
   <body>
+    <a href=".." class="nav-link ms-4" style="width:10%">Back</a>
     <div class="w-50 col flex-wrap" id="article_reload"style="margin: auto;">
       <div class="d-flex justify-content-center">
         <a class="btn btn-success btn-lg m-4" href="addCompagny.php">Ajouter une entreprise</a>

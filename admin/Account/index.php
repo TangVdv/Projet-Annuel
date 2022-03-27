@@ -4,8 +4,9 @@
     <meta charset="utf-8">
     <title>Admin site</title>
   </head>
-  <?php include("../../includes/header.php"); ?>
+  <?php include("../includes/header.php"); ?>
   <body>
+    <a href=".." class="nav-link ms-4" style="width:10%">Back</a>
     <div class="w-50 col flex-wrap" id="article_reload"style="margin: auto;">
         <div class='table-responsive my-4'>
           <table class='table'>

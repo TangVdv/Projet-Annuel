@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <title>Admin site</title>
-    <script src="../../lib/bootstrap.min.js" charset="utf-8"></script>
   </head>
-  <?php include("../../includes/header.php"); ?>
+  <?php include("../includes/header.php"); ?>
   <body>
+    <a href="index.php" class="nav-link ms-4" style="width:10%">Back</a>
     <?php
     include("stockModel.php");
     $res = stockModel::selectSpecificCompagny();

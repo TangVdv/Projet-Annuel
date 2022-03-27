@@ -14,5 +14,5 @@ if(isset($_POST['Suppr']) && isset($_POST['idProduit'])){
   ]);
 }
 
-header('location:panier.php');
+header('location:./');
  ?>

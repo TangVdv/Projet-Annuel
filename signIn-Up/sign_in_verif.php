@@ -21,7 +21,7 @@
   $hashword = hash('sha256', $trimword);
 
   /* SELECT les identifiants*/
-  $req = $db->prepare('SELECT id_utilisateur, email FROM utilisateur WHERE email = :email AND mot_de_passe = :password');
+  $req = $db->prepare('SELECT id_utilisateur, email, admin FROM utilisateur WHERE email = :email AND mot_de_passe = :password');
   $req->execute([
     "email" => $email,
     "password" => $hashword
@@ -33,6 +33,7 @@
     setcookie('email', $row->email, time() + 365*24*3600);
 		$_SESSION['email'] = $row->email;
 		$_SESSION['id_utilisateur'] = $row->id_utilisateur;
+    $_SESSION['admin'] = $row->admin;
 		header('location:../index.php?message=Vous êtes connecté&type=success');
 		exit;
   }

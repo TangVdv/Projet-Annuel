@@ -1,7 +1,6 @@
 <?php
+include("../includes/checkAdmin.php");
 include('compagnyModel.php');
-
-
 // UPDATE
 if (isset($_POST["turnover_submit"])) {
   if(!isset($_POST["turnover"]) || empty($_POST["turnover"])){

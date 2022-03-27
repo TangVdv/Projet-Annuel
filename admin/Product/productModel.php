@@ -1,4 +1,5 @@
 <?php
+include("../includes/checkAdmin.php");
 class productModel{
   public static function AddProduct($ProductToAdd){
     include("../../includes/bdd.php");

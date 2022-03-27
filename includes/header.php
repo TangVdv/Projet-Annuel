@@ -23,9 +23,9 @@
           session_start();
 
           if (isset($_SESSION['email'])) {
-              echo "<li class='nav-item'><a href='../signIn-Up/logOut.php' class='nav-link text-white px-2'>Déconnexion</a> </li>";
+              echo "<li class='nav-item'><a href='/signIn-Up/logOut.php' class='nav-link text-white px-2'>Déconnexion</a> </li>";
       				echo "<li class='nav-item'><a href='#' class='nav-link text-white px-2'>Compte</a> </li>";
-              echo "<li class='nav-item'><a href='../panier/panier.php' class='nav-link text-white px-2'>Panier</a> </li>";
+              echo "<li class='nav-item'><a href='/panier/' class='nav-link text-white px-2'>Panier</a> </li>";
       			}
       		else{
       				echo "<li class='nav-item'><a href='../signIn-Up/sign_in.php' class='nav-link text-white px-2'>Connexion</a> </li>";
@@ -42,13 +42,12 @@
     <nav class="py-2 bg-light border-bottom">
       <div class="container d-flex flex-wrap justify-content-center">
         <ul class="nav">
-          <li class="nav-item"><a href="../index.php" class="nav-link link-dark px-2 active" aria-current="page">Home</a></li>
-          <li class="nav-item"><a href="../../market/index.php" class="nav-link link-dark px-2">Market</a></li>
+          <li class="nav-item"><a href="/" class="nav-link link-dark px-2 active" aria-current="page">Home</a></li>
+          <li class="nav-item"><a href="/market/" class="nav-link link-dark px-2">Market</a></li>
           <li class="nav-item"><a href="#" class="nav-link link-dark px-2">Features</a></li>
           <li class="nav-item"><a href="#" class="nav-link link-dark px-2">Pricing</a></li>
           <li class="nav-item"><a href="#" class="nav-link link-dark px-2">FAQs</a></li>
           <li class="nav-item"><a href="#" class="nav-link link-dark px-2">About</a></li>
-          <li class="nav-item"><a href="../../admin/index.php" class="nav-link link-dark px-2 text-danger">Admin</a></li>
         </ul>
 
       </div>

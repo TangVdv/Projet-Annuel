@@ -4,8 +4,9 @@
     <meta charset="utf-8">
     <title>Admin site</title>
   </head>
-  <?php include("../../includes/header.php"); ?>
+  <?php include("../includes/header.php"); ?>
   <body>
+    <a href="index.php" class="nav-link ms-4" style="width:10%">Back</a>
     <div class="w-50" style="margin: auto;">
         <h3 class="my-4">Ajouter un produit </h3>
         <form class="" action="checkAddProduct.php" method="post" enctype="multipart/form-data">
@@ -56,10 +57,6 @@
               <input type="submit" class="form-control btn btn-primary" id="submit_modif">
           </div>
         </form>
-
-
-        <a href="index.php" class="nav-link my-4 p-0" style="width:10%">Back</a>
-
     </div>
   </body>
 </html>

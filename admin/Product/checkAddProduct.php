@@ -1,4 +1,5 @@
 <?php
+include("../includes/checkAdmin.php");
 include('productModel.php');
 
 if(!isset($_POST["name"]) || empty($_POST["name"])){

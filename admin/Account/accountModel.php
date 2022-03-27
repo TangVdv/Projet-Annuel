@@ -1,5 +1,5 @@
 <?php
-
+include("../includes/checkAdmin.php");
 class accountModel{
   public static function SelectAccount(){
       include("../../includes/bdd.php");

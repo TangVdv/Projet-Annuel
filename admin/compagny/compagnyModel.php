@@ -1,5 +1,5 @@
 <?php
-
+include("../includes/checkAdmin.php");
 class CompagnyModel{
   public static function SelectCompagny(){
     include("../../includes/bdd.php");

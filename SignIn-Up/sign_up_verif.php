@@ -51,7 +51,7 @@
     header('Location:sign_up.php?message=Erreur lors de la création du compte ; '. print_r($db->errorInfo()));
   }
   else {
-    $req = $db->prepare('SELECT id_utilisateur FROM UTILISATEUR WHERE email = :email AND mot_de_passe = :password');
+    $req = $db->prepare('SELECT id_utilisateur, admin FROM UTILISATEUR WHERE email = :email AND mot_de_passe = :password');
     $req->execute([
       "email" => $email,
       "password" => $password
@@ -61,6 +61,7 @@
     session_start();
     $_SESSION['email'] = $_POST['email'];
     $_SESSION['id_utilisateur'] = $row->id_utilisateur;
+    $_SESSION['admin'] = $row->admin;
     header('Location:../index.php?Compte créé avec succès&type=success');
   }
 

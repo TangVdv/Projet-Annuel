@@ -1,5 +1,5 @@
 <?php
-
+include("../includes/checkAdmin.php");
 class stockModel{
   public static function SelectStock(){
       include("../../includes/bdd.php");
