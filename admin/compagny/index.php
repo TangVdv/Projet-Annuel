@@ -16,11 +16,16 @@
       <?php
       include("compagnyModel.php");
 
-      $res = compagnyModel::selectCompagny();
+      $res = CompagnyModel::selectCompagny();
 
       while($row = $res->fetch(PDO::FETCH_OBJ)){ ?>
-        <div class="">
-          <a href=<?php echo "compagnyShow.php?id=".$row->id_entreprise; ?> class="nav-link mx-3"><h4><?php echo $row->nom; ?></h4></a>
+        <div class="d-flex align-items-center justify-content-between">
+          <div><a href=<?php echo "compagnyShow.php?id=".$row->id_entreprise; ?> class="nav-link mx-3"><h4><?php echo $row->nom; ?></h4></a></div>
+          <div>
+            <form action=<?php echo "checkCompagny.php?id=".$row->id_entreprise; ?> method="post" enctype="multipart/form-data">
+              <button type="submit" class="btn btn-danger btn-sm" name="delete_submit">Supprimer</button>
+            </form>
+          </div>
         </div>
       <?php } ?>
     </div>

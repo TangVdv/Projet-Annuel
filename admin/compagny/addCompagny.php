@@ -8,14 +8,14 @@
   <body>
     <div class="w-50" style="margin: auto;">
         <h3 class="my-4">Ajouter une entreprise </h3>
-        <form class="" action="checkAddProduct.php" method="post" enctype="multipart/form-data">
+        <form action="checkCompagny.php" method="post" enctype="multipart/form-data">
           <div class="mb-3">
             <label class="form-label">Nom</label>
-            <input type="text" class="form-control" name="name" id="name">
+            <input type="text" class="form-control" name="name">
           </div>
           <div class="mb-3">
             <label class="form-label">Chiffre d'affaire</label>
-            <input type="number" class="form-control" name="turnover" id="stock">
+            <input type="number" class="form-control" name="turnover">
           </div>
           <div>
             <p class="text-danger">
@@ -27,7 +27,7 @@
             </p>
           </div>
           <div class="mb-3 w-25">
-              <input type="submit" class="form-control btn btn-primary" id="submit_modif">
+              <input type="submit" class="form-control btn btn-primary" name="add_submit">
           </div>
         </form>
 

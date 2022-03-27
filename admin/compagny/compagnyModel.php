@@ -1,6 +1,6 @@
 <?php
 
-class compagnyModel{
+class CompagnyModel{
   public static function SelectCompagny(){
     include("../../includes/bdd.php");
 
@@ -19,7 +19,7 @@ class compagnyModel{
 
     $id = $_GET["id"];
 
-    $query = $db->prepare("SELECT nom from entreprise where id_entreprise = :id");
+    $query = $db->prepare("SELECT nom, cotisation, statut_cotisation from entreprise where id_entreprise = :id");
     $query->execute([
       "id" => $id
     ]);
@@ -40,18 +40,107 @@ class compagnyModel{
     return $query;
   }
 
-  public static function AddCompagny($CompagnyToAdd){
+  public static function CalculContribution($turnover){
+    if($turnover > 200000) $contribution = 0;
+    if($turnover < 800000) $contribution = 0.8;
+    if($turnover < 1500000) $contribution = 0.6;
+    if($turnover < 3000000) $contribution = 0.4;
+    else $contribution = 0.3;
+
+    $contribution = $contribution * $turnover / 100;
+
+    return $contribution;
+  }
+
+  public static function AddCompagny(){
     include("../../includes/bdd.php");
 
-    $turnover = $CompagnyToAdd["turnover"];
+    $turnover = $_POST["turnover"];
 
+    $contribution = CompagnyModel::CalculContribution($turnover);
 
     $query = $db->prepare( "INSERT INTO Entreprise(nom, cotisation, statut_cotisation) VALUES(:name, :contribution, :contribution_status);" );
     $res = $query->execute([
-        "name" => $CompagnyToAdd["name"],
+        "name" => $_POST["name"],
         "contribution" => $contribution,
         "contribution_status" => 0,
     ]);
+
+    header("location:index.php");
+  }
+
+  public static function IfCompagnyAlreadyExist($name){
+    include("../../includes/bdd.php");
+
+    $query = $db->prepare( "SELECT COUNT(*) as total FROM entreprise WHERE nom = :name" );
+    $query->execute([
+        "name" => $name,
+    ]);
+    $row = $query->fetch(PDO::FETCH_OBJ);
+    if($row->total != 0){
+      return true;
+    }
+    return false;
+  }
+
+  public static function UpdateContributionStatus(){
+    include("../../includes/bdd.php");
+
+    if (!isset($_GET["id"]) || empty($_GET["id"])){
+      echo "None id found";
+      die;
+    }
+
+    $id = $_GET["id"];
+
+    $query = $db->prepare("UPDATE entreprise SET statut_cotisation = :value WHERE id_entreprise = :id");
+    $query->execute([
+      "value" => $_POST["status"],
+      "id" => $id
+    ]);
+
+    header("location:compagnyShow.php?id=".$_GET["id"]);
+    die;
+  }
+
+  public static function UpdateContribution(){
+    include("../../includes/bdd.php");
+
+    if (!isset($_GET["id"]) || empty($_GET["id"])){
+      echo "None id found";
+      die;
+    }
+
+    $id = $_GET["id"];
+
+    $contribution = CompagnyModel::CalculContribution($_POST["turnover"]);
+
+    $query = $db->prepare("UPDATE entreprise SET cotisation = :value WHERE id_entreprise = :id");
+    $query->execute([
+      "value" => $contribution,
+      "id" => $id
+    ]);
+
+    header("location:compagnyShow.php?id=".$_GET["id"]);
+    die;
+  }
+
+  public static function DeleteCompagny(){
+    include("../../includes/bdd.php");
+
+    if (!isset($_GET["id"]) || empty($_GET["id"])){
+      echo "None id found";
+      die;
+    }
+
+    $id = $_GET["id"];
+
+    $query = $db->prepare( "DELETE FROM Entreprise WHERE id_entreprise = :id" );
+    $res = $query->execute([
+        "id" => $id
+    ]);
+
+    header("location:index.php");
   }
 }
  ?>
