@@ -4,12 +4,19 @@ class accountModel{
   public static function SelectAccount(){
       include("../../includes/bdd.php");
 
-      $query = $db->query("SELECT * FROM Utilisateur");
+      $query = $db->query("SELECT id_utilisateur, nom, prenom, email FROM Utilisateur");
 
       return $query;
   }
-  public static function DeleteAccount($id){
+  public static function DeleteAccount(){
       include("../../includes/bdd.php");
+
+      if (!isset($_GET["id"]) || empty($_GET["id"])){
+        header("location:./?message=Aucun id trouvé");
+        die;
+      }
+
+      $id = $_GET["id"];
 
       $query = $db->prepare("DELETE FROM ajoute WHERE id_panier = (SELECT id_panier FROM panier WHERE id_utilisateur = :id)");
       $query->execute([
@@ -30,6 +37,8 @@ class accountModel{
       $query->execute([
         "id" => $id
       ]);
+
+      header("location:./");
   }
 }
  ?>

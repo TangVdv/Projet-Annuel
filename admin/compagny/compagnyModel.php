@@ -13,7 +13,7 @@ class CompagnyModel{
     include("../../includes/bdd.php");
 
     if (!isset($_GET["id"]) || empty($_GET["id"])){
-      echo "None id found";
+      header("location:./?message=Aucun id trouvé");
       die;
     }
 
@@ -29,6 +29,11 @@ class CompagnyModel{
 
   public static function SelectProductAsCompagny(){
     include("../../includes/bdd.php");
+
+    if (!isset($_GET["id"]) || empty($_GET["id"])){
+      header("location:./?message=Aucun id trouvé");
+      die;
+    }
 
     $id = $_GET["id"];
 
@@ -65,8 +70,6 @@ class CompagnyModel{
         "contribution" => $contribution,
         "contribution_status" => 0,
     ]);
-
-    header("location:index.php");
   }
 
   public static function IfCompagnyAlreadyExist($name){
@@ -87,7 +90,7 @@ class CompagnyModel{
     include("../../includes/bdd.php");
 
     if (!isset($_GET["id"]) || empty($_GET["id"])){
-      echo "None id found";
+      header("location:./?message=Aucun id trouvé");
       die;
     }
 
@@ -107,7 +110,7 @@ class CompagnyModel{
     include("../../includes/bdd.php");
 
     if (!isset($_GET["id"]) || empty($_GET["id"])){
-      echo "None id found";
+      header("location:./?message=Aucun id trouvé");
       die;
     }
 
@@ -129,18 +132,21 @@ class CompagnyModel{
     include("../../includes/bdd.php");
 
     if (!isset($_GET["id"]) || empty($_GET["id"])){
-      echo "None id found";
+      header("location:./?message=Aucun id trouvé");
       die;
     }
 
     $id = $_GET["id"];
 
+    $query = $db->prepare("DELETE FROM dispose WHERE id_entreprise = :id");
+    $query->execute([
+      "id" => $id
+    ]);
+
     $query = $db->prepare( "DELETE FROM Entreprise WHERE id_entreprise = :id" );
     $res = $query->execute([
         "id" => $id
     ]);
-
-    header("location:index.php");
   }
 }
  ?>

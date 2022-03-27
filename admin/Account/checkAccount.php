@@ -1,7 +1,11 @@
 <?php
 include("../includes/checkAdmin.php");
 include("accountModel.php");
-accountModel::DeleteAccount($_GET['id']);
-header("location:index.php");
+if (isset($_POST['delete_submit'])) {
+  accountModel::DeleteAccount();
+}
+else {
+  header("location:./");
+}
 
  ?>

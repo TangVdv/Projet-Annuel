@@ -4,16 +4,16 @@ class stockModel{
   public static function SelectStock(){
       include("../../includes/bdd.php");
 
-      $query = $db->query("SELECT * FROM entrepot");
+      $query = $db->query("SELECT id_entrepot, adresse, nom, telephone FROM entrepot");
 
       return $query;
   }
 
-  public static function selectSpecificCompagny(){
+  public static function selectSpecificStock(){
     include("../../includes/bdd.php");
 
     if (!isset($_GET["id"]) || empty($_GET["id"])){
-      echo "None id found";
+      header("location:./?message=Aucun id trouvé");
       die;
     }
 
@@ -31,13 +31,13 @@ class stockModel{
     include("../../includes/bdd.php");
 
     if (!isset($_GET["id"]) || empty($_GET["id"])){
-      echo "None id found";
+      header("location:./?message=Aucun id trouvé");
       die;
     }
 
     $id = $_GET["id"];
 
-    $query = $db->prepare("SELECT * from produit INNER JOIN stock ON produit.id_produit = stock.id_produit WHERE stock.id_entrepot = :id");
+    $query = $db->prepare("SELECT produit.id_produit, image, nom, description, prix, stock, reduction from produit INNER JOIN stock ON produit.id_produit = stock.id_produit WHERE stock.id_entrepot = :id");
     $query->execute([
       "id" => $id
     ]);
@@ -49,7 +49,11 @@ class stockModel{
     include("../../includes/bdd.php");
 
     if (!isset($_GET["idP"]) || empty($_GET["idP"])){
-      echo "None id found";
+      header("location:./?message=L'id du produit n'a pas été trouvé");
+      die;
+    }
+    if (!isset($_GET["idE"]) || empty($_GET["idE"])){
+      header("location:./?message=L'id de l'entrepot n'a pas été trouvé");
       die;
     }
 
@@ -69,7 +73,11 @@ class stockModel{
     include("../../includes/bdd.php");
 
     if (!isset($_GET["idP"]) || empty($_GET["idP"])){
-      echo "None id found";
+      header("location:./?message=L'id du produit n'a pas été trouvé");
+      die;
+    }
+    if (!isset($_GET["idE"]) || empty($_GET["idE"])){
+      header("location:./?message=L'id de l'entrepot n'a pas été trouvé");
       die;
     }
 

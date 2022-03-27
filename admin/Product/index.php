@@ -21,7 +21,7 @@
             ?>
             <div id=<?php echo $row->id_produit; ?> class="text-center btn" data-bs-toggle="modal" data-bs-target=<?php echo "#modal-".$row->id_produit?>>
               <div class="card mb-4 shadow-sm">
-                <img src=<?php echo "../../img/products/".$row->image; ?> width="200px" height="200px">
+                <img src=<?php echo "/img/products/".$row->image; ?> width="200px" height="200px">
                 <div class="card-body p-0">
                   <div style="width: 200px;" class="card-text">
                     <p><?php echo $row->nom; ?></p>
@@ -54,7 +54,7 @@
                       </thead>
                       <tbody>
                         <tr>
-                          <td><img src=<?php echo "../../img/products/".$row->image; ?> width="50px" height="50px"></td>
+                          <td><img src=<?php echo "/img/products/".$row->image; ?> width="50px" height="50px"></td>
                           <td><?php echo $row->nom; ?></td>
                           <td><?php echo $row->description; ?></td>
                           <td><?php echo $row->prix; ?></td>
@@ -69,7 +69,9 @@
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Annuler</button>
                     </div>
                     <div>
-                      <a class="btn btn-danger" href=<?php echo "checkDeleteProduct.php?id=".$row->id_produit; ?>>Supprimer</a>
+                      <form action=<?php echo "checkProduct.php?id=".$row->id_produit; ?> method="post">
+                        <button type="submit" class="btn btn-danger" name="delete_submit">Supprimer</button>
+                      </form>
                     </div>
                   </div>
                 </div>

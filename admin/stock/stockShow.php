@@ -9,7 +9,7 @@
     <a href="index.php" class="nav-link ms-4" style="width:10%">Back</a>
     <?php
     include("stockModel.php");
-    $res = stockModel::selectSpecificCompagny();
+    $res = stockModel::selectSpecificStock();
     $row = $res->fetch(PDO::FETCH_OBJ);
      ?>
     <div class="d-flex m-4 justify-content-between">
@@ -29,9 +29,9 @@
           $res = productModel::SelectProduct();
           while ($row = $res->fetch(PDO::FETCH_OBJ)) {
           ?>
-          <div id=<?php echo $row->id_produit; ?> class="btn" onclick="document.location.href='checkAddProduct.php?idP=<?php echo $row->id_produit; ?>&idE=<?php echo $_GET["id"]; ?>'">
+          <div class="btn" onclick="document.location.href='checkProduct.php?idP=<?php echo $row->id_produit; ?>&idE=<?php echo $_GET["id"]; ?>'">
             <div class="card mb-4 shadow-sm">
-              <img src=<?php echo "../../img/products/".$row->image; ?> >
+              <img src=<?php echo "/img/products/".$row->image; ?> >
               <div class="card-body p-0">
                 <div class="card-text">
                   <p><?php echo $row->nom; ?></p>
@@ -56,7 +56,7 @@
             ?>
             <div id=<?php echo $row->id_produit; ?> class='text-center btn' data-bs-toggle="modal" data-bs-target=<?php echo "#modal-".$row->id_produit?>>
               <div class='card mb-4 shadow-sm'>
-                <img src=<?php echo "../../img/products/".$row->image; ?> width='200px' height='200px'>
+                <img src=<?php echo "/img/products/".$row->image; ?> width='200px' height='200px'>
                 <div class='card-body p-0'>
                   <div class='card-text'>
                     <p class='m-0' style='width: 200px; word-wrap: break-word;'><?php echo $row->nom; ?></p>
@@ -89,7 +89,7 @@
                       </thead>
                       <tbody>
                         <tr>
-                          <td><img src=<?php echo "../../img/products/".$row->image; ?> width="50px" height="50px"></td>
+                          <td><img src=<?php echo "/img/products/".$row->image; ?> width="50px" height="50px"></td>
                           <td><?php echo $row->nom; ?></td>
                           <td><?php echo $row->description; ?></td>
                           <td><?php echo $row->prix; ?></td>
@@ -104,7 +104,9 @@
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Annuler</button>
                     </div>
                     <div>
-                      <a class="btn btn-danger" href=<?php echo "checkDeleteProduct.php?idP=".$row->id_produit."&idE=".$_GET["id"]; ?> >Supprimer</a>
+                      <form action=<?php echo "checkProduct.php?idP=".$row->id_produit."&idE=".$_GET["id"]; ?> method="post">
+                        <button type="submit" class="btn btn-danger" name="delete_submit">Supprimer</button>
+                      </form>
                     </div>
                   </div>
                 </div>

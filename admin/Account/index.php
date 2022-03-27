@@ -28,7 +28,9 @@
                 <td><?php echo $row->prenom ?></td>
                 <td><?php echo $row->email ?></td>
                 <td>
-                  <a class="btn btn-danger btn-sm mx-1" href=<?php echo "checkAccount.php?id=".$row->id_utilisateur; ?>>Supprimer</a>
+                  <form action="<?php echo "checkAccount.php?id=".$row->id_utilisateur; ?>" method="post">
+                    <button type="submit" class="btn btn-danger btn-sm mx-1" name="delete_submit">Supprimer</button>
+                  </form>
                 </td>
               </tr>
             </tbody>

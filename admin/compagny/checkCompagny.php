@@ -47,4 +47,6 @@ if(isset($_POST["add_submit"])){
 if(isset($_POST["delete_submit"])){
     CompagnyModel::DeleteCompagny();
 }
+
+header("location:./");
 ?>

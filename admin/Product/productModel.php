@@ -7,26 +7,26 @@ class productModel{
     $query = $db->prepare( "INSERT INTO Produit(image, nom, description, prix, reduction, stock) VALUES(:image, :name, :description, :price, :reduction, :stock);" );
     $res = $query->execute([
         "image" => $ProductToAdd["image"],
-        "name" => $ProductToAdd["name"],
-        "description" => $ProductToAdd["description"],
-        "price" => $ProductToAdd["price"],
+        "name" => $_POST["name"],
+        "description" => $_POST["description"],
+        "price" => $_POST["price"],
         "reduction" => 0,
-        "stock" => $ProductToAdd["stock"]
+        "stock" => $_POST["stock"]
     ]);
 
     $query = $db->prepare( "INSERT INTO dispose(id_entreprise, id_produit) VALUES(:id_entreprise, (SELECT id_produit FROM produit WHERE nom = :name));" );
     $query->execute([
         "id_entreprise" => $ProductToAdd["id_entreprise"],
-        "name" => $ProductToAdd["name"]
+        "name" => $_POST["name"]
     ]);
 
-
+    header('location:./');
   }
 
   public static function SelectProduct(){
     include("../../includes/bdd.php");
 
-    $query = $db->query("SELECT * FROM Produit");
+    $query = $db->query("SELECT id_produit, image, nom, description, prix, stock, reduction FROM Produit");
 
     return $query;
   }
@@ -34,7 +34,7 @@ class productModel{
   public static function SelectSpecificProduct($id){
     include("../../includes/bdd.php");
 
-    $query = $db->prepare("SELECT * FROM produit WHERE id_produit = :id");
+    $query = $db->prepare("SELECT id_produit, image, nom, description, prix, stock, reduction FROM produit WHERE id_produit = :id");
     $query->execute([
       "id" => $id
     ]);
@@ -44,6 +44,11 @@ class productModel{
 
   public static function DeleteProduct(){
     include("../../includes/bdd.php");
+
+    if (!isset($_GET["id"]) || empty($_GET["id"])){
+      header("location:./?message=Aucun id trouvé");
+      die;
+    }
 
     $id = $_GET['id'];
 
@@ -67,7 +72,7 @@ class productModel{
       "id" => $id
     ]);
 
-    header("location:index.php");
+    header("location:./");
   }
 }
 

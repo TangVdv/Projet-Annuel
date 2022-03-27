@@ -11,7 +11,7 @@ if(isset($_POST['plus']) && isset($_POST['idProduit'])){
     //"id_utilisateur" => $_SESSION['id_utilisateur'],
     "id_produit" => htmlspecialchars($_POST["idProduit"])
   ]);
-  header('location:../panier.php?message=Quantité augmentée avec succès&type=success');
+  header('location:../');
 
 //Si l'utilisateur a appuyé sur le bouton -
 }elseif(isset($_POST['minus']) && isset($_POST['idProduit'])){
@@ -40,10 +40,10 @@ if(isset($_POST['plus']) && isset($_POST['idProduit'])){
       "id_produit" => htmlspecialchars($_POST["idProduit"])
     ]);
   }
-  header('location:../panier.php?message=Quantité réduite avec succès&type=success');
+  header('location:../');
 
 }else{
-  header('location:../panier.php?message=Une erreur est survenue&type=danger');
+  header('location:../?message=Une erreur est survenue&type=danger');
 }
 
 

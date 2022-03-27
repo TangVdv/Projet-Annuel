@@ -9,22 +9,22 @@
     <a href="index.php" class="nav-link ms-4" style="width:10%">Back</a>
     <div class="w-50" style="margin: auto;">
         <h3 class="my-4">Ajouter un produit </h3>
-        <form class="" action="checkAddProduct.php" method="post" enctype="multipart/form-data">
+        <form class="" action="checkProduct.php" method="post" enctype="multipart/form-data">
           <div class="mb-3">
             <label class="form-label">Nom</label>
-            <input type="text" class="form-control" name="name" id="name">
+            <input type="text" class="form-control" name="name">
           </div>
           <div class="mb-3">
             <label class="form-label">Description</label>
-            <textarea class="form-control" id="description" rows="3" name="description"></textarea>
+            <textarea class="form-control" rows="3" name="description"></textarea>
           </div>
           <div class="mb-3">
             <label class="form-label">Prix</label>
-            <input type="number" step=".01" class="form-control" name="price" id="price">
+            <input type="number" step=".01" class="form-control" name="price">
           </div>
           <div class="mb-3">
             <label class="form-label">Stock</label>
-            <input type="number" class="form-control" name="stock" id="stock">
+            <input type="number" class="form-control" name="stock">
           </div>
           <div class="mb-3">
             <label class="form-label">Entreprise</label>
@@ -54,7 +54,7 @@
             </p>
           </div>
           <div class="mb-3 w-25">
-              <input type="submit" class="form-control btn btn-primary" id="submit_modif">
+              <button type="submit" class="form-control btn btn-primary" name="add_submit">Envoyer</button>
           </div>
         </form>
     </div>
