@@ -7,6 +7,11 @@
   </head>
   <?php include("../../includes/header.php"); ?>
   <body>
+    <div class="w-50 col flex-wrap" id="article_reload"style="margin: auto;">
+      <div class="d-flex justify-content-center">
+        <a class="btn btn-success btn-lg m-4" href="addCompagny.php">Ajouter une entreprise</a>
+      </div>
+    </div>
     <div class="w-50 col flex-wrap" style="margin: auto;">
       <?php
       include("compagnyModel.php");

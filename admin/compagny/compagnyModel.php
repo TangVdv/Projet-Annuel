@@ -1,7 +1,7 @@
 <?php
 
 class compagnyModel{
-  public static function selectCompagny(){
+  public static function SelectCompagny(){
     include("../../includes/bdd.php");
 
     $query = $db->query("SELECT id_entreprise, nom from entreprise");
@@ -9,8 +9,7 @@ class compagnyModel{
     return $query;
   }
 
-
-  public static function selectSpecificCompagny(){
+  public static function SelectSpecificCompagny(){
     include("../../includes/bdd.php");
 
     if (!isset($_GET["id"]) || empty($_GET["id"])){
@@ -28,7 +27,7 @@ class compagnyModel{
     return $query;
   }
 
-  public static function selectProductAsCompagny(){
+  public static function SelectProductAsCompagny(){
     include("../../includes/bdd.php");
 
     $id = $_GET["id"];
@@ -39,6 +38,20 @@ class compagnyModel{
     ]);
 
     return $query;
+  }
+
+  public static function AddCompagny($CompagnyToAdd){
+    include("../../includes/bdd.php");
+
+    $turnover = $CompagnyToAdd["turnover"];
+
+
+    $query = $db->prepare( "INSERT INTO Entreprise(nom, cotisation, statut_cotisation) VALUES(:name, :contribution, :contribution_status);" );
+    $res = $query->execute([
+        "name" => $CompagnyToAdd["name"],
+        "contribution" => $contribution,
+        "contribution_status" => 0,
+    ]);
   }
 }
  ?>
