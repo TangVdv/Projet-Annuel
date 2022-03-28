@@ -11,11 +11,15 @@
     <div style="width: 100rem" class="container">
       <div class="bg-light py-4 container d-flex flex-column">
 
-        <div class="d-flex flex-wrap">
+        <div class="d-flex bg-light py-1 container">
           <div class="w-25 text-center">
-            <img src="../img/icon.jpg" class="img-fluid rounded-circle" width="200" height="200"><br>
-            <h1 class="h3">Bonjour <b>Client,</b></h1 class="h3">
-            <p>Vous êtes avec nous depuis X jours !</p>
+            <ul class="list-group rounded-3 w-50">
+              <a class="btn btn-outline-light" href="account.php">
+                <li class="list-group-item">
+                  <p>< <b>Accueil</b></p>
+                </li>
+              </a>
+            </ul>
           </div>
 
           <div class="w-75 container text-center rounded-3 py-1">

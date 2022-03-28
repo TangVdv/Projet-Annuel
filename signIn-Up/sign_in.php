@@ -21,7 +21,7 @@
     <div style="width: 60rem" class="container">
       <div class="bg-light py-5 container text-center border-bottom">
 
-        <form class="form-signin" action="sign_in_verif.php" method="post">
+        <form class="form-signin" action="checkSign.php" method="post">
 
           <h1 class="h3 mb-3 font-weight-normal">Identifiez-vous :</h1>
 
@@ -37,7 +37,7 @@
             </label>
           </div>
 
-          <button class="btn btn-lg btn-primary btn-block" style="background-color: #004579" type="submit">Connexion</button>
+          <button class="btn btn-lg btn-primary btn-block" style="background-color: #004579" type="submit" name="sign_in">Connexion</button>
           <div class="py-4">
             <a style="color: #004579;" href="#">Vous avez oublié votre mot de passe ?</a>
           </div>
