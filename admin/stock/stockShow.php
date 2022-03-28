@@ -29,7 +29,7 @@
           $res = productModel::SelectProduct();
           while ($row = $res->fetch(PDO::FETCH_OBJ)) {
           ?>
-          <div class="btn" onclick="document.location.href='checkProduct.php?idP=<?php echo $row->id_produit; ?>&idE=<?php echo $_GET["id"]; ?>'">
+          <div class="btn" onclick="document.location.href='checkStock.php?idP=<?php echo $row->id_produit; ?>&idE=<?php echo $_GET["id"]; ?>'">
             <div class="card mb-4 shadow-sm">
               <img src=<?php echo "/img/products/".$row->image; ?> >
               <div class="card-body p-0">
@@ -104,8 +104,8 @@
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Annuler</button>
                     </div>
                     <div>
-                      <form action=<?php echo "checkProduct.php?idP=".$row->id_produit."&idE=".$_GET["id"]; ?> method="post">
-                        <button type="submit" class="btn btn-danger" name="delete_submit">Supprimer</button>
+                      <form action=<?php echo "checkStock.php?idP=".$row->id_produit."&idE=".$_GET["id"]; ?> method="post">
+                        <button type="submit" class="btn btn-danger btn-sm mx-1" name="delete_product_submit">Supprimer</button>
                       </form>
                     </div>
                   </div>

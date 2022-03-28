@@ -9,7 +9,7 @@ class stockModel{
       return $query;
   }
 
-  public static function selectSpecificStock(){
+  public static function SelectSpecificStock(){
     include("../../includes/bdd.php");
 
     if (!isset($_GET["id"]) || empty($_GET["id"])){
@@ -27,7 +27,7 @@ class stockModel{
     return $query;
   }
 
-  public static function selectProductAsStock(){
+  public static function SelectProductAsStock(){
     include("../../includes/bdd.php");
 
     if (!isset($_GET["id"]) || empty($_GET["id"])){
@@ -45,7 +45,7 @@ class stockModel{
     return $query;
   }
 
-  public static function addProductToStock(){
+  public static function AddProductToStock(){
     include("../../includes/bdd.php");
 
     if (!isset($_GET["idP"]) || empty($_GET["idP"])){
@@ -67,9 +67,10 @@ class stockModel{
     ]);
 
     header("location:stockShow.php?id=".$idE);
+    die;
   }
 
-  public static function deleteProductFromStock(){
+  public static function DeleteProductFromStock(){
     include("../../includes/bdd.php");
 
     if (!isset($_GET["idP"]) || empty($_GET["idP"])){
@@ -91,6 +92,55 @@ class stockModel{
     ]);
 
     header("location:stockShow.php?id=".$idE);
+    die;
+  }
+
+  public static function DeleteStock(){
+    include("../../includes/bdd.php");
+
+    if (!isset($_GET["id"]) || empty($_GET["id"])){
+      header("location:./?message=Aucun id trouvé");
+      die;
+    }
+
+    $id = $_GET["id"];
+
+    $query = $db->prepare("DELETE FROM stock WHERE id_entrepot = :id");
+    $query->execute([
+      "id" => $id,
+    ]);
+
+    $query = $db->prepare("DELETE FROM entrepot WHERE id_entrepot = :id");
+    $query->execute([
+      "id" => $id,
+    ]);
+  }
+
+  public static function AddStock(){
+    include("../../includes/bdd.php");
+
+    $query = $db->prepare("INSERT INTO entrepot(adresse, nom, telephone) VALUES(:addr, :name, :phone)");
+    $query->execute([
+      "addr" => $_POST["addr"],
+      "name" => $_POST["name"],
+      "phone" => $_POST["phone"]
+    ]);
+  }
+
+  public static function IfStockAlreadyExist(){
+    include("../../includes/bdd.php");
+
+    $query = $db->prepare( "SELECT COUNT(*) as total FROM entrepot WHERE nom = :name OR adresse = :addr OR telephone = :phone");
+    $query->execute([
+      "addr" => $_POST["addr"],
+      "name" => $_POST["name"],
+      "phone" => $_POST["phone"]
+    ]);
+    $row = $query->fetch(PDO::FETCH_OBJ);
+    if($row->total != 0){
+      return true;
+    }
+    return false;
   }
 }
 
