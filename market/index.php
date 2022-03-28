@@ -25,7 +25,7 @@
                     </div>
                     <div class="col p-4 d-flex flex-column position-static">
                         <h4 class="mb-0"><?php echo $row->nom; ?></h4>
-                        <div class="mb-1 text-muted">Description</div>
+                        <div class="mb-1 text-muted"><?php echo $row->description; ?></div>
                         <strong class="d-inline-block mb-2 mt-2 text-secondary"><?php echo $row->prix." €"; ?></strong>
                       </div>
                   </div>

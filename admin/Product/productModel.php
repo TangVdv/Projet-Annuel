@@ -23,11 +23,16 @@ class productModel{
     header('location:./');
   }
 
-  public static function SelectProduct(){
+  public static function SelectProduct($value){
     include("../../includes/bdd.php");
 
-    $query = $db->query("SELECT id_produit, image, nom, description, prix, stock, reduction FROM Produit");
-
+    if($value){
+      $query = $db->query("SELECT id_produit, image, nom, description, prix, stock, reduction FROM Produit WHERE EXISTS (SELECT id_produit FROM Stock WHERE Stock.id_produit = Produit.id_produit)");
+    }
+    else {
+      $query = $db->query("SELECT id_produit, image, nom, description, prix, stock, reduction FROM Produit WHERE NOT EXISTS (SELECT id_produit FROM Stock WHERE Stock.id_produit = Produit.id_produit)");
+    }
+    
     return $query;
   }
 

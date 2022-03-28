@@ -17,7 +17,8 @@ class addToCartModel{
   public static function SelectProduct(){
     include("../includes/bdd.php");
 
-    $query = $db->query("SELECT * FROM Produit");
+    $query = $db->query("SELECT id_produit, nom, image, description, prix, stock, reduction FROM Produit WHERE EXISTS (SELECT id_produit FROM Stock WHERE Stock.id_produit = Produit.id_produit)");
+
 
     return $query;
   }

@@ -26,7 +26,7 @@
 
           <?php
           include("../product/productModel.php");
-          $res = productModel::SelectProduct();
+          $res = productModel::SelectProduct(false);
           while ($row = $res->fetch(PDO::FETCH_OBJ)) {
           ?>
           <div class="btn" onclick="document.location.href='checkStock.php?idP=<?php echo $row->id_produit; ?>&idE=<?php echo $_GET["id"]; ?>'">
