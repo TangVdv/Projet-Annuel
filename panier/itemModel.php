@@ -25,13 +25,15 @@ class ItemModel{
 
   public static function MinusQuantity($UserId){
     include("../../includes/bdd.php");
-    ItemModel::GetQuantity($UserId);
+    $actualQuantity = ItemModel::GetQuantity($UserId);
+    //echo $actualQuantity;
+    //ItemModel::GetQuantity($UserId);
 
     if($actualQuantity < 2){
       //Supprime la ligne du produit dans le panier
       ItemModel::DeleteProduct($UserId);
     }else {
-      ItemModel::LowerQuantity($UId);
+      ItemModel::LowerQuantity($UserId);
     }
   }
 
@@ -44,7 +46,7 @@ class ItemModel{
       "id_utilisateur" => $UId,
       "id_produit" => htmlspecialchars($_POST["idProduit"])
     ]);
-    $actualQuantity = $reqCheck->fetchColumn();
+    return $reqCheck->fetchColumn();
   }
 
 
