@@ -6,6 +6,8 @@
   </head>
   <?php
   include("../includes/header.php");
+
+  include("../includes/bdd.php");
    ?>
   <body>
     <div style="width: 100rem" class="container">
@@ -14,7 +16,7 @@
         <div class="d-flex bg-light py-1 container">
           <div class="w-25 text-center">
             <ul class="list-group rounded-3 w-50">
-              <a class="btn btn-outline-light" href="account.php">
+              <a class="text-decoration-none" href="account.php">
                 <li class="list-group-item">
                   <p>< <b>Accueil</b></p>
                 </li>
@@ -34,7 +36,6 @@
           </div>
         </div>
 
-
         <br>
 
         <div class="bg-light py-1 container">
@@ -45,13 +46,8 @@
             <li class="list-group-item">
               <p><b>Mes informations personnelles </b> <br>Email, mot de passe...</p>
             </li>
-            <li class="list-group-item">
-              <p><b>Mes commandes </b> <br>Suivre, annuler, retourner</p>
-            </li>
           </ul>
         </div>
-
-
 
       </div>
 

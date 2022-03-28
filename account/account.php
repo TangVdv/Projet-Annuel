@@ -6,6 +6,8 @@
   </head>
   <?php
   include("../includes/header.php");
+
+  include("../includes/bdd.php");
    ?>
   <body>
     <div style="width: 100rem" class="container">
@@ -22,6 +24,10 @@
             <h1 class="h3">Votre dernière commande</h1>
 
             <div class="d-flex flex-wrap container justify-content-between align-items-center bg-white border">
+              <?php
+                include("accountModel.php");
+                $res = accountModel::DisplayLastOrder();
+               ?>
               <img src="../img/icon.jpg" width="250" height="150">
               <p class="">Nom :</p>
               <p>Commandé le : </p>
@@ -35,15 +41,16 @@
 
         <div class="bg-light py-1 container">
           <ul class="list-group rounded-3 w-25">
-            <li class="list-group-item">
-              <p><b>Mes commandes </b> <br>Suivre, annuler, retourner</p>
-            </li>
-            <li class="list-group-item">
-              <p><b>Mes informations personnelles </b> <br>Email, mot de passe...</p>
-            </li>
-            <li class="list-group-item">
-              <p><b>Mes commandes </b> <br>Suivre, annuler, retourner</p>
-            </li>
+            <a class="text-decoration-none" href="orderTracking.php">
+              <li class="list-group-item">
+                <p><b>Mes commandes </b> <br>Suivre, annuler, retourner</p>
+              </li>
+            </a>
+            <a class="text-decoration-none" href="#">
+              <li class="list-group-item">
+                <p><b>Mes informations personnelles </b> <br>Email, mot de passe...</p>
+              </li>
+            </a>
           </ul>
         </div>
 
