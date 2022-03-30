@@ -10,10 +10,16 @@ FILE *yaml_file;
 
 
 int getData(void *NotUsed, int rowCount, char **rowValue, char **rowName){
+  char tab = '\t';
   for (int i = 0; i < rowCount; i++){
-    fprintf(yaml_file, "%s: %s\n", rowName[i], rowValue[i]);
+    if (i%2 == 0){
+      fprintf(yaml_file, "%c%s: %s\n", tab, rowName[i], rowValue[i]);
+    }
+    else
+      fprintf(yaml_file, "%c%c%s: %s\n", tab, tab, rowName[i], rowValue[i]);
   }
 
+  return 0;
 }
 
 void getSupply(){
@@ -22,7 +28,7 @@ void getSupply(){
   //sql = "SELECT nom, prix FROM PRODUIT INNER JOIN STOCK ON stock.id_produit = produit.id_produit WHERE CAST(stock.date_ajout AS DATE) = CAST( GETDATE() AS DATE)";
   //sqlite3_exec(db, sql, getData, 0,&err_msg);
 
-  char *sql = "SELECT nom, prenom FROM utilisateur";
+  char *sql = "SELECT date_achat, prix_achat FROM historique_achat";
   sqlite3_exec(db, sql, getData, 0,&err_msg);
 }
 
@@ -32,7 +38,7 @@ void getSale(){
   //char *sql = "SELECT nom, prix FROM PRODUIT INNER JOIN HISTORIQUE_ACHAT ON historique_achat.id_produit  = produit.id_produit WHERE CAST(date_achat AS DATE) = CAST( GETDATE() AS DATE)";
   //sqlite3_exec(db, sql, getData, 0,&err_msg);
 
-  char *sql = "SELECT nom, description, prix FROM produit";
+  char *sql = "SELECT nom, prix FROM produit";
   sqlite3_exec(db, sql, getData, 0,&err_msg);
 }
 
@@ -60,7 +66,7 @@ void curl(){
     curl_easy_perform(curl);
 }
 
-int main(int argc, char * argv[]){
+int main(int argc, char **argv){
 
   // OPEN
   yaml_file = fopen("data.yaml", "w");
