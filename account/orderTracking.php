@@ -25,13 +25,18 @@
           </div>
 
           <div class="w-75 container text-center rounded-3 py-1">
-            <h1 class="h3">Votre dernière commande</h1>
+            <h1 class="h3">Vos commandes</h1>
 
             <div class="d-flex flex-wrap container justify-content-between align-items-center bg-white border">
-              <img src="../img/icon.jpg" width="250" height="150">
-              <p class="">Nom :</p>
-              <p>Commandé le : </p>
-              <p>Prix : | Quantité :</p>
+              <?php
+                include("AccountPageModel.php");
+                $res = AccountPageModel::DisplayOrders();
+                while ($row = $res->fetch(PDO::FETCH_OBJ)) { ?>
+                <img src=<?php echo "../img/products/".$row->image; ?> width="250" height="150">
+                <p><?php echo $row->nom?></p>
+                <p><?php echo $row->date_achat?></p>
+                <p><?php echo $row->prix_achat . " €"?> | x <?php echo $row->quantite ?></p>
+              <?php } ?>
             </div>
           </div>
         </div>

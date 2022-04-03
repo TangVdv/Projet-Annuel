@@ -2,7 +2,7 @@
 <html lang="fr" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Votre compte</title>
   </head>
   <?php
   include("../includes/header.php");
@@ -15,23 +15,31 @@
 
         <div class="d-flex flex-wrap">
           <div class="w-25 text-center">
+      <?php
+            include("AccountPageModel.php");
+            $res = AccountPageModel::DisplayName();
+            while ($row = $res->fetch(PDO::FETCH_OBJ)) {
+            ?>
             <img src="../img/icon.jpg" class="img-fluid rounded-circle" width="200" height="200"><br>
-            <h1 class="h3">Bonjour <b>Client,</b></h1 class="h3">
+            <h1 class="h3">Bonjour
+              <b> <?php echo $row->nom?>, </b>
+            </h1 class="h3">
+      <?php } ?>
             <p>Vous êtes avec nous depuis X jours !</p>
           </div>
 
           <div class="w-75 container text-center rounded-3 py-1">
             <h1 class="h3">Votre dernière commande</h1>
 
-            <div class="d-flex flex-wrap container justify-content-between align-items-center bg-white border">
+            <div class="d-flex flex-wrap container justify-content-between align-items-center border" style="background-color: #eaf9ff">
               <?php
-                include("accountModel.php");
-                $res = accountModel::DisplayLastOrder();
-               ?>
-              <img src="../img/icon.jpg" width="250" height="150">
-              <p class="">Nom :</p>
-              <p>Commandé le : </p>
-              <p>Prix : | Quantité :</p>
+                $res = AccountPageModel::DisplayLastOrder();
+                while ($row = $res->fetch(PDO::FETCH_OBJ)) { ?>
+                <img src=<?php echo "../img/products/".$row->image; ?> width="250" height="150">
+                <p><?php echo $row->nom?></p>
+                <p><?php echo $row->date_achat?></p>
+                <p><?php echo $row->prix_achat . " €"?> | x <?php echo $row->quantite ?></p>
+              <?php } ?>
             </div>
           </div>
         </div>
@@ -46,9 +54,14 @@
                 <p><b>Mes commandes </b> <br>Suivre, annuler, retourner</p>
               </li>
             </a>
-            <a class="text-decoration-none" href="#">
+            <a class="text-decoration-none" href="accountInfos.php">
               <li class="list-group-item">
                 <p><b>Mes informations personnelles </b> <br>Email, mot de passe...</p>
+              </li>
+            </a>
+            <a class="text-decoration-none" href="#">
+              <li class="list-group-item">
+                <p><b>Ma carte de fidélité </b> <br>Consulter vos informations clients</p>
               </li>
             </a>
           </ul>

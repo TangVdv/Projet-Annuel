@@ -8,6 +8,7 @@ class accountModel{
 
       return $query;
   }
+
   public static function DeleteAccount($id){
       include("../../includes/bdd.php");
 
