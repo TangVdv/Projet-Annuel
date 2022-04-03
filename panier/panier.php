@@ -1,8 +1,13 @@
+<?php
+include("stripeSetup.php");
+?>
+
 <!DOCTYPE html>
 <html lang="fr" dir="ltr">
   <head>
     <meta charset="utf-8">
     <title>Panier</title>
+    <script src="https://js.stripe.com/v3/"></script>
   </head>
   <body class="gap-3" style="background: #EAF9FF">
     <?php
@@ -73,13 +78,24 @@
 
              <?php } ?>
           <div class="d-flex justify-content-end">
-            <a class="btn btn-success" href="#">Finaliser la commande</a>
+            <button id="checkout-button" class="btn btn-success">Finaliser la commande</button>
+            <!--<a id="checkout-button" class="btn btn-success">Finaliser la commande</a> -->
           </div>
 
           <script>
           //Edit total price
             var prix = <?php echo json_encode("Prix total : " . $prix_total . "€"); ?>;
             document.getElementById("prix_total").innerHTML = prix;
+
+          //Redirect to Stripe API
+            var stripe = Stripe('pk_test_51KkUMrEAVKGv2IR8nSGCaofWHp39rz8HpyLpVDZww9MRMmYDzROT7q2XjqURjygjVKF3zTmm53SdsrucbwY5XoRQ00L3pUicbq');
+            const btn = document.getElementById("checkout-button")
+            btn.addEventListener('click', function(e) {
+              e.preventDefault();
+              stripe.redirectToCheckout({
+                sessionId: "<?php echo $session->id; ?>"
+              });
+            });
           </script>
        </ul>
     </div>
