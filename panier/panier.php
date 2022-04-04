@@ -1,7 +1,3 @@
-<?php
-include("stripeSetup.php");
-?>
-
 <!DOCTYPE html>
 <html lang="fr" dir="ltr">
   <head>
@@ -83,8 +79,10 @@ include("stripeSetup.php");
 
              <?php } ?>
           <div class="d-flex justify-content-end">
-            <button id="checkout-button" class="btn btn-success">Finaliser la commande</button>
-            <!--<a id="checkout-button" class="btn btn-success">Finaliser la commande</a> -->
+            <?php if ($req->rowCount() > 0) {
+              include("stripeSetup.php"); ?>
+              <button id="checkout-button" class="btn btn-success">Finaliser la commande</button>
+            <?php } ?>
           </div>
 
           <script>
