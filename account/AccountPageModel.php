@@ -59,27 +59,24 @@ class AccountPageModel {
     return $req;
   }
 
-  public static function UpdateAccountInfos() {
-    includes("../includes/bdd.php");
-
-    // On récup les valeurs dans des variables
-    $nom =	$_POST['nom'];
-    $prenom = trim($_POST['prenom']);
-    $numero = trim($_POST['numero']);
-    $adresse = $_POST['adresse'];
-    $email = $_POST['email'];
-    //$password = SignModel::HashNTrim();
-
+  public static function UpdateAccountInfos($id_utilisateur, $nom, $prenom, $numero, $adresse, $email, $password) {
+    include("../includes/bdd.php");
 
     $req = $db->prepare("UPDATE utilisateur SET
-      nom = $nom, prenom = $prenom, numero = $numero, adresse = $adresse, email = $email
-      WHERE nom = :nom, prenom = :prenom, numero = :numero, adresse = :adresse, email = :email");
+      nom = :nom, prenom = :prenom, numero = :numero, adresse = :adresse, email = :email, mot_de_passe = :password
+      WHERE id_utilisateur = :id_utilisateur");
 
-      
+      $res = $req->execute([
+        "id_utilisateur" => $_SESSION['id_utilisateur'],
+        "nom" => $nom,
+        "prenom" => $prenom,
+        "numero" => $numero,
+        "adresse" => $adresse,
+        "email" => $email,
+        "password" => $password
+      ]);
   }
 
 }
-
-
 
 ?>

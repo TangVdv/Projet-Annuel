@@ -77,7 +77,7 @@ class SignModel {
 
   public static function IfUserExist() {
     include("../includes/bdd.php");
-    
+
     /* SELECT les identifiants*/
     $req = $db->prepare('SELECT id_utilisateur, email FROM utilisateur WHERE email = :email AND mot_de_passe = :password');
     $req->execute([
