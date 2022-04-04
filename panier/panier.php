@@ -31,8 +31,11 @@ include("stripeSetup.php");
       </div>
        <ul class="list-group rounded-3 gap-3">
          <?php
+          require_once("PanierModel.php");("PanierModel.php");
+          $UserId = $_SESSION['id_utilisateur'];
           $prix_total = 0;
 
+          /*
           //Sélectionne tous les produits dans le panier de l'utilisateur
           $req = $db->prepare('SELECT produit.id_produit, image, nom, prix, reduction, quantite
                                 FROM PRODUIT
@@ -40,7 +43,9 @@ include("stripeSetup.php");
                                 WHERE achete.id_utilisateur = :id_utilisateur');
                  $req->execute([
                    "id_utilisateur" => $_SESSION['id_utilisateur']
-                 ]);
+                 ]);*/
+          $req = PanierModel::SelectProducts($UserId);
+
 
 
 
