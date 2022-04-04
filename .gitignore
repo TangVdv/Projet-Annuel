@@ -1,2 +1,5 @@
+dir_to_ignore/
+stripe
 
 *.jpg
+*.png
