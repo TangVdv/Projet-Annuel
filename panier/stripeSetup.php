@@ -33,8 +33,8 @@ $Infos = array(
   'payment_method_types' => ['card'],
   'line_items' => $products,
   'mode' => 'payment',
-  'success_url' => 'http://localhost:4242/success',
-  'cancel_url' => 'http://example.com/cancel'
+  'success_url' => 'http://localhost/panier/finishPayment.php',
+  'cancel_url' => 'http://localhost/panier/CancelPayment.php'
 );
 
 

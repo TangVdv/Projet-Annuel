@@ -29,15 +29,74 @@ class PanierModel{
 
   public static function UpdateBuyingStatus($UserId){
     include("../includes/bdd.php");
-
-    echo "bruh";
-
+    //Passe tous les articles présents dans le panier de l'utilisateur en statut d'achat en cours
     $req = $db->prepare('UPDATE ACHETE
                           SET isBuying = 1
                           WHERE achete.id_utilisateur = :id_utilisateur');
     $req->execute([
       "id_utilisateur" => $UserId
     ]);
+  }
+
+  public static function ClearPanier($UserId){
+    include("../includes/bdd.php");
+    //Supprime tous les éléments du panier achetés par l'utilisateur
+    $req = $db->prepare('DELETE FROM ACHETE
+                          WHERE id_utilisateur = :id_utilisateur
+                          AND isBuying = 1');
+           $req->execute([
+             "id_utilisateur" => $UserId
+           ]);
+  }
+
+  public static function CancelPayment($UserId){
+    include("../includes/bdd.php");
+    //Passe tous les articles présents dans le panier de l'utilisateur en statut d'achat en cours
+    $req = $db->prepare('UPDATE ACHETE
+                          SET isBuying = 0
+                          WHERE id_utilisateur = :id_utilisateur
+                          AND isBuying = 1');
+    $req->execute([
+      "id_utilisateur" => $UserId
+    ]);
+  }
+
+  public static function SaveBuyingHistory($prix_achat, $quantite, $id_utilisateur, $id_produit){
+    include("../includes/bdd.php");
+    //Sauvegarde les achats dans l'historique
+    $req = $db->prepare('INSERT INTO HISTORIQUE_ACHAT(date_achat,	prix_achat, quantite, id_utilisateur, id_produit)
+                          VALUES()');
+           $req->execute([
+             "date_achat" => date("Y-m-d"),
+             "prix_achat" => $prix_achat,
+             "quantite" => $quantite,
+             "id_utilisateur" => $id_utilisateur,
+             "id_produit" => $id_produit
+           ]);
+    return $req;
+  }
+
+  public static function ApplyPayment($UserId){
+    //Regroupe la sélection des informations produits et utilisateur ainsi que le remplissage de l'historique d'achat
+    $finalReq = PanierModel::SelectProducts($UserId);
+    $prix_total = 0;
+    while ($row = $finalReq->fetch(PDO::FETCH_OBJ)){
+      PanierModel::SaveBuyingHistory($row->$prix, $row->$quantite, $row->$id_utilisateur, $row->$id_produit);
+      $prix_total += $row->$prix * $row->$quantite;
+    }
+    PanierModel::redeemPoints($UserId, $prix_total);
+  }
+
+  public static function redeemPoints($UserId, $prix_total){
+    include("../includes/bdd.php");
+    //Donne les points de fidélités à l'utilisateur
+    $req = $db->prepare('UPDATE UTILISATEUR
+                          SET pts_fidelite += :prix_total
+                          WHERE id_utilisateur = :id_utilisateur');
+           $req->execute([
+             "id_utilisateur" => $prix_total * 10,
+             "id_utilisateur" => $UserId
+           ]);
   }
 
 }

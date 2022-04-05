@@ -82,6 +82,7 @@
             <?php if ($req->rowCount() > 0) {
               include("stripeSetup.php"); ?>
               <button type="button" onclick="startStripe()" class="btn btn-success">Finaliser la commande</button>
+            <?php } ?>
           </div>
           <script>
           //Edit total price
