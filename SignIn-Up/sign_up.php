@@ -15,7 +15,7 @@
       <div class="bg-light py-5 container text-center border-bottom">
         <form action="sign_up_verif.php" method="post">
           <div class="border-bottom">
-            <h1 class="h3 mb-3 font-weight-normal" translate-key="registerPage-id-title"></h1>
+            <h1 class="h3 mb-3 font-weight-normal" translate-key="form-id-title"></h1>
 
             <div class="form-row">
               <div class="form-group col-md-6">
@@ -31,7 +31,7 @@
           </div>
 
           <div class="mt-2 form-group">
-            <h1 class="h3 mb-3 font-weight-normal" translate-key="registerPage-personalInfo-title"></h1>
+            <h1 class="h3 mb-3 font-weight-normal" translate-key="form-personalInfo-title"></h1>
             <br>
             <input type="text" class="form-control w-50" id="inputFamName" placeholder="" name="nom" translate-key="lastname-input">
           </div>

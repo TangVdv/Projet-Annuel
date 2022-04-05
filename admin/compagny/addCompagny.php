@@ -6,16 +6,16 @@
   </head>
   <?php include("../includes/header.php"); ?>
   <body>
-    <a href="index.php" class="nav-link ms-4" style="width:10%">Back</a>
+    <a href="index.php" class="nav-link ms-4" style="width:10%" translate-key="back-button"></a>
     <div class="w-50" style="margin: auto;">
-        <h3 class="my-4">Ajouter une entreprise </h3>
+        <h3 class="my-4" translate-key="addcompagny-title"></h3>
         <form action="checkCompagny.php" method="post" enctype="multipart/form-data">
           <div class="mb-3">
-            <label class="form-label">Nom</label>
+            <label class="form-label" translate-key="name-title"></label>
             <input type="text" class="form-control" name="name">
           </div>
           <div class="mb-3">
-            <label class="form-label">Chiffre d'affaire</label>
+            <label class="form-label" translate-key="turnover-title"></label>
             <input type="number" class="form-control" name="turnover">
           </div>
           <div>
@@ -28,7 +28,7 @@
             </p>
           </div>
           <div class="mb-3 w-25">
-              <input type="submit" class="form-control btn btn-primary" name="add_submit">
+              <button type="submit" class="form-control btn btn-primary" name="add_submit" translate-key="submit-button"></button>
           </div>
         </form>
     </div>

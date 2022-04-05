@@ -6,16 +6,16 @@
   </head>
   <?php include("../includes/header.php"); ?>
   <body>
-    <a href=".." class="nav-link ms-4" style="width:10%">Back</a>
+    <a href=".." class="nav-link ms-4" style="width:10%" translate-key="back-button"></a>
     <div class="w-50 col flex-wrap" id="article_reload"style="margin: auto;">
         <div class='table-responsive my-4'>
           <table class='table'>
             <thead class='text-center'>
               <tr>
-                <th>Name</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Action</th>
+                <th translate-key="table-lastname-title"></th>
+                <th translate-key="table-firstname-title"></th>
+                <th translate-key="table-email-title"></th>
+                <th translate-key="table-action-title"></th>
               </tr>
             </thead>
             <?php
@@ -29,7 +29,7 @@
                 <td><?php echo $row->email ?></td>
                 <td>
                   <form action="<?php echo "checkAccount.php?id=".$row->id_utilisateur; ?>" method="post">
-                    <button type="submit" class="btn btn-danger btn-sm mx-1" name="delete_submit">Supprimer</button>
+                    <button type="submit" class="btn btn-danger btn-sm mx-1" name="delete_submit" translate-key="delete-button"></button>
                   </form>
                 </td>
               </tr>

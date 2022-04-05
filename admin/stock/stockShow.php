@@ -6,19 +6,19 @@
   </head>
   <?php include("../includes/header.php"); ?>
   <body>
-    <a href="index.php" class="nav-link ms-4" style="width:10%">Back</a>
+    <a href="index.php" class="nav-link ms-4" style="width:10%" translate-key="back-button"></a>
     <?php
     include("stockModel.php");
     $res = stockModel::selectSpecificStock();
     $row = $res->fetch(PDO::FETCH_OBJ);
      ?>
     <div class="d-flex m-4 justify-content-between">
-      <h2><?php echo "Entrepôt : ".$row->nom ?></h2>
-      <button class="btn btn-success btn-lg" data-bs-toggle="offcanvas" data-bs-target="#addProductCanvas">Ajouter un Produit</button>
+      <h2><?php echo $row->nom ?></h2>
+      <button class="btn btn-success btn-lg" data-bs-toggle="offcanvas" data-bs-target="#addProductCanvas" translate-key="addproduct-title"></button>
     </div>
     <div class="offcanvas offcanvas-end" tabindex="-1" id="addProductCanvas">
       <div class="offcanvas-header">
-        <h5>Choisissez un produit à ajouter</h5>
+        <h5 translate-key="addproduct-desc"></h5>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body">
@@ -47,7 +47,7 @@
       </div>
     </div>
     <hr>
-    <h4 class="m-4">Tous les produits se trouvant dans l'entrepôt : </h4>
+    <h4 class="m-4" translate-key="warehouse-desc"></h4>
     <div class="d-flex flex-wrap border border-1 rounded m-4">
       <div class="mx-4">
             <?php
@@ -72,19 +72,19 @@
               <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenteredScrollableTitle">Information du produit</h5>
+                    <h5 class="modal-title" id="exampleModalCenteredScrollableTitle" translate-key="informationproduct-title"></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body text-center">
                     <table class='table table-striped'>
                       <thead class='text-center'>
                         <tr>
-                          <th>image</th>
-                          <th>nom</th>
-                          <th>description</th>
-                          <th>prix</th>
-                          <th>reduction</th>
-                          <th>stock</th>
+                          <th translate-key="image-title"></th>
+                          <th translate-key="name-title"></th>
+                          <th translate-key="desc-title"></th>
+                          <th translate-key="price-title"></th>
+                          <th translate-key="discount-title"></th>
+                          <th translate-key="stock-title"></th>
                         </tr>
                       </thead>
                       <tbody>
@@ -101,11 +101,11 @@
                   </div>
                   <div class="modal-footer justify-content-between">
                     <div>
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Annuler</button>
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close" translate-key="cancel-button"></button>
                     </div>
                     <div>
                       <form action=<?php echo "checkStock.php?idP=".$row->id_produit."&idE=".$_GET["id"]; ?> method="post">
-                        <button type="submit" class="btn btn-danger btn-sm mx-1" name="delete_product_submit">Supprimer</button>
+                        <button type="submit" class="btn btn-danger btn-sm mx-1" name="delete_product_submit" translate-key="delete-button"></button>
                       </form>
                     </div>
                   </div>
