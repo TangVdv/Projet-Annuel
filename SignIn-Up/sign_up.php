@@ -61,7 +61,7 @@
               </p>
             </div>
 
-          <button class="btn btn-lg btn-primary btn-block my-5" style="background-color: #004579" type="submit" translate-key="register-title"></button>
+          <button class="btn btn-lg btn-primary btn-block my-5" style="background-color: #004579" type="submit" name="sign_up" translate-key="register-title"></button>
         </form>
       </div>
       <div class="bg-light py-1 container text-center border-top">

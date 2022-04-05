@@ -6,7 +6,7 @@ $current_UID = $_SESSION["id_utilisateur"];
 
 PanierModel::CancelPayment($current_UID);
 
-header("location:panier.php?message=Achat annulé avec succès")
+header("location:./")
 
 
  ?>

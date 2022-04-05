@@ -56,22 +56,23 @@ class SignModel {
       header('Location:sign_up.php?message=Erreur lors de la création du compte ; '. print_r($db->errorInfo()));
     }
     else {
-      $req = $db->prepare('SELECT id_utilisateur FROM UTILISATEUR WHERE email = :email AND mot_de_passe = :password');
+      $req = $db->prepare('SELECT id_utilisateur, admin FROM UTILISATEUR WHERE email = :email AND mot_de_passe = :password');
       $req->execute([
         "email" => $email,
         "password" => $password
       ]);
       $row = $req->fetch(PDO::FETCH_OBJ);
 
-      SignModel::CreateSession($row->id_utilisateur);
+      SignModel::CreateSession($row->id_utilisateur, $row->admin);
       header('Location:../index.php?Compte créé avec succès&type=success');
     }
   }
 
-  public static function CreateSession($id) {
+  public static function CreateSession($id, $admin) {
     session_start();
     $_SESSION['email'] = $_POST['email'];
     $_SESSION['id_utilisateur'] = $id;
+    $_SESSION['admin'] = $admin;
     setcookie('email', $row->email, time() + 365*24*3600);
   }
 
@@ -79,7 +80,7 @@ class SignModel {
     include("../includes/bdd.php");
 
     /* SELECT les identifiants*/
-    $req = $db->prepare('SELECT id_utilisateur, email FROM utilisateur WHERE email = :email AND mot_de_passe = :password');
+    $req = $db->prepare('SELECT id_utilisateur, admin, email FROM utilisateur WHERE email = :email AND mot_de_passe = :password');
     $req->execute([
       "email" => $_POST['email'],
       "password" => SignModel::HashNTrim()
@@ -87,7 +88,7 @@ class SignModel {
 
     if ($req->rowCount() == 1) {
       $row = $req->fetch(PDO::FETCH_OBJ);
-      SignModel::CreateSession($row->id_utilisateur);
+      SignModel::CreateSession($row->id_utilisateur, $row->admin);
 
   		header('location:../index.php?message=Vous êtes connecté&type=success');
   		exit;

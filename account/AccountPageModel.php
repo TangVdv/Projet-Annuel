@@ -59,7 +59,7 @@ class AccountPageModel {
     return $req;
   }
 
-  public static function UpdateAccountInfos($id_utilisateur, $nom, $prenom, $numero, $adresse, $email, $password) {
+  public static function UpdateAccountInfos($nom, $prenom, $numero, $adresse, $email, $password) {
     include("../includes/bdd.php");
 
     $req = $db->prepare("UPDATE utilisateur SET

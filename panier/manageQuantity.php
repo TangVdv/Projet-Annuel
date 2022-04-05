@@ -1,7 +1,7 @@
 <?php
 include("../../includes/bdd.php");
-include("../itemModel.php");
-include("../PanierModel.php");
+include("itemModel.php");
+include("PanierModel.php");
 session_start();
 $UserId = $_SESSION['id_utilisateur'];
 
@@ -18,10 +18,10 @@ if($VerifStatus == 0){
     ItemModel::MinusQuantity($UserId);
     //header('location:../panier.php?message=Quantité réduite avec succès&type=success');
   }else{
-    header('location:../panier.php?message=Une erreur est survenue&type=danger');
+    header('location:./?message=Une erreur est survenue&type=danger');
   }
 }else{
-  header('location:../?message=Un achat est en cours&type=danger');
+  header('location:./?message=Un achat est en cours&type=danger');
 }
 
 

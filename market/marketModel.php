@@ -1,16 +1,36 @@
 <?php
 
-class addToCartModel{
-  public static function InsertProduct($ProductId){
+class MarketModel{
+  public static function SelectSpecificProduct(){
     include("../includes/bdd.php");
-    session_start();
-
-    $UserId = $_SESSION["id_utilisateur"];
-
-    $query = $db->prepare("INSERT INTO achete(id_produit, id_utilisateur, quantite, isBuying) VALUES (:ProductId, :UserId, 1, 0) ON DUPLICATE KEY UPDATE quantite = quantite + 1");
+    $query = $db->prepare("SELECT COUNT(*) as total FROM achete WHERE id_produit = :ProductId AND id_utilisateur = :UserId");
     $query->execute([
-        "ProductId" => $ProductId,
-        "UserId" => $UserId
+        "ProductId" => $_GET["id_produit"],
+        "UserId" => $_SESSION["id_utilisateur"]
+    ]);
+
+    $res = $query->fetch(PDO::FETCH_OBJ);
+    $rowCount = $res->total;
+    return $rowCount;
+  }
+
+  public static function UpdateProduct(){
+    include("../includes/bdd.php");
+
+    $query = $db->prepare('UPDATE ACHETE SET quantite = quantite + 1 WHERE id_utilisateur = :id_utilisateur AND id_produit = :id_produit');
+    $query->execute([
+      "id_utilisateur" => $_SESSION["id_utilisateur"],
+      "id_produit" => htmlspecialchars($_GET["id_produit"])
+    ]);
+  }
+
+  public static function InsertProduct(){
+    include("../includes/bdd.php");
+
+    $query = $db->prepare("INSERT INTO achete(id_produit, id_utilisateur, quantite) VALUES (:ProductId, :UserId, 1)");
+    $query->execute([
+        "ProductId" => $_GET["id_produit"],
+        "UserId" => $_SESSION["id_utilisateur"]
     ]);
   }
 
@@ -23,4 +43,3 @@ class addToCartModel{
     return $query;
   }
 }
-?>

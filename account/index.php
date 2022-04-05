@@ -6,8 +6,6 @@
   </head>
   <?php
   include("../includes/header.php");
-
-  include("../includes/bdd.php");
    ?>
   <body>
     <div style="width: 100rem" class="container">
@@ -18,29 +16,39 @@
       <?php
             include("AccountPageModel.php");
             $res = AccountPageModel::DisplayName();
-            while ($row = $res->fetch(PDO::FETCH_OBJ)) {
-            ?>
+            $row = $res->fetch(PDO::FETCH_OBJ) ?>
             <img src="../img/icon.jpg" class="img-fluid rounded-circle" width="200" height="200"><br>
             <div class="d-flex justify-content-center">
               <h3 class="mx-2" translate-key="hello-title"></h3>
               <p class="h3 mx-2"><b><?php echo $row->nom?></b></p>
             </div>
-      <?php } ?>
           </div>
 
           <div class="w-75 container text-center rounded-3 py-1">
             <h1 class="h3" translate-key="lastorder-title"></h1>
-
-            <div class="d-flex flex-wrap container justify-content-between align-items-center border" style="background-color: #eaf9ff">
-              <?php
-                $res = AccountPageModel::DisplayLastOrder();
-                while ($row = $res->fetch(PDO::FETCH_OBJ)) { ?>
-                <img src=<?php echo "../img/products/".$row->image; ?> width="250" height="150">
-                <p><?php echo $row->nom?></p>
-                <p><?php echo $row->date_achat?></p>
-                <p><?php echo $row->prix_achat . " €"?> | x <?php echo $row->quantite ?></p>
-              <?php } ?>
-            </div>
+              <table class='table table-striped'>
+                <thead class='text-center'>
+                  <tr>
+                    <th translate-key="image-title"></th>
+                    <th translate-key="name-title"></th>
+                    <th translate-key="date-title"></th>
+                    <th translate-key="price-title"></th>
+                    <th translate-key="stock-title"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                    $res = AccountPageModel::DisplayLastOrder();
+                    $row = $res->fetch(PDO::FETCH_OBJ); ?>
+                  <tr>
+                    <td><img src=<?php echo "/img/products/".$row->image; ?> width="100" height="100"></td>
+                    <td><?php echo $row->nom?></td>
+                    <td><?php echo $row->date_achat?></td>
+                    <td><?php echo $row->prix_achat . " €"?></td>
+                    <td><?php echo $row->quantite ?></td>
+                  </tr>
+                </tbody>
+              </table>
           </div>
         </div>
 

@@ -15,7 +15,7 @@ class PanierModel{
   }
 
   public static function VerifBuying($UserId){
-    include("../../includes/bdd.php");
+    include("../includes/bdd.php");
     $req = $db->prepare('SELECT COUNT(*) AS total
                           FROM ACHETE
                           WHERE id_utilisateur = :id_utilisateur

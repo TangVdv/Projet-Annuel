@@ -4,8 +4,7 @@ include("accountModel.php");
 if (isset($_POST['delete_submit'])) {
   accountModel::DeleteAccount();
 }
-else {
-  header("location:./");
-}
+
+header("location:./");
 
  ?>

@@ -34,10 +34,11 @@
             <label translate-key="connected-checkbox"></label>
           </div>
 
-          <button class="btn btn-lg btn-primary btn-block" style="background-color: #004579" type="submit" translate-key="login-title"></button>
+          <button class="btn btn-lg btn-primary btn-block" style="background-color: #004579" type="submit" name="sign_in" translate-key="login-title"></button>
           <div class="py-4">
             <a style="color: #004579;" href="#" translate-key="password-forgotten-text"></a>
           </div>
+
 
         </form>
       </div>

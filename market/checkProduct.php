@@ -1,6 +1,17 @@
 <?php
-include("marketModel.php");
-addToCartModel::InsertProduct($_GET['id_produit']);
-header("location:index.php");
+
+if (isset($_POST["market-submit"])) {
+  include("marketModel.php");
+  session_start();
+  $exist = MarketModel::SelectSpecificProduct();
+  if ($exist == 0) {
+    MarketModel::InsertProduct();
+  }
+  else {
+    MarketModel::UpdateProduct();
+  }
+}
+
+header("location:./");
 
  ?>

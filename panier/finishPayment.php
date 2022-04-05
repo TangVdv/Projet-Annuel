@@ -8,6 +8,6 @@ PanierModel::ApplyPayment($current_UID);
 //Supprime tous les éléments du panier achetés par l'utilisateur
 PanierModel::ClearPanier($current_UID);
 
-header("location:panier.php?message=Achat effectué avec succès");
+header("location:./");
 
  ?>

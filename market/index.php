@@ -13,7 +13,7 @@
       <div class="row row-cols-md-3 justify-content-center">
         <?php
         include("marketModel.php");
-        $res = addToCartModel::SelectProduct();
+        $res = MarketModel::SelectProduct();
         while ($row = $res->fetch(PDO::FETCH_OBJ)) {
         ?>
             <div class="row mb-2">
@@ -31,9 +31,11 @@
                   </div>
                   <div class="text-end m-2">
                     <?php if ($row->stock <= 0) {?>
-                      <a type="button" class="btn btn-primary disabled">Rupture de stock</a>
+                      <button type="button" class="btn btn-primary disabled" translate-key="outofstock-button"></button>
                     <?php }else{?>
-                      <a type="button" class="btn btn-primary" href=<?php echo 'checkProduct.php?id_produit='.$row->id_produit ?>>Ajouter au panier</a>
+                      <form action=<?php echo "checkProduct.php?id_produit=".$row->id_produit; ?> method="post">
+                        <button type="submit" class="btn btn-primary" name="market-submit" translate-key="market-button"></button>
+                      </form>
                     <?php } ?>
                   </div>
                 </div>

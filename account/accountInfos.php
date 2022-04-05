@@ -17,23 +17,23 @@
           ?>
           <div class="mb-3">
             <label class="form-label" translate-key="lastname-input"></label>
-            <input type="text" class="form-control" placeholder="<?=$row->nom?>" name="nom" id="nom">
+            <input type="text" class="form-control" value="<?=$row->nom?>" name="nom" id="nom">
           </div>
           <div class="mb-3">
             <label class="form-label" translate-key="firstname-input"></label>
-            <input type="text" class="form-control" id="prenom" placeholder="<?=$row->prenom?>" name="prenom"></input>
+            <input type="text" class="form-control" id="prenom" value="<?=$row->prenom?>" name="prenom"></input>
           </div>
           <div class="mb-3">
             <label class="form-label" translate-key="phone-input"></label>
-            <input type="number" class="form-control" placeholder="<?=$row->numero?>" name="numero" id="numero">
+            <input type="number" class="form-control" value="<?=$row->numero?>" name="numero" id="numero">
           </div>
           <div class="mb-3">
             <label class="form-label" translate-key="address-input"></label>
-            <input type="text" class="form-control" placeholder="<?=$row->adresse?>" name="adresse" id="adresse">
+            <input type="text" class="form-control" value="<?=$row->adresse?>" name="adresse" id="adresse">
           </div>
           <div class="mb-3">
             <label class="form-label" translate-key="email-input"></label>
-            <input type="text" class="form-control" placeholder="<?=$row->email?>" name="email" id="email">
+            <input type="text" class="form-control" value="<?=$row->email?>" name="email" id="email">
           </div>
           <div class="mb-3">
             <label class="form-label" translate-key="password-input"></label>
@@ -51,13 +51,13 @@
             </p>
           </div>
           <div class="mb-3 w-25">
-              <button type="submit" class="form-control btn btn-primary" id="submit_modif" translate-key="submit-button"></button>
+              <button type="submit" class="form-control btn btn-primary" id="submit_modif" name="submit-button" translate-key="submit-button"></button>
           </div>
         <?php } ?>
         </form>
 
 
-        <a href="account.php" class="nav-link my-4 p-0" style="width:10%" translate-key="back-button">Back</a>
+        <a href="account.php" class="nav-link my-4 p-0" style="width:10%" translate-key="back-button"></a>
 
     </div>
   </body>

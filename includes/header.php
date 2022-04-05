@@ -24,9 +24,9 @@
           session_start();
 
           if (isset($_SESSION['email'])) {
-              echo "<li class='nav-item'><a href='/signIn-Up/logOut.php' class='nav-link text-white px-2'>Déconnexion</a> </li>";
-      				echo "<li class='nav-item'><a href='/account/account.php' class='nav-link text-white px-2'>Compte</a> </li>";
-              echo "<li class='nav-item'><a href='/panier/' class='nav-link text-white px-2'>Panier</a> </li>";
+              echo "<li class='nav-item'><a href='/signIn-Up/logOut.php' class='nav-link text-white px-2' translate-key='logout-title'></a> </li>";
+      				echo "<li class='nav-item'><a href='/account/' class='nav-link text-white px-2' translate-key='account-title'>Compte</a> </li>";
+              echo "<li class='nav-item'><a href='/panier/' class='nav-link text-white px-2' translate-key='basket-title'>Panier</a> </li>";
       			}
       		else{
       				echo "<li class='nav-item'><a href='/signIn-Up/sign_in.php' class='nav-link text-white px-2' translate-key='login-title'></a> </li>";
