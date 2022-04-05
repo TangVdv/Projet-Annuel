@@ -1,5 +1,4 @@
 <?php
-
 class PanierModel{
 
   public static function SelectProducts($UserId){
@@ -30,12 +29,15 @@ class PanierModel{
 
   public static function UpdateBuyingStatus($UserId){
     include("../includes/bdd.php");
+
+    echo "bruh";
+
     $req = $db->prepare('UPDATE ACHETE
                           SET isBuying = 1
                           WHERE achete.id_utilisateur = :id_utilisateur');
-           $req->execute([
-             "id_utilisateur" => $UserId
-           ]);
+    $req->execute([
+      "id_utilisateur" => $UserId
+    ]);
   }
 
 }

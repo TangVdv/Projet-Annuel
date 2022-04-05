@@ -27,7 +27,7 @@
       </div>
        <ul class="list-group rounded-3 gap-3">
          <?php
-          require_once("PanierModel.php");("PanierModel.php");
+          require_once("PanierModel.php");
           $UserId = $_SESSION['id_utilisateur'];
           $prix_total = 0;
 
@@ -41,7 +41,7 @@
                    "id_utilisateur" => $_SESSION['id_utilisateur']
                  ]);*/
           $req = PanierModel::SelectProducts($UserId);
-
+          $myClass = new PanierModel();
 
 
 
@@ -81,27 +81,23 @@
           <div class="d-flex justify-content-end">
             <?php if ($req->rowCount() > 0) {
               include("stripeSetup.php"); ?>
-              <form class="" action="updateIsBuying.php" method="post">
-                <button id="checkout-button" type="submit" class="btn btn-success">Finaliser la commande</button>
-              </form>
-
-            <?php } ?>
+              <button type="button" onclick="startStripe()" class="btn btn-success">Finaliser la commande</button>
           </div>
-
           <script>
           //Edit total price
             var prix = <?php echo json_encode("Prix total : " . $prix_total . "€"); ?>;
             document.getElementById("prix_total").innerHTML = prix;
 
-          //Redirect to Stripe API
-            var stripe = Stripe('pk_test_51KkUMrEAVKGv2IR8nSGCaofWHp39rz8HpyLpVDZww9MRMmYDzROT7q2XjqURjygjVKF3zTmm53SdsrucbwY5XoRQ00L3pUicbq');
-            const btn = document.getElementById("checkout-button")
-            btn.addEventListener('click', function(e) {
-              e.preventDefault();
+            function startStripe(){
+              let result="<?php PanierModel::UpdateBuyingStatus($_SESSION["id_utilisateur"]); ?>";
+
+              //Redirect to Stripe API
+              let stripe = Stripe('pk_test_51KkUMrEAVKGv2IR8nSGCaofWHp39rz8HpyLpVDZww9MRMmYDzROT7q2XjqURjygjVKF3zTmm53SdsrucbwY5XoRQ00L3pUicbq');
+
               stripe.redirectToCheckout({
                 sessionId: "<?php echo $session->id; ?>"
               });
-            });
+            }
           </script>
        </ul>
     </div>
