@@ -1,7 +1,8 @@
 <?php
 require_once("PanierModel.php");
-
+//PanierModel::UpdateBuyingStatus($_SESSION["id_utilisateur"]);
 $products = [];
+
 
 $req = PanierModel::SelectProducts($_SESSION["id_utilisateur"]);
 while ($row = $req->fetch(PDO::FETCH_OBJ)){
@@ -9,7 +10,7 @@ while ($row = $req->fetch(PDO::FETCH_OBJ)){
     [
       'price_data' => [
         'currency' => 'eur',
-        'unit_amount' => 2000,
+        'unit_amount' => $row->prix*100,
         'product_data' => [
           'name' => $row->nom,
         ],
@@ -55,6 +56,8 @@ $Infos = array(
 //require_once('vendor/autoload.php');
 require_once('../stripe/init.php');
 \Stripe\Stripe::setApiKey('sk_test_51KkUMrEAVKGv2IR8Kj3e4q9RhsfjzvtU64ItPz4ueVZx5w1nYW27VWQJUhD8OinIQ6gJgvKQhZ80znlYObeQBk2600H38MDqf5');
+
+
 
 $session = \Stripe\Checkout\Session::create($Infos);
 

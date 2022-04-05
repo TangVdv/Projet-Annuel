@@ -81,7 +81,10 @@
           <div class="d-flex justify-content-end">
             <?php if ($req->rowCount() > 0) {
               include("stripeSetup.php"); ?>
-              <button id="checkout-button" class="btn btn-success">Finaliser la commande</button>
+              <form class="" action="updateIsBuying.php" method="post">
+                <button id="checkout-button" type="submit" class="btn btn-success">Finaliser la commande</button>
+              </form>
+
             <?php } ?>
           </div>
 
