@@ -13,7 +13,7 @@
 
     <div style="width: 60rem" class="container">
       <div class="bg-light py-5 container text-center border-bottom">
-        <form action="sign_up_verif.php" method="post">
+        <form action="checkSign.php" method="post">
           <div class="border-bottom">
             <h1 class="h3 mb-3 font-weight-normal">Vos identifiants :</h1>
 
@@ -61,7 +61,7 @@
               </p>
             </div>
 
-          <button class="btn btn-lg btn-primary btn-block my-5" style="background-color: #004579" type="submit">Inscription</button>
+          <button class="btn btn-lg btn-primary btn-block my-5" style="background-color: #004579" type="submit" name="sign_up">Inscription</button>
         </form>
       </div>
       <div class="bg-light py-1 container text-center border-top">

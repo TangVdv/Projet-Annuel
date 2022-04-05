@@ -8,6 +8,7 @@ class accountModel{
 
       return $query;
   }
+
   public static function DeleteAccount(){
       include("../../includes/bdd.php");
 
@@ -22,7 +23,7 @@ class accountModel{
       $query->execute([
         "id" => $id
       ]);
-      
+
       $query = $db->prepare("DELETE FROM utilisateur WHERE id_utilisateur = :id");
       $query->execute([
         "id" => $id
