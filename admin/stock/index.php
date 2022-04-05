@@ -6,10 +6,10 @@
   </head>
   <?php include("../includes/header.php"); ?>
   <body>
-    <a href=".." class="nav-link ms-4" style="width:10%">Back</a>
+    <a href=".." class="nav-link ms-4" style="width:10%" translate-key="back-button"></a>
     <div class="w-50 col flex-wrap" style="margin: auto;">
       <div class="d-flex justify-content-center">
-        <a class="btn btn-success btn-lg m-4" href="addStock.php">Ajouter un entrepôt</a>
+        <a class="btn btn-success btn-lg m-4" href="addStock.php" translate-key="addwarehouse-title"></a>
       </div>
     </div>
     <div class="w-50 col flex-wrap" style="margin: auto;">
@@ -17,10 +17,10 @@
           <table class='table'>
             <thead class='text-center'>
               <tr>
-                <th>Nom</th>
-                <th>Adresse</th>
-                <th>Téléphone</th>
-                <th>Stock</th>
+                <th translate-key="name-title"></th>
+                <th translate-key="address-title"></th>
+                <th translate-key="phone-title"></th>
+                <th translate-key="stock-title"></th>
               </tr>
             </thead>
             <?php
@@ -34,9 +34,9 @@
                 <td><?php echo $row->telephone ?></td>
                 <td>
                   <div class="d-flex justify-content-center">
-                    <a class="btn btn-success btn-sm mx-1" href=<?php echo "stockShow.php?id=".$row->id_entrepot; ?>>Produit</a>
+                    <a class="btn btn-success btn-sm mx-1" href=<?php echo "stockShow.php?id=".$row->id_entrepot; ?> translate-key="product-title"></a>
                     <form action=<?php echo "checkStock.php?id=".$row->id_entrepot; ?> method="post">
-                      <button type="submit" class="btn btn-danger btn-sm mx-1" name="delete_stock_submit">Supprimer</button>
+                      <button type="submit" class="btn btn-danger btn-sm mx-1" name="delete_stock_submit" translate-key="delete-button"></button>
                     </form>
                   </div>
                 </td>

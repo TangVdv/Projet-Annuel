@@ -1,12 +1,4 @@
 <!DOCTYPE html>
-<html lang="fr" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <link href="../lib/bootstrap.min.css" rel="stylesheet">
-    <title>Footer</title>
-  </head>
-  <body>
-    <!-- Footer -->
 <footer class="text-center text-white" style="background : #004579;">
   <!-- Grid container -->
   <div class="container p-4">
@@ -26,11 +18,7 @@
 
     <!-- Section: Text -->
     <section class="mb-4">
-      <p>
-        Loyalty Card est un site de vente en ligne qui vous permet d'acheter des produits mais aussi des prestations.
-        Vous avez la possibilité de profiter de nos avantages de fidélité en accumulant des points à travers vos achats.
-        De la même manière, vous pouvez visualiser vos avantages en ouvrant la boutique 3D.
-      </p>
+      <p translate-key="footer-desc-website"></p>
     </section>
     <!-- Section: Text -->
 
@@ -41,13 +29,10 @@
       <img src="../img/logo.png" width="15%">
     </div>
   </div>
-    <p>Loyalty Card project by : <strong>Frédéric Sananes</strong>, <strong>Kamal Hennou</strong></p>
+    <p translate-key="footer-desc-project"></p>
     <div class="py-3" style="background: #eaf9ff">
       <a target=”_blank” href="https://www.esgi.fr/"><img src="../img/logo_esgi.jpeg" width="15%"></a>
     </div>
   <!-- Copyright -->
   </div>
 </footer>
-<!-- Footer -->
-  </body>
-</html>

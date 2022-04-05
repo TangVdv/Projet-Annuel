@@ -6,14 +6,14 @@
   </head>
   <?php include("../includes/header.php"); ?>
   <body>
-    <a href=".." class="nav-link ms-4" style="width:10%">Back</a>
+    <a href=".." class="nav-link ms-4" style="width:10%" translate-key="back-button"></a>
     <div class="w-50 col flex-wrap" id="article_reload"style="margin: auto;">
       <div class="d-flex justify-content-center">
-        <a class="btn btn-success btn-lg m-4" href="addProduct.php">Ajouter un Produit</a>
+        <a class="btn btn-success btn-lg m-4" href="addProduct.php" translate-key="addproduct-title"></a>
       </div>
     </div>
     <div class="d-flex flex-wrap row border m-4">
-      <h4 class="border-bottom text-success p-2">Produits se trouvant dans un entrepôt : </h4>
+      <h4 class="border-bottom text-success p-2" translate-key="warehouseproduct-title"></h4>
       <div class="mx-4">
             <?php
             include("productModel.php");
@@ -38,19 +38,19 @@
               <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenteredScrollableTitle">Information du produit</h5>
+                    <h5 class="modal-title" id="exampleModalCenteredScrollableTitle" translate-key="informationproduct-title"></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body text-center">
                     <table class='table table-striped'>
                       <thead class='text-center'>
                         <tr>
-                          <th>image</th>
-                          <th>nom</th>
-                          <th>description</th>
-                          <th>prix</th>
-                          <th>reduction</th>
-                          <th>stock</th>
+                          <th translate-key="image-title"></th>
+                          <th translate-key="name-title"></th>
+                          <th translate-key="desc-title"></th>
+                          <th translate-key="price-title"></th>
+                          <th translate-key="discount-title"></th>
+                          <th translate-key="stock-title"></th>
                         </tr>
                       </thead>
                       <tbody>
@@ -67,11 +67,11 @@
                   </div>
                   <div class="modal-footer justify-content-between">
                     <div>
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Annuler</button>
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close" translate-key="cancel-button"></button>
                     </div>
                     <div>
                       <form action=<?php echo "checkProduct.php?id=".$row->id_produit; ?> method="post">
-                        <button type="submit" class="btn btn-danger" name="delete_submit">Supprimer</button>
+                        <button type="submit" class="btn btn-danger" name="delete_submit" translate-key="delete-button"></button>
                       </form>
                     </div>
                   </div>
@@ -84,7 +84,7 @@
     </div>
     <br>
     <div class="d-flex flex-wrap row border m-4">
-      <h4 class="border-bottom text-danger p-2">Produits ne se trouvant pas dans un entrepôt : </h4>
+      <h4 class="border-bottom text-danger p-2" translate-key="notwarehouseproduct-title"></h4>
       <div class="mx-4">
             <?php
             $res = productModel::SelectProduct(false);
@@ -108,19 +108,19 @@
               <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenteredScrollableTitle">Information du produit</h5>
+                    <h5 class="modal-title" id="exampleModalCenteredScrollableTitle" translate-key="informationproduct-title"></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body text-center">
                     <table class='table table-striped'>
                       <thead class='text-center'>
                         <tr>
-                          <th>image</th>
-                          <th>nom</th>
-                          <th>description</th>
-                          <th>prix</th>
-                          <th>reduction</th>
-                          <th>stock</th>
+                          <th translate-key="image-title"></th>
+                          <th translate-key="name-title"></th>
+                          <th translate-key="desc-title"></th>
+                          <th translate-key="price-title"></th>
+                          <th translate-key="discount-title"></th>
+                          <th translate-key="stock-title"></th>
                         </tr>
                       </thead>
                       <tbody>
@@ -137,11 +137,11 @@
                   </div>
                   <div class="modal-footer justify-content-between">
                     <div>
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Annuler</button>
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close" translate-key="cancel-button"></button>
                     </div>
                     <div>
                       <form action=<?php echo "checkProduct.php?id=".$row->id_produit; ?> method="post">
-                        <button type="submit" class="btn btn-danger" name="delete_submit">Supprimer</button>
+                        <button type="submit" class="btn btn-danger" name="delete_submit" translate-key="delete-button"></button>
                       </form>
                     </div>
                   </div>
