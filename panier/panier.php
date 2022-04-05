@@ -8,15 +8,6 @@
   <body class="gap-3" style="background: #EAF9FF">
     <?php
       include("../includes/header.php");
-
-      include("../includes/bdd.php");
-      //Display errors
-      /*
-      ini_set('display_errors', 1);
-      ini_set('display_startup_errors', 1);
-      error_reporting(E_ALL);
-      */
-
     ?>
     <div class="mx-auto" style="width: 60rem; height: 500px; display: block;">
 
@@ -31,19 +22,7 @@
           $UserId = $_SESSION['id_utilisateur'];
           $prix_total = 0;
 
-          /*
-          //Sélectionne tous les produits dans le panier de l'utilisateur
-          $req = $db->prepare('SELECT produit.id_produit, image, nom, prix, reduction, quantite
-                                FROM PRODUIT
-                                INNER JOIN ACHETE ON produit.id_produit = achete.id_produit
-                                WHERE achete.id_utilisateur = :id_utilisateur');
-                 $req->execute([
-                   "id_utilisateur" => $_SESSION['id_utilisateur']
-                 ]);*/
           $req = PanierModel::SelectProducts($UserId);
-          $myClass = new PanierModel();
-
-
 
            while ($row = $req->fetch(PDO::FETCH_OBJ)){
              //Calcul du prix total mis à jour à chaque row
@@ -79,8 +58,7 @@
 
              <?php } ?>
           <div class="d-flex justify-content-end">
-            <?php if ($req->rowCount() > 0) {
-              include("stripeSetup.php"); ?>
+            <?php if ($req->rowCount() > 0) { ?>
               <button type="button" onclick="startStripe()" class="btn btn-success">Finaliser la commande</button>
             <?php } ?>
           </div>
@@ -90,14 +68,7 @@
             document.getElementById("prix_total").innerHTML = prix;
 
             function startStripe(){
-              let result="<?php PanierModel::UpdateBuyingStatus($_SESSION["id_utilisateur"]); ?>";
-
-              //Redirect to Stripe API
-              let stripe = Stripe('pk_test_51KkUMrEAVKGv2IR8nSGCaofWHp39rz8HpyLpVDZww9MRMmYDzROT7q2XjqURjygjVKF3zTmm53SdsrucbwY5XoRQ00L3pUicbq');
-
-              stripe.redirectToCheckout({
-                sessionId: "<?php echo $session->id; ?>"
-              });
+              window.location.href='loadStripe.php';
             }
           </script>
        </ul>

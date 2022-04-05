@@ -64,8 +64,9 @@ class PanierModel{
   public static function SaveBuyingHistory($prix_achat, $quantite, $id_utilisateur, $id_produit){
     include("../includes/bdd.php");
     //Sauvegarde les achats dans l'historique
+
     $req = $db->prepare('INSERT INTO HISTORIQUE_ACHAT(date_achat,	prix_achat, quantite, id_utilisateur, id_produit)
-                          VALUES()');
+                          VALUES(:date_achat, :prix_achat, :quantite, :id_utilisateur, :id_produit)');
            $req->execute([
              "date_achat" => date("Y-m-d"),
              "prix_achat" => $prix_achat,
@@ -73,7 +74,6 @@ class PanierModel{
              "id_utilisateur" => $id_utilisateur,
              "id_produit" => $id_produit
            ]);
-    return $req;
   }
 
   public static function ApplyPayment($UserId){
@@ -81,8 +81,8 @@ class PanierModel{
     $finalReq = PanierModel::SelectProducts($UserId);
     $prix_total = 0;
     while ($row = $finalReq->fetch(PDO::FETCH_OBJ)){
-      PanierModel::SaveBuyingHistory($row->$prix, $row->$quantite, $row->$id_utilisateur, $row->$id_produit);
-      $prix_total += $row->$prix * $row->$quantite;
+      PanierModel::SaveBuyingHistory($row->prix, $row->quantite, $UserId, $row->id_produit);
+      $prix_total += $row->prix * $row->quantite;
     }
     PanierModel::redeemPoints($UserId, $prix_total);
   }
@@ -91,10 +91,10 @@ class PanierModel{
     include("../includes/bdd.php");
     //Donne les points de fidélités à l'utilisateur
     $req = $db->prepare('UPDATE UTILISATEUR
-                          SET pts_fidelite += :prix_total
+                          SET pts_fidelite = pts_fidelite + :prix_total
                           WHERE id_utilisateur = :id_utilisateur');
            $req->execute([
-             "id_utilisateur" => $prix_total * 10,
+             "prix_total" => $prix_total * 10,
              "id_utilisateur" => $UserId
            ]);
   }
