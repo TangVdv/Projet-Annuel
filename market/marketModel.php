@@ -7,7 +7,7 @@ class addToCartModel{
 
     $UserId = $_SESSION["id_utilisateur"];
 
-    $query = $db->prepare("INSERT INTO achete(id_produit, id_utilisateur, quantite) VALUES (:ProductId, :UserId, 1) ON DUPLICATE KEY UPDATE quantite = quantite + 1");
+    $query = $db->prepare("INSERT INTO achete(id_produit, id_utilisateur, quantite, isBuying) VALUES (:ProductId, :UserId, 1, 0) ON DUPLICATE KEY UPDATE quantite = quantite + 1");
     $query->execute([
         "ProductId" => $ProductId,
         "UserId" => $UserId
