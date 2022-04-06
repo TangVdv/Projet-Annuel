@@ -5,11 +5,11 @@ class AccountPageModel {
   public static function DisplayLastOrder() {
     include("../includes/bdd.php");
 
-    $req = $db->prepare("SELECT image, nom, prix_achat, date_achat, quantite
+    $req = $db->prepare("SELECT produit.id_produit, image, nom, prix_achat, date_achat, quantite
                         FROM HISTORIQUE_ACHAT
                         INNER JOIN PRODUIT ON produit.id_produit = historique_achat.id_produit
                         WHERE historique_achat.id_utilisateur = :id_utilisateur
-                        ORDER BY date_achat DESC LIMIT 1; --Jsp si ça prend aussi en compte ceux des autres users");
+                        ORDER BY date_achat DESC LIMIT 1");
 
     $req->execute([
       "id_utilisateur" => $_SESSION['id_utilisateur']

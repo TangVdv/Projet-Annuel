@@ -46,6 +46,11 @@
                     <td><?php echo $row->date_achat?></td>
                     <td><?php echo $row->prix_achat . " €"?></td>
                     <td><?php echo $row->quantite ?></td>
+                    <td>
+                      <form action=<?php echo "Return/return.php?id=".$row->id_produit ?> method="post">
+                        <button type="submit" name="return_submit" type="button" class="btn btn-success">Renvoyer</button>
+                      </form>
+                    </td>
                   </tr>
                 </tbody>
               </table>
