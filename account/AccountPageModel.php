@@ -5,7 +5,7 @@ class AccountPageModel {
   public static function DisplayLastOrder() {
     include("../includes/bdd.php");
 
-    $req = $db->prepare("SELECT produit.id_produit, image, nom, prix_achat, date_achat, quantite
+    $req = $db->prepare("SELECT historique_achat.id_historique, produit.id_produit, image, nom, prix_achat, date_achat, quantite
                         FROM HISTORIQUE_ACHAT
                         INNER JOIN PRODUIT ON produit.id_produit = historique_achat.id_produit
                         WHERE historique_achat.id_utilisateur = :id_utilisateur
@@ -33,7 +33,7 @@ class AccountPageModel {
   public static function DisplayOrders() {
     include("../includes/bdd.php");
 
-    $req = $db->prepare("SELECT image, nom, prix_achat, date_achat, quantite
+    $req = $db->prepare("SELECT historique_achat.id_historique, produit.id_produit, image, nom, prix_achat, date_achat, quantite
                         FROM HISTORIQUE_ACHAT
                         INNER JOIN PRODUIT ON produit.id_produit = historique_achat.id_produit
                         WHERE historique_achat.id_utilisateur = :id_utilisateur

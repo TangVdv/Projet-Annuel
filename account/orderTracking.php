@@ -67,6 +67,13 @@
                   <td><?php echo $row->date_achat?></td>
                   <td><?php echo $row->prix_achat . " €"?></td>
                   <td><?php echo $row->quantite ?></td>
+                  <td>
+                    <form action="Return/return.php" method="post">
+                      <input type = "text" name = "idProduit" value = "<?php echo $row->id_produit; ?>" hidden>
+                      <input type = "text" name = "idHistorique" value = "<?php echo $row->id_historique; ?>" hidden>
+                      <input type="submit" name="return_submit" class="btn btn-success" value="Renvoyer"></input>
+                    </form>
+                  </td>
                 </tr>
                 <?php } ?>
               </tbody>

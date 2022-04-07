@@ -1,26 +1,35 @@
 <?php
 
 class ReturnModel{
-  public static function GetPrice($UserId, $id_produit){
+  public static function GetPrice($UserId, $id_produit, $id_historique){
     include("../../includes/bdd.php");
     //Renvoie le prix total du produit
-    $req = $db->prepare('SELECT prix_achat, quantite FROM HISTORIQUE_ACHAT WHERE id_utilisateur = :id_utilisateur AND id_produit = :id_produit');
+    $req = $db->prepare('SELECT prix_achat, quantite
+                          FROM HISTORIQUE_ACHAT
+                          WHERE id_utilisateur = :id_utilisateur
+                          AND id_produit = :id_produit
+                          AND id_historique = :id_historique');
     $req->execute([
       "id_utilisateur" => $UserId,
-      "id_produit" => $id_produit
+      "id_produit" => $id_produit,
+      "id_historique" => $id_historique
     ]);
     //while ($row = $req->fetch(PDO::FETCH_OBJ))
     $row = $req->fetch(PDO::FETCH_OBJ);
     return $row->prix_achat * $row->quantite;
   }
 
-  public static function UpdateHistory($UserId, $id_produit){
+  public static function UpdateHistory($UserId, $id_produit, $id_historique){
     include("../../includes/bdd.php");
     //Supprime l'article renvoyé de l'historique d'achat
-    $req = $db->prepare('DELETE FROM HISTORIQUE_ACHAT WHERE id_utilisateur = :id_utilisateur AND id_produit = :id_produit');
+    $req = $db->prepare('DELETE FROM HISTORIQUE_ACHAT
+                          WHERE id_utilisateur = :id_utilisateur
+                          AND id_produit = :id_produit
+                          AND id_historique = :id_historique');
     $req->execute([
       "id_utilisateur" => $UserId,
-      "id_produit" => $id_produit
+      "id_produit" => $id_produit,
+      "id_historique" => $id_historique
     ]);
   }
 
@@ -51,12 +60,12 @@ class ReturnModel{
 
 
 
-  public static function ReturnProduct($UserId, $id_produit){
+  public static function ReturnProduct($UserId, $id_produit, $id_historique){
 
-    $prix_total = ReturnModel::GetPrice($UserId, $id_produit);
+    $prix_total = ReturnModel::GetPrice($UserId, $id_produit, $id_historique);
     ReturnModel::cancelFidelityPoints($UserId, $prix_total);
     ReturnModel::refund($UserId, $prix_total);
-    ReturnModel::UpdateHistory($UserId, $id_produit);
+    ReturnModel::UpdateHistory($UserId, $id_produit, $id_historique);
 
 
   }
