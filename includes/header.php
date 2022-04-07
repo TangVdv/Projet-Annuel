@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     <link href="/lib/bootstrap.min.css" rel="stylesheet">
     <script src="/lib/bootstrap.min.js" charset="utf-8"></script>
-    <script src="/lib/languageScript.js"></script>
+    <script src="/lib/languageScript.js" charset="utf-8"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <title>Header</title>
     <style>
       header {

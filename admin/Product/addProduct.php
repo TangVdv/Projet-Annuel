@@ -29,8 +29,8 @@
           <div class="mb-3">
             <label class="form-label" translate-key="type-title"></label>
             <select class="form-select" name="type" id="type">
-              <option value="product">Produit</option>
-              <option value="service">Prestation</option>";
+              <option value="product" translate-key="product-title"></option>
+              <option value="service" translate-key="service-title"></option>";
             </select>
           </div>
           <div class="mb-3">

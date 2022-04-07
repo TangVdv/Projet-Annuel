@@ -1,5 +1,4 @@
 <?php
-
 if (isset($_POST["market-submit"])) {
   include("marketModel.php");
   session_start();
