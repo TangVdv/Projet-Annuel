@@ -8,8 +8,7 @@ include("checkAdmin.php");
     <link href="../../lib/bootstrap.min.css" rel="stylesheet">
     <script src="../../lib/bootstrap.min.js" charset="utf-8"></script>
     <script src="/admin/lib/languageAdminScript.js" charset="utf-8"></script>
-
-    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   </head>
   <body>
     <header class="py-3 border-bottom" style="background : #004579">

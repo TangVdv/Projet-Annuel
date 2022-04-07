@@ -67,16 +67,22 @@
                   </div>
                   <div class="modal-footer justify-content-between">
                     <div>
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close" translate-key="cancel-button"></button>
+                      <button type="button" class="btn btn-secondary" id="cancel_submit" data-bs-dismiss="modal" aria-label="Close" translate-key="cancel-button"></button>
                     </div>
-                    <div>
-                      <form action=<?php echo "checkProduct.php?id=".$row->id_produit; ?> method="post">
-                        <button type="submit" class="btn btn-danger" name="delete_submit" translate-key="delete-button"></button>
-                      </form>
+                    <div class="d-flex">
+                      <div class="mx-4">
+                        <button type="button" class="btn btn-primary" id="modify_submit" name=<?php echo $row->id_produit; ?> translate-key="modify-button"></button>
+                      </div>
+                      <div>
+                        <form action=<?php echo "checkProduct.php?id=".$row->id_produit; ?> method="post">
+                          <button type="submit" class="btn btn-danger" name="delete_submit" translate-key="delete-button"></button>
+                        </form>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
+
             </div>
 
             <?php } ?>
@@ -138,10 +144,15 @@
                     <div>
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close" translate-key="cancel-button"></button>
                     </div>
-                    <div>
-                      <form action=<?php echo "checkProduct.php?id=".$row->id_produit; ?> method="post">
-                        <button type="submit" class="btn btn-danger" name="delete_submit" translate-key="delete-button"></button>
-                      </form>
+                    <div class="d-flex">
+                      <div class="mx-4">
+                        <button type="button" class="btn btn-primary" id="modify_submit" name=<?php echo $row->id_produit; ?> translate-key="modify-button"></button>
+                      </div>
+                      <div>
+                        <form action=<?php echo "checkProduct.php?id=".$row->id_produit; ?> method="post">
+                          <button type="submit" class="btn btn-danger" name="delete_submit" translate-key="delete-button"></button>
+                        </form>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -208,10 +219,15 @@
                     <div>
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close" translate-key="cancel-button"></button>
                     </div>
-                    <div>
-                      <form action=<?php echo "checkProduct.php?id=".$row->id_produit; ?> method="post">
-                        <button type="submit" class="btn btn-danger" name="delete_submit" translate-key="delete-button"></button>
-                      </form>
+                    <div class="d-flex">
+                      <div class="mx-4">
+                        <button type="button" class="btn btn-primary" id="modify_submit" name=<?php echo $row->id_produit; ?> translate-key="modify-button"></button>
+                      </div>
+                      <div>
+                        <form action=<?php echo "checkProduct.php?id=".$row->id_produit; ?> method="post">
+                          <button type="submit" class="btn btn-danger" name="delete_submit" translate-key="delete-button"></button>
+                        </form>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -221,6 +237,6 @@
             <?php } ?>
       </div>
     </div>
-
+    <script src="/admin/lib/modifyProduct.js" charset="utf-8"></script>
   </body>
 </html>

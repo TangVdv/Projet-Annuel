@@ -19,6 +19,7 @@ const translations = {
     "submit-button": "Send",
     "cancel-button": "Cancel",
     "validate-button": "Validate",
+    "modify-button": "Modify",
     "yes-title": "Yes",
     "no-title": "No",
     // HOME
@@ -75,6 +76,7 @@ const translations = {
     "submit-button": "Envoyer",
     "cancel-button": "Annuler",
     "validate-button": "Valider",
+    "modify-button": "Modifier",
     "yes-title": "Oui",
     "no-title": "Non",
     // HOME
