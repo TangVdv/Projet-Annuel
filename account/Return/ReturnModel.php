@@ -9,7 +9,9 @@ class ReturnModel{
       "id_utilisateur" => $UserId,
       "id_produit" => $id_produit
     ]);
-    return $req->prix_achat * $req->quantite;
+    //while ($row = $req->fetch(PDO::FETCH_OBJ))
+    $row = $req->fetch(PDO::FETCH_OBJ);
+    return $row->prix_achat * $row->quantite;
   }
 
   public static function UpdateHistory($UserId, $id_produit){

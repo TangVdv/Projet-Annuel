@@ -9,7 +9,7 @@ if (isset($_POST["return_submit"])) {
   ReturnModel::ReturnProduct($UserId, $id_produit);
 }
 
-header('location:./');
+header('location:../index.php');
 
 
  ?>
