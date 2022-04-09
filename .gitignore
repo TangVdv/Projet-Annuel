@@ -1,5 +1,7 @@
 dir_to_ignore/
 stripe
+three.js-master
+
 
 *.jpg
 *.png
