@@ -1,10 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "xlsxwriter.h"
+#include <time.h>
 
 lxw_worksheet *worksheet;
 lxw_format *format;
 FILE *fp;
+time_t t;
+struct tm tm;
+char date[10];
 
 void write(){
   char line[128];
@@ -59,8 +63,16 @@ int main() {
     exit(1);
   }
 
+  t = time(NULL);
+  tm = *localtime(&t);
+  sprintf(date, "%d-%02d-%02d", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday);
+
   /* Create a new workbook and add a worksheet. */
-  lxw_workbook  *workbook  = workbook_new("rapport.xlsx");
+  char file_name[20] = "data_";
+  strcat(file_name, date);
+  strcat(file_name, ".xlsx");
+
+  lxw_workbook  *workbook  = workbook_new(file_name);
   worksheet = workbook_add_worksheet(workbook, NULL);
 
   /* Ajoute un format */
