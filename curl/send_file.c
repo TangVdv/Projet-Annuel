@@ -4,6 +4,10 @@
 #include <sqlite3.h>
 #include <sys/stat.h>
 
+
+#define UPLOAD_FILE_AS "data.yaml"
+#define REMOTE_URL "file:///home/tangvdv/Documents/receive_data/" UPLOAD_FILE_AS
+
 sqlite3 *db;
 sqlite3_stmt *res;
 char *err_msg = 0;
@@ -44,59 +48,39 @@ void getSale(){
 }
 
 int curl(){
+    yaml_file = fopen("data.yaml", "r");
+
     CURL *curl = curl_easy_init();
     CURLcode res;
     struct stat file_info;
     curl_off_t speed_upload, total_time;
 
-
-    if(!yaml_file){
-      printf("error cannot open file");
-      return 1; /* cannot continue */
-    }
-
-    if(fstat(fileno(yaml_file), &file_info) != 0){
-      printf("error file size");
-      return 1; /* cannot continue */
-    }
-
     if(curl){
-
-      //upload to this place 
-      curl_easy_setopt(curl, CURLOPT_URL,"file:///home/tangvdv/Documents/receive_data");
    
-      //tell it to "upload" to the URL 
+      // Dis à curl d'envoyer un fichier à un url donné
       curl_easy_setopt(curl, CURLOPT_UPLOAD, 1L);
    
-      //set where to read from (on Windows you need to use READFUNCTION too)
+      // Enverra le fichier à cette url
+      curl_easy_setopt(curl, CURLOPT_URL, REMOTE_URL);
+
+      // Le fichier qui va être envoyé
       curl_easy_setopt(curl, CURLOPT_READDATA, yaml_file);
 
-      /* and give the size of the upload (optional) */
+      // Taille du fichier à envoyer
       curl_easy_setopt(curl, CURLOPT_INFILESIZE_LARGE,
                      (curl_off_t)file_info.st_size);
    
-      //enable verbose for easier tracing
-      curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
-   
       res = curl_easy_perform(curl);
-      /* Check for errors */
+      // Regarde s'il y a des erreurs
       if(res != CURLE_OK) {
         fprintf(stderr, "curl_easy_perform() failed: %s\n",
                 curl_easy_strerror(res));
       }
-      else {
-        /* now extract transfer info */
-        curl_easy_getinfo(curl, CURLINFO_SPEED_UPLOAD_T, &speed_upload);
-        curl_easy_getinfo(curl, CURLINFO_TOTAL_TIME_T, &total_time);
-   
-        fprintf(stderr, "Speed: %lu bytes/sec during %lu.%06lu seconds\n",
-                (unsigned long)speed_upload,
-                (unsigned long)(total_time / 1000000),
-                (unsigned long)(total_time % 1000000));
-      }
-      /* always cleanup */
+      // Nettoie curl à la fin de son utilisation
       curl_easy_cleanup(curl);
     }
+    fclose(yaml_file);
+
     return 0;
 }
 
@@ -121,12 +105,12 @@ int main(int argc, char **argv){
   //APPROVISIONNEMENT
   getSupply();
 
+  // CLOSE
+  fclose(yaml_file);
+
   //CURL
   curl();
 
-
-  // CLOSE
-  fclose(yaml_file);
 
   sqlite3_finalize(res); // Supprime le "statement" de la base de donnée
   sqlite3_close(db); // Ferme la base de donnée
