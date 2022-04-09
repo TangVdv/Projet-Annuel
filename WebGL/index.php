@@ -15,7 +15,7 @@
 		<script type="importmap">
 			{
 				"imports": {
-					"three": "/three.js-master/build/three.module.js"
+					"three": "./three.js-master/build/three.module.js"
 				}
 			}
 		</script>

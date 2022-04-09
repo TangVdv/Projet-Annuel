@@ -1,5 +1,6 @@
 //import * as THREE from 'three.js-master/build/three.module.js';
 import * as THREE from 'three';
+import { Capsule } from './three.js-master/examples/jsm/math/Capsule.js';
 //import { Capsule } from 'three.js-master/examples/jsm/math/Capsule.js';
 
 let camera, scene, renderer;
@@ -9,14 +10,14 @@ let mouseTime = 0;
 
 //Déclaration des paramètres de l'utilisateur
 
-//const playerCollider = new Capsule( new THREE.Vector3( 0, 100, 0 ), new THREE.Vector3( 0, 100, 0 ), 100 );
+const playerCollider = new Capsule( new THREE.Vector3( 0, 1, 0 ), new THREE.Vector3( 0, 1, 0 ), 1 );
 const playerVelocity = new THREE.Vector3();
 const playerDirection = new THREE.Vector3();
 
 const keyStates = {};
 
 const STEPS_PER_FRAME = 5;
-let floorSpeed = 1500;
+let floorSpeed = 100;
 
 const clock = new THREE.Clock();
 
@@ -30,6 +31,7 @@ function init(){
 
   camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 1000 );
   camera.position.set( 0, 3, - 6 );
+  camera.rotation.order = 'YXZ';
   camera.lookAt( 0, 1, 0 );
   console.log(camera.position.y);
 
@@ -99,6 +101,23 @@ function setupMap(){
 
 
 }
+
+//
+
+
+function updatePlayer( deltaTime ) {
+
+	let damping = Math.exp( - 4 * deltaTime ) - 1;
+
+	playerVelocity.addScaledVector( playerVelocity, damping );
+
+	const deltaPosition = playerVelocity.clone().multiplyScalar( deltaTime );
+	playerCollider.translate( deltaPosition );
+
+	camera.position.copy( playerCollider.end );
+
+}
+
 
 function setupKeys(){
   document.addEventListener( 'keydown', ( event ) => {
@@ -182,7 +201,6 @@ function controls( deltaTime ) {
 
 }
 
-
 function onWindowResize() {
 
   camera.aspect = window.innerWidth / window.innerHeight;
@@ -191,6 +209,8 @@ function onWindowResize() {
   renderer.setSize( window.innerWidth, window.innerHeight );
 
 }
+
+//
 
 function animate() {
 
@@ -201,7 +221,13 @@ function animate() {
   const delta = clock.getDelta();
   const deltaTime = Math.min( 0.05, delta ) / STEPS_PER_FRAME;
 
-  controls( deltaTime );
+  for ( let i = 0; i < STEPS_PER_FRAME; i ++ ) {
+
+    controls( deltaTime );
+
+    updatePlayer( deltaTime );
+
+  }
 
   renderer.render( scene, camera );
 
