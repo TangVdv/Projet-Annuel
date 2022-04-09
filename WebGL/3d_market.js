@@ -4,13 +4,22 @@ import * as THREE from 'three';
 
 let camera, scene, renderer;
 let wall;
+let mouseTime = 0;
 
 
 //Déclaration des paramètres de l'utilisateur
-/*
-const playerCollider = new Capsule( new THREE.Vector3( 0, 100, 0 ), new THREE.Vector3( 0, 100, 0 ), 100 );
+
+//const playerCollider = new Capsule( new THREE.Vector3( 0, 100, 0 ), new THREE.Vector3( 0, 100, 0 ), 100 );
 const playerVelocity = new THREE.Vector3();
-const playerDirection = new THREE.Vector3();*/
+const playerDirection = new THREE.Vector3();
+
+const keyStates = {};
+
+const STEPS_PER_FRAME = 5;
+let floorSpeed = 1500;
+
+const clock = new THREE.Clock();
+
 
 
 init();
@@ -20,8 +29,10 @@ function init(){
   let wall;
 
   camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 1000 );
-  camera.position.set( 2, 3, - 6 );
+  camera.position.set( 0, 3, - 6 );
   camera.lookAt( 0, 1, 0 );
+  console.log(camera.position.y);
+
 
   scene = new THREE.Scene();
 
@@ -37,6 +48,8 @@ function init(){
   setupLights();
 
   setupMap();
+
+  setupKeys();
 
 
 
@@ -87,6 +100,88 @@ function setupMap(){
 
 }
 
+function setupKeys(){
+  document.addEventListener( 'keydown', ( event ) => {
+
+    keyStates[ event.code ] = true;
+
+  } );
+
+  document.addEventListener( 'keyup', ( event ) => {
+
+    keyStates[ event.code ] = false;
+
+  } );
+
+  document.addEventListener( 'mousedown', () => {
+
+    document.body.requestPointerLock();
+
+    mouseTime = performance.now();
+
+  } );
+
+  document.body.addEventListener( 'mousemove', ( event ) => {
+
+    if ( document.pointerLockElement === document.body ) {
+
+      camera.rotation.y -= event.movementX / 500;
+      camera.rotation.x -= event.movementY / 500;
+
+    }
+
+  } );
+
+}
+
+function getForwardVector() {
+
+  camera.getWorldDirection( playerDirection );
+  playerDirection.y = 0;
+  playerDirection.normalize();
+
+  return playerDirection;
+
+}
+
+function getSideVector() {
+
+  camera.getWorldDirection( playerDirection );
+  playerDirection.y = 0;
+  playerDirection.normalize();
+  playerDirection.cross( camera.up );
+
+  return playerDirection;
+
+}
+
+function controls( deltaTime ) {
+
+  const speedDelta = deltaTime * floorSpeed;
+
+  if ( keyStates[ 'KeyW' ] ) {
+    playerVelocity.add( getForwardVector().multiplyScalar( speedDelta ) );
+
+  }
+
+  if ( keyStates[ 'KeyS' ] ) {
+    playerVelocity.add( getForwardVector().multiplyScalar( - speedDelta ) );
+
+  }
+
+  if ( keyStates[ 'KeyA' ] ) {
+    playerVelocity.add( getSideVector().multiplyScalar( - speedDelta ) );
+
+  }
+
+  if ( keyStates[ 'KeyD' ] ) {
+    playerVelocity.add( getSideVector().multiplyScalar( speedDelta ) );
+
+  }
+
+
+}
+
 
 function onWindowResize() {
 
@@ -102,6 +197,11 @@ function animate() {
   requestAnimationFrame( animate );
   //wall.rotation.x +=  0.01;
   //console.log(wall.rotation.x);
+
+  const delta = clock.getDelta();
+  const deltaTime = Math.min( 0.05, delta ) / STEPS_PER_FRAME;
+
+  controls( deltaTime );
 
   renderer.render( scene, camera );
 
