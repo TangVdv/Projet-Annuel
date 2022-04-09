@@ -3,6 +3,7 @@
 #include <string.h>
 #include <sqlite3.h>
 #include <sys/stat.h>
+#include <time.h>
 
 
 #define UPLOAD_FILE_AS "data.yaml"
@@ -12,6 +13,9 @@ sqlite3 *db;
 sqlite3_stmt *res;
 char *err_msg = 0;
 FILE *yaml_file;
+time_t t;
+struct tm tm;
+char date[10];
 
 
 int getData(void *NotUsed, int rowCount, char **rowValue, char **rowName){
@@ -30,20 +34,22 @@ int getData(void *NotUsed, int rowCount, char **rowValue, char **rowName){
 void getSupply(){
   fprintf(yaml_file, "approvisionnement:\n");
 
-  //sql = "SELECT nom, prix FROM PRODUIT INNER JOIN STOCK ON stock.id_produit = produit.id_produit WHERE CAST(stock.date_ajout AS DATE) = CAST( GETDATE() AS DATE)";
-  //sqlite3_exec(db, sql, getData, 0,&err_msg);
+  char sql[157] = "SELECT nom, prix FROM PRODUIT INNER JOIN STOCK ON stock.id_produit = produit.id_produit WHERE stock.date_ajout = '";
+  
+  strcat(sql, date);
+  strcat(sql, "'");
 
-  char *sql = "SELECT date_achat, prix_achat FROM historique_achat";
   sqlite3_exec(db, sql, getData, 0,&err_msg);
 }
 
 void getSale(){
   fprintf(yaml_file, "vente:\n");
 
-  //char *sql = "SELECT nom, prix FROM PRODUIT INNER JOIN HISTORIQUE_ACHAT ON historique_achat.id_produit  = produit.id_produit WHERE CAST(date_achat AS DATE) = CAST( GETDATE() AS DATE)";
-  //sqlite3_exec(db, sql, getData, 0,&err_msg);
+  char sql[157] = "SELECT nom, prix FROM PRODUIT INNER JOIN HISTORIQUE_ACHAT ON historique_achat.id_produit  = produit.id_produit WHERE historique_achat.date_achat = '";
+  
+  strcat(sql, date);
+  strcat(sql, "'");
 
-  char *sql = "SELECT nom, prix FROM produit";
   sqlite3_exec(db, sql, getData, 0,&err_msg);
 }
 
@@ -85,6 +91,10 @@ int curl(){
 }
 
 int main(int argc, char **argv){
+
+  t = time(NULL);
+  tm = *localtime(&t);
+  sprintf(date, "%d-%02d-%02d", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday);
 
   // OPEN
   yaml_file = fopen("data.yaml", "w");
