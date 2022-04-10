@@ -4,14 +4,15 @@ class productModel{
   public static function AddProduct($ProductToAdd){
     include("../../includes/bdd.php");
 
-    $query = $db->prepare( "INSERT INTO Produit(image, nom, description, prix, reduction, stock) VALUES(:image, :name, :description, :price, :reduction, :stock);" );
+    $query = $db->prepare( "INSERT INTO Produit(image, nom, description, prix, reduction, stock, type) VALUES(:image, :name, :description, :price, :reduction, :stock, :type);" );
     $res = $query->execute([
         "image" => $ProductToAdd["image"],
         "name" => $_POST["name"],
         "description" => $_POST["description"],
         "price" => $_POST["price"],
         "reduction" => 0,
-        "stock" => $_POST["stock"]
+        "stock" => $_POST["stock"],
+        "type" => $ProductToAdd["type_value"]
     ]);
 
     $query = $db->prepare( "INSERT INTO dispose(id_entreprise, id_produit) VALUES(:id_entreprise, (SELECT id_produit FROM produit WHERE nom = :name));" );
@@ -27,12 +28,20 @@ class productModel{
     include("../../includes/bdd.php");
 
     if($value){
-      $query = $db->query("SELECT id_produit, image, nom, description, prix, stock, reduction FROM Produit WHERE EXISTS (SELECT id_produit FROM Stock WHERE Stock.id_produit = Produit.id_produit)");
+      $query = $db->query("SELECT id_produit, image, nom, description, prix, stock, reduction FROM Produit WHERE EXISTS (SELECT id_produit FROM Stock WHERE Stock.id_produit = Produit.id_produit) AND type='product'");
     }
     else {
-      $query = $db->query("SELECT id_produit, image, nom, description, prix, stock, reduction FROM Produit WHERE NOT EXISTS (SELECT id_produit FROM Stock WHERE Stock.id_produit = Produit.id_produit)");
+      $query = $db->query("SELECT id_produit, image, nom, description, prix, stock, reduction FROM Produit WHERE NOT EXISTS (SELECT id_produit FROM Stock WHERE Stock.id_produit = Produit.id_produit) AND type='product'");
     }
-    
+
+    return $query;
+  }
+
+  public static function SelectService(){
+    include("../../includes/bdd.php");
+
+    $query = $db->query("SELECT id_produit, image, nom, description, prix, stock, reduction FROM Produit WHERE type='service'");
+
     return $query;
   }
 

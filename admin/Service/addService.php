@@ -8,8 +8,8 @@
   <body>
     <a href="index.php" class="nav-link ms-4" style="width:10%" translate-key="back-button"></a>
     <div class="w-50" style="margin: auto;">
-        <h3 class="my-4" translate-key="addproduct-title"></h3>
-        <form class="" action="checkProduct.php" method="post" enctype="multipart/form-data">
+        <h3 class="my-4" translate-key="addservice-title"></h3>
+        <form class="" action="checkService.php" method="post" enctype="multipart/form-data">
           <div class="mb-3">
             <label class="form-label" translate-key="name-title"></label>
             <input type="text" class="form-control" name="name">
@@ -23,15 +23,12 @@
             <input type="number" step=".01" class="form-control" name="price">
           </div>
           <div class="mb-3">
-            <label class="form-label" translate-key="stock-title"></label>
-            <input type="number" class="form-control" name="stock">
+            <label class="form-label" translate-key="reduction-title"></label>
+            <input type="number" step=".01" class="form-control" name="reduction">
           </div>
           <div class="mb-3">
-            <label class="form-label" translate-key="type-title"></label>
-            <select class="form-select" name="type" id="type">
-              <option value="product" translate-key="product-title"></option>
-              <option value="service" translate-key="service-title"></option>";
-            </select>
+            <label class="form-label" translate-key="stock-title"></label>
+            <input type="number" class="form-control" name="stock">
           </div>
           <div class="mb-3">
             <label class="form-label" translate-key="compagny-title"></label>

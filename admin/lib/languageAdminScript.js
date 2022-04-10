@@ -19,6 +19,7 @@ const translations = {
     "submit-button": "Send",
     "cancel-button": "Cancel",
     "validate-button": "Validate",
+    "modify-button": "Modify",
     "yes-title": "Yes",
     "no-title": "No",
     // HOME
@@ -35,7 +36,8 @@ const translations = {
     "table-action-title": "Action",
     // PRODUCT
     "informationproduct-title": "Product information",
-    "addproduct-title": "Add a product",
+    "addproduct-title": "Add item",
+    "service-title": "Service",
     "warehouseproduct-title": "Products in a warehouse :",
     "notwarehouseproduct-title": "Products not in a warehouse :",
     "image-title": "Image",
@@ -45,6 +47,7 @@ const translations = {
     "price-title": "Price",
     "discount-title": "Discount",
     "stock-title": "Stock",
+    "type-title": "Type",
     "compagny-title": "Compagny",
     "compagny-desc": "Choose a compagny",
     // COMPAGNY
@@ -54,7 +57,7 @@ const translations = {
     "notcontributioncompagny-title": "This company has not yet paid its dues",
     "contributionamount-title": "Contribution amount : ",
     "change-button": "Change",
-    "productcompagny-title": "All the products available to the company :",
+    "productcompagny-title": "All items available to the company :",
     "contributionquestion-title": "Has the company paid the contribution ?",
     "setnewturnover-title": "Fill in the new turnover of the company",
     // WAREHOUSE
@@ -73,6 +76,7 @@ const translations = {
     "submit-button": "Envoyer",
     "cancel-button": "Annuler",
     "validate-button": "Valider",
+    "modify-button": "Modifier",
     "yes-title": "Oui",
     "no-title": "Non",
     // HOME
@@ -89,7 +93,8 @@ const translations = {
     "table-action-title": "Action",
     // PRODUCT
     "informationproduct-title": "Information du produit",
-    "addproduct-title": "Ajouter un produit",
+    "addproduct-title": "Ajouter un article",
+    "service-title": "Prestation",
     "warehouseproduct-title": "Produits se trouvant dans un entrepôt :",
     "notwarehouseproduct-title": "Produits ne se trouvant pas dans un entrepôt :",
     "image-title": "Image",
@@ -99,6 +104,7 @@ const translations = {
     "price-title": "Prix",
     "discount-title": "Réduction",
     "stock-title": "Stock",
+    "type-title": "Type",
     "compagny-title": "Entreprise",
     "compagny-desc": "Choisir une entreprise",
     // COMPAGNY
@@ -108,7 +114,7 @@ const translations = {
     "notcontributioncompagny-title": "Cette entreprise n'a pas enore payée sa cotisation",
     "contributionamount-title": "Montant de la cotisation : ",
     "change-button": "Changer",
-    "productcompagny-title": "Tous les produits dont dispose l'entreprise :",
+    "productcompagny-title": "Tous les articles dont dispose l'entreprise :",
     "contributionquestion-title": "L'entreprise a-t-elle payée la cotisation ?",
     "setnewturnover-title": "Renseignez le nouveau chiffre d'affaire de l'entreprise",
     // WAREHOUSE

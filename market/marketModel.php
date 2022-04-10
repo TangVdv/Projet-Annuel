@@ -1,6 +1,7 @@
 <?php
 
 class MarketModel{
+  // PRODUCT
   public static function SelectSpecificProduct(){
     include("../includes/bdd.php");
     $query = $db->prepare("SELECT COUNT(*) as total FROM achete WHERE id_produit = :ProductId AND id_utilisateur = :UserId");
@@ -34,12 +35,22 @@ class MarketModel{
     ]);
   }
 
-  public static function SelectProduct(){
+  public static function SelectProduct($type){
     include("../includes/bdd.php");
 
-    $query = $db->query("SELECT id_produit, nom, image, description, prix, stock, reduction FROM Produit WHERE EXISTS (SELECT id_produit FROM Stock WHERE Stock.id_produit = Produit.id_produit)");
+    switch ($type) {
+      case 'service':
+        $query = $db->query("SELECT id_produit, nom, image, description, prix, stock, reduction, type FROM Produit WHERE type='service'");
+        break;
 
+      case 'product':
+        $query = $db->query("SELECT id_produit, nom, image, description, prix, stock, reduction, type FROM Produit WHERE EXISTS (SELECT id_produit FROM Stock WHERE Stock.id_produit = Produit.id_produit)");
+        break;
 
-    return $query;
+      default:
+        $query = $db->query("SELECT id_produit, nom, image, description, prix, stock, reduction, type FROM Produit WHERE EXISTS (SELECT id_produit FROM Stock WHERE Stock.id_produit = Produit.id_produit) OR type='service'");
+
+    }
+      return $query;
   }
 }

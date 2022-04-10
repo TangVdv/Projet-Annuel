@@ -13,9 +13,9 @@
 
       <div class="d-flex justify-content-between d-flex align-items-end mb-3">
 
-        <h1 translate-key="basket-desc"></h1>
+        <h1 translate-key="cart-desc"></h1>
         <div class="d-flex">
-          <h2 class="mx-2" translate-key="basket-price"></h2>
+          <h2 class="mx-2" translate-key="cart-price"></h2>
           <h2 id="prix_total"></h2>
         </div>
       </div>
@@ -60,7 +60,7 @@
              <?php } ?>
           <div class="d-flex justify-content-end">
             <?php if ($req->rowCount() > 0) { ?>
-              <button type="button" onclick="startStripe()" class="btn btn-success" translate-key="basket-button"></button>
+              <button type="button" onclick="startStripe()" class="btn btn-success" translate-key="cart-button"></button>
             <?php } ?>
           </div>
           <script>

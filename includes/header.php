@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     <link href="/lib/bootstrap.min.css" rel="stylesheet">
     <script src="/lib/bootstrap.min.js" charset="utf-8"></script>
-    <script src="/lib/languageScript.js"></script>
+    <script src="/lib/languageScript.js" charset="utf-8"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <title>Header</title>
     <style>
       header {
@@ -26,7 +27,7 @@
           if (isset($_SESSION['email'])) {
               echo "<li class='nav-item'><a href='/signIn-Up/logOut.php' class='nav-link text-white px-2' translate-key='logout-title'></a> </li>";
       				echo "<li class='nav-item'><a href='/account/' class='nav-link text-white px-2' translate-key='account-title'>Compte</a> </li>";
-              echo "<li class='nav-item'><a href='/panier/' class='nav-link text-white px-2' translate-key='basket-title'>Panier</a> </li>";
+              echo "<li class='nav-item'><a href='/panier/' class='nav-link text-white px-2' translate-key='cart-title'>Panier</a> </li>";
       			}
       		else{
       				echo "<li class='nav-item'><a href='/signIn-Up/sign_in.php' class='nav-link text-white px-2' translate-key='login-title'></a> </li>";
