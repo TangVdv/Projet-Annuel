@@ -19,9 +19,12 @@
 				}
 			}
 		</script>
+    <video id="video" width="1600" style="display:none" muted>
+      <source src="video/Coin_rain.mp4" type="video/mp4">
+    </video>
+    <div id="container">
+      <script type="module" src="3d_market.js"></script>
+    </div>
 
-      <script type="module" src="3d_market.js">
-
-      </script>
   </body>
 </html>

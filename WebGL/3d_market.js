@@ -2,15 +2,23 @@
 import * as THREE from 'three';
 import { Capsule } from './three.js-master/examples/jsm/math/Capsule.js';
 //import { Capsule } from 'three.js-master/examples/jsm/math/Capsule.js';
+import { FontLoader } from './three.js-master/examples//jsm/loaders/FontLoader.js';
 
 let camera, scene, renderer;
-let wall;
+let productImg;
 let mouseTime = 0;
+
+let button;
+
+const raycaster = new THREE.Raycaster();
+const pointer = new THREE.Vector2();
+
+const objects = [];
 
 
 //Déclaration des paramètres de l'utilisateur
 
-const playerCollider = new Capsule( new THREE.Vector3( 0, 1, 0 ), new THREE.Vector3( 0, 1, 0 ), 1 );
+const playerCollider = new Capsule( new THREE.Vector3( 0, 1, 0 ), new THREE.Vector3( 0, 10, 0 ), 1 );
 const playerVelocity = new THREE.Vector3();
 const playerDirection = new THREE.Vector3();
 
@@ -21,6 +29,12 @@ let floorSpeed = 100;
 
 const clock = new THREE.Clock();
 
+let video;
+const container = document.getElementById('container');
+const coinSound = new Audio('video/coin_sound.mp3');
+
+document.addEventListener( 'mouseup', onPointerMove );
+
 
 
 init();
@@ -29,16 +43,20 @@ animate();
 function init(){
   let wall;
 
+  //Video setup
+  video = document.getElementById( 'video' );
+
+
   camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 1000 );
   camera.position.set( 0, 3, - 6 );
   camera.rotation.order = 'YXZ';
   camera.lookAt( 0, 1, 0 );
-  console.log(camera.position.y);
+  //console.log(camera.position.y);
 
 
   scene = new THREE.Scene();
 
-  scene.background = new THREE.Color( 0xa0a0a0 );
+  scene.background = new THREE.Color( 0x057dc2 );
 
   /*
   const texture = new THREE.TextureLoader().load( 'textures/grass.png' );
@@ -46,7 +64,6 @@ function init(){
   const geometry = new THREE.BoxGeometry( 200, 200, 200 );
   const material = new THREE.MeshBasicMaterial( { map: texture } );
   */
-
   setupLights();
 
   setupMap();
@@ -87,23 +104,210 @@ function setupLights(){
 }
 
 function setupMap(){
-  const ground = new THREE.Mesh( new THREE.PlaneGeometry( 200, 200 ), new THREE.MeshPhongMaterial( { color: 0x999999, depthWrite: false } ) );
+  let material = setMaterial(20, 40, 'wood.jpg');
+  let geometry = new THREE.PlaneGeometry( 80, 80 );
+  const ground = new THREE.Mesh( geometry, material );
   ground.rotation.x = - Math.PI / 2;
   ground.receiveShadow = true;
   scene.add( ground );
 
-  wall = new THREE.Mesh( new THREE.PlaneGeometry( 5, 2 ), new THREE.MeshPhongMaterial( { color: 0x049ef4, depthWrite: false } ) );
-  //wall.rotation.x =  3;
-  wall.rotation.x = - Math.PI;
-  //wall.position.x = ground.position.x -20;
-  wall.receiveShadow = true;
-  scene.add( wall );
+  //console.log("oui");
+  spawnProduct();
+  spawnWalls();
+  spawnButton();
 
 
 }
 
+function spawnButton(){
+  let material = new THREE.MeshPhongMaterial( { color: 0xa50909, depthWrite: false } )
+  let geometry = new THREE.BoxGeometry( 2, 1, 1 );
+  button = new THREE.Mesh( geometry, material );
+  button.position.y = 7;
+  button.position.z = 9;
+  //ground.receiveShadow = true;
+  objects.push(button);
+  scene.add(button);
+  //console.log("bouton");
+}
+
+function onPointerMove( event ) {
+
+  pointer.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1 );
+
+  raycaster.setFromCamera( pointer, camera );
+
+  const intersects = raycaster.intersectObjects( objects, false );
+
+  if (intersects.length > 0){
+      //console.log("YEEEEEEEEEEEEEES");
+      playVideo();
+  }
+
+}
+
+function playVideo(){
+  container.style.display = 'none';
+  video.style.display = 'block';
+  video.play();
+  coinSound.play();
+  coinSound.volume = .2;
+  setTimeout( stopVideo, 10000 );
+}
+
+function stopVideo(){
+  video.style.display = 'none';
+  container.style.display = 'block';
+}
+
+
+function spawntext(){
+  const loader = new FontLoader();
+	loader.load( 'three.js-master/examples/fonts/helvetiker_regular.typeface.json', function ( font ) {
+	   const color = 0xc5d11a;
+     const matDark = new THREE.LineBasicMaterial( {
+		     color: color,
+	        side: THREE.DoubleSide
+					} );
+
+          const matLite = new THREE.MeshBasicMaterial( {
+            color: color,
+            transparent: true,
+            opacity: 0.6,
+            side: THREE.DoubleSide
+          } );
+
+
+					const message = '300€';
+					const shapes = font.generateShapes( message, 100 );
+					const geometry = new THREE.ShapeGeometry( shapes );
+					geometry.computeBoundingBox();
+					const xMid = - 0.5 * ( geometry.boundingBox.max.x - geometry.boundingBox.min.x );
+					geometry.translate( xMid, 0, 0 );
+
+
+					const text = new THREE.Mesh( geometry, matLite );
+					text.position.z = 10;
+          text.position.y = 8;
+					scene.add( text );
+
+				} );
+}
+
+function spawnWalls(){
+  let loyaltyGroup = new THREE.Group();
+  let hwdGroup = new THREE.Group();
+  let hwdGroup2 = new THREE.Group();
+  let wallPosY = 12.5;
+
+  //LW1
+  let material = setMaterial(10, 20, 'logo_loyaltycard.png');
+  let geometry = new THREE.BoxGeometry( 80, 25, 0.01 );
+  let loyaltyWall = new THREE.Mesh( geometry, material );
+  loyaltyWall.position.y = wallPosY;
+  loyaltyWall.position.z = 40;
+
+  scene.add( loyaltyWall );
+
+
+  //LW2
+  material = setMaterial(10, 20, 'logo_loyaltycard.png');
+  geometry = new THREE.BoxGeometry( 80, 25, 0.01 );
+  let loyaltyWall2 = new THREE.Mesh( geometry, material );
+  loyaltyWall2.position.y = wallPosY;
+  loyaltyWall2.position.z = 40;
+  loyaltyGroup.add(loyaltyWall2);
+  loyaltyGroup.rotation.y = - Math.PI;
+
+  scene.add( loyaltyGroup );
+
+
+
+  //HWD1
+  material = setMaterial(10, 5, 'here_we_dev_logo.jpg');
+  geometry = new THREE.BoxGeometry( 80, 25, 0.01 );
+  let hwdWall = new THREE.Mesh( geometry, material );
+  hwdWall.position.y = wallPosY;
+  hwdWall.position.z = 40;
+  hwdGroup.add(hwdWall);
+  hwdGroup.rotation.y = - Math.PI/2;
+
+  scene.add( hwdGroup );
+
+
+
+  //HWD2
+  material = setMaterial(10, 5, 'here_we_dev_logo.jpg');
+  geometry = new THREE.BoxGeometry( 80, 25, 0.01 );
+  let hwdWall2 = new THREE.Mesh( geometry, material );
+  hwdWall2.position.y = wallPosY;
+  hwdWall2.position.z = 40;
+  hwdGroup2.add(hwdWall2);
+  hwdGroup2.rotation.y = Math.PI/2;
+
+  scene.add( hwdGroup2 );
+
+
+}
+
+
 //
 
+function spawnProduct(){
+  let texture = new THREE.TextureLoader().load( 'textures/carte_graphique.jpg' );
+
+	let geometry = new THREE.BoxGeometry( 5, 5, 0.01 );
+	let material = new THREE.MeshBasicMaterial( { map: texture } );
+
+	productImg = new THREE.Mesh( geometry, material );
+
+  productImg.position.y = 9.5;
+  productImg.position.z = 10;
+  //console.log(product.position.x);
+
+  scene.add( productImg );
+
+
+  material = setMaterial(2, 4, 'Carbon.png');
+  geometry = new THREE.BoxGeometry( 5, 12, 2 );
+
+  let productCore = new THREE.Mesh( geometry, material );
+  productCore.position.y = 6;
+  productCore.position.z = 11;
+  scene.add( productCore );
+
+
+  geometry = new THREE.BoxGeometry( 5, 8, 2 );
+  let buttonSupport = new THREE.Mesh( geometry, material );
+  buttonSupport.position.y = 3;
+  buttonSupport.position.z = 9;
+  scene.add( buttonSupport );
+
+
+}
+
+function setMaterial(UV_x, UV_y, textureName){
+  //Texture
+  const objectTexture = new THREE.TextureLoader().load('textures/' + textureName);
+
+  //Texture scale
+  objectTexture.wrapS = THREE.RepeatWrapping; // Texture is wrapped horizontally
+  objectTexture.wrapT = THREE.RepeatWrapping; // Texture is wrapped vertically
+  objectTexture.repeat.set( UV_x, UV_y ); // Number of times the texture is repeated
+
+  //Material
+  const material = new THREE.MeshPhongMaterial( { map: objectTexture } );
+  return material;
+}
+
+function teleportPlayerIfOob(){
+  if(camera.position.x > 38 || camera.position.x < -38 || camera.position.z > 38 || camera.position.z < -38){
+    playerCollider.start.set( 0, 1, 0 );
+    playerCollider.end.set( 0, 10, 0 );
+    camera.position.copy( playerCollider.end );
+    camera.rotation.set( 0, 0, 0 );
+  }
+}
 
 function updatePlayer( deltaTime ) {
 
@@ -229,7 +433,10 @@ function animate() {
 
   }
 
+  teleportPlayerIfOob();
+
   renderer.render( scene, camera );
 
+  //console.log(camera.position.x);
 
 }
