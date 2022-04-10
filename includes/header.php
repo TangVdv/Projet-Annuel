@@ -53,6 +53,7 @@
         <ul class="nav">
           <li class="nav-item"><a href="/" class="nav-link link-dark px-2 active" aria-current="page" translate-key="home-title"></a></li>
           <li class="nav-item"><a href="/market/" class="nav-link link-dark px-2" translate-key="market-title"></a></li>
+          <li class="nav-item"><a href="/WebGL/" class="nav-link link-dark px-2">Magasin 3D</a></li>
         </ul>
 
       </div>

@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Olala catastrophe</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link type="text/css" rel="stylesheet" href="bootstrap.min.css">
+	</head>
+
+	<body class="bg-dark">
+		<div id = "overlay" class="d-flex justify-content-center">
+			<button class="btn-success btn-lg" id = "startButton">Start</button>
+			<video id="video" width="1600" controls>
+	  		<source src="video/Introduction.mp4" type="video/mp4">
+			</video>
+		</div>
+		<div id = "overlay_video" class="d-flex justify-content-center" >
+			<video id="video" width="1600" style="display:none" muted>
+	  		<source src="video/Explosion.mp4" type="video/mp4">
+			</video>
+		</div>
+		<div id="instructions" style="display:none">
+			<div>
+				<h1>Click to begin</h1>
+			</div>
+		</div>
+
+		<div id="container">
+			<script type="module">
+
+				import * as THREE from '../three.js-master/build/three.module.js';
+
+				import Stats from '../three.js-master/examples/jsm/libs/stats.module.js';
+
+				import { GUI } from '../three.js-master/examples/jsm/libs/dat.gui.module.js';
+
+				import { OrbitControls } from '../three.js-master/examples/jsm/controls/OrbitControls.js';
+				import { FBXLoader } from '../three.js-master/examples/jsm/loaders/FBXLoader.js';
+
+	      import { MTLLoader } from '../three.js-master/examples/jsm/loaders/MTLLoader.js';
+	      import { OBJLoader } from '../three.js-master/examples/jsm/loaders/OBJLoader.js';
+				import { GLTFLoader } from '../three.js-master/examples/jsm/loaders/GLTFLoader.js';
+				import { ColladaLoader } from '../three.js-master/examples/jsm/loaders/ColladaLoader.js';
+
+				import { Octree } from '../three.js-master/examples/jsm/math/Octree.js';
+				import { Capsule } from '../three.js-master/examples/jsm/math/Capsule.js';
+
+				let camera, scene, renderer, stats;
+				let gui, controls;
+				//let gui;
+
+				const clock = new THREE.Clock();
+
+				let mixer;
+				let fog = 0;
+	      let shrekPosition;
+				let Rshrek, Rmissile, Rmap, Rbridge;
+				let Opos;
+				let video, Vstatus;
+				let light, hemiLight;
+				let sEEEEEEEEEEEE, rocketSound, kenshiroSound;
+				let activate;
+				let floorSpeed = 1500;
+				let airSpeed = 100;
+				let jumpHeight = 300;
+
+				const raycaster = new THREE.Raycaster();
+				const pointer = new THREE.Vector2();
+
+				const objects = [];
+
+				const GRAVITY = 400;
+
+				const STEPS_PER_FRAME = 5;
+
+				const worldOctree = new Octree();
+
+				const playerCollider = new Capsule( new THREE.Vector3( 0, 100, 0 ), new THREE.Vector3( 0, 100, 0 ), 100 );
+
+				const playerVelocity = new THREE.Vector3();
+				const playerDirection = new THREE.Vector3();
+
+				const nuclearSound = new Audio('Music/Explosion.mp3');
+
+				let playerOnFloor = false;
+				let mouseTime = 0;
+				let fps = false;
+
+				const keyStates = {};
+
+				const vector1 = new THREE.Vector3();
+				const vector2 = new THREE.Vector3();
+				const vector3 = new THREE.Vector3();
+
+				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 50000 );
+				camera.position.set( 100, 800, -200 );
+				camera.rotation.order = 'YXZ';
+
+				const listener = new THREE.AudioListener();
+				camera.add( listener );
+				const sound = new THREE.Audio( listener );
+
+
+				const startButton = document.getElementById( 'startButton' );
+				startButton.addEventListener( 'click', init );
+				renderer = new THREE.WebGLRenderer( { antialias: true } );
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.shadowMap.enabled = true;
+				container.appendChild( renderer.domElement );
+
+				scene = new THREE.Scene();
+				scene.background = new THREE.Color( 0xa0a0a0 );
+				scene.fog = new THREE.Fog( 0xa0a0a0, 12000, 15000 );
+
+				// stats
+				stats = new Stats();
+				container.appendChild( stats.dom );
+
+				document.addEventListener( 'mouseup', onPointerMove );
+
+				animate();
+
+				function setup(){
+
+					const overlay = document.getElementById('overlay');
+					overlay.remove();
+
+					window.addEventListener( 'resize', onWindowResize );
+
+					hemiLight = new THREE.HemisphereLight( 0xffffff, 0x444444 );
+					hemiLight.position.set( 0, 200, 0 );
+
+					light = new THREE.PointLight( 0xffffff, .33, 10000 );
+					light.position.set( 1000, 2000, 1000 );
+					light.castShadow = true;
+					light.shadow.mapSize.width = 2048; //Qualité de l'ombre en largeur
+					light.shadow.mapSize.height = 2048; //Qualité de l'ombre en hauteur
+
+				}
+
+				function init() {
+					setup();
+					const container = document.getElementById('container');
+
+					scene.add( hemiLight );
+
+					scene.add( light );
+
+					//Video setup
+					video = document.getElementById( 'video' );
+					Vstatus = 0;
+					//video.play();
+
+					Opos = 2100;
+					camera.position.y += Opos;
+					//1000 1500
+
+					// ground
+					const mesh = new THREE.Mesh( new THREE.PlaneGeometry( 2000, 2000 ), new THREE.MeshPhongMaterial( { color: 0x999999, depthWrite: false } ) );
+					mesh.rotation.x = - Math.PI / 2;
+					mesh.receiveShadow = true;
+					scene.add( mesh );
+
+	        shrekPosition = 100;
+
+					createShrek();
+
+	        createRocket();
+
+					//buildCityClean();
+					buildCityDestroyed();
+
+					setupControls();
+					controls_2.enabled = false;
+				}
+
+				function Volcan(){
+					const container = document.getElementById('container');
+
+					scene = new THREE.Scene();
+
+					scene.background = new THREE.Color( 0xa0a0a0 );
+					scene.fog = new THREE.Fog( 0xa0a0a0, 12000, 15000 );
+
+
+					scene.add( hemiLight );
+					scene.add( light );
+
+					createKenshiro();
+					createSaitama();
+					buildVolcanMap();
+					bridge();
+
+					setup_keys();
+
+					buildGui();
+
+					animate();
+				}
+
+				function setupControls(){
+					// CONTROL
+
+					controls = new OrbitControls( camera, renderer.domElement );
+					controls.addEventListener( 'change', renderer );
+					controls.minDistance = 100;
+					controls.maxDistance = 20000;
+					controls.enablePan = false;
+					controls.enabled = true;
+				}
+
+				function createShrek(){
+
+					// model shrek
+					const loader = new FBXLoader();
+					loader.load( 'models/shrekPose.fbx', function ( shrek ) {
+
+						mixer = new THREE.AnimationMixer( shrek );
+						Rshrek = shrek;
+
+	          shrek.position.y = Opos + shrekPosition;
+	          shrek.scale.set(7, 7, 7);
+
+						shrek.rotation.x = 1;
+
+						const action = mixer.clipAction( shrek.animations[ 0 ] );
+						action.play();
+
+						shrek.traverse( function ( child ) {
+
+							if ( child.isMesh ) {
+
+								child.castShadow = true;
+								child.receiveShadow = true;
+
+							}
+
+						} );
+
+						scene.add( shrek );
+
+
+						// Sound
+
+						sEEEEEEEEEEEE = new THREE.PositionalAudio(listener);
+						const sEEEaudio = new THREE.AudioLoader();
+						sEEEaudio.load( 'Music/Takeshi.mp3', function( sEEEsound ) {
+							sEEEEEEEEEEEE.setBuffer( sEEEsound );
+							sEEEEEEEEEEEE.setLoop( true );
+							sEEEEEEEEEEEE.setVolume( 3 );
+							sEEEEEEEEEEEE.setRefDistance(30);
+							sEEEEEEEEEEEE.play();
+						});
+
+					shrek.add(sEEEEEEEEEEEE);
+					} );
+				}
+
+				function createRocket(){
+					//model fusé
+
+	        const missileLoader = new FBXLoader();
+					missileLoader.load( 'models/missile.fbx', function ( missile ) {
+
+	          missile.position.y =  Opos + shrekPosition;
+	          missile.scale.set(0.3, 0.3, 0.3);
+
+						missile.rotation.x = 1;
+
+						missile.traverse( function ( child ) {
+
+							if ( child.isMesh ) {
+
+								child.castShadow = true;
+								child.receiveShadow = true;
+
+							}
+
+						} );
+
+						scene.add( missile );
+						Rmissile = missile;
+						// Sound
+
+						rocketSound = new THREE.PositionalAudio(listener);
+						const rocket_sound = new THREE.AudioLoader();
+						rocket_sound.load( 'Music/rocket.mp3', function( rocket__Sound ) {
+							rocketSound.setBuffer( rocket__Sound );
+							rocketSound.setLoop( true );
+							rocketSound.setVolume( 3 );
+							rocketSound.setRefDistance(30);
+							rocketSound.play();
+						});
+
+						missile.add(rocketSound);
+					} );
+				}
+
+	      function buildVolcanMap() {
+						const loader = new FBXLoader();
+
+						loader.load( 'models/maps/Volcan/volcan.fbx', ( volcano ) => {
+							volcano.scale.set(.2,.2,.2);
+							scene.add( volcano );
+
+							worldOctree.fromGraphNode( volcano );
+							volcano.traverse( child => {
+
+								if ( child.isMesh ) {
+
+									child.castShadow = true;
+									child.receiveShadow = true;
+
+									if ( child.material.map ) {
+
+										child.material.map.anisotropy = 8;
+
+									}
+
+								}
+
+							} );
+						});
+
+						// MUSIC
+						const audioLoader = new THREE.AudioLoader();
+						audioLoader.load( 'Music/lava.mp3', function( buffer ) {
+							sound.setBuffer( buffer );
+							sound.setLoop( true );
+							sound.setVolume( 0.1 );
+							sound.play();
+						});
+				}
+
+				function createKenshiro() {
+					let loader = new GLTFLoader();
+
+					loader.load('models/kenshiro_final.glb', function ( kenshiro ) {
+
+							scene.add( kenshiro.scene );
+							kenshiro.scene.scale.set(5,5,5);
+							kenshiro.scene.traverse( function ( child ) {
+								if ( child.isMesh ) {
+									child.castShadow = true;
+									child.receiveShadow = true;
+								}
+							});
+
+							// Sound
+
+							kenshiroSound = new THREE.PositionalAudio(listener);
+							const kenshiro_sound = new THREE.AudioLoader();
+							kenshiro_sound.load( 'Music/kenshiro.mp3', function( kenshiro__Sound ) {
+								kenshiroSound.setBuffer( kenshiro__Sound );
+								kenshiroSound.setLoop( true );
+								kenshiroSound.setVolume( 4 );
+								kenshiroSound.setRefDistance(1);
+								kenshiroSound.play();
+							});
+
+							kenshiro.add(kenshiroSound);
+
+						});
+
+
+
+					}
+
+				function createSaitama() {
+					const loader = new FBXLoader();
+							loader.load( 'models/Saitama/Saitama.fbx', function ( saitama ) {
+
+									mixer = new THREE.AnimationMixer( saitama );
+									saitama.scale.set(.5,.5,.5);
+									saitama.position.set(-862, 89, -1872);
+									const action = mixer.clipAction( saitama.animations[ 0 ] );
+									action.play();
+
+									saitama.traverse( function ( child ) {
+
+											if ( child.isMesh ) {
+
+													child.castShadow = true;
+													child.receiveShadow = true;
+
+											}
+
+									} );
+
+									scene.add( saitama );
+
+							} );
+					}
+
+				function buildCityDestroyed() {
+							let loader = new GLTFLoader();
+
+							loader.load('models/maps/City_destroyed/City_destroyed.gltf', function ( city_destroyed ) {
+
+									scene.add( city_destroyed.scene );
+									city_destroyed.scene.scale.set(50,50,50);
+
+									city_destroyed.scene.traverse( function ( child ) {
+										if ( child.isMesh ) {
+											child.castShadow = true;
+											child.receiveShadow = true;
+										}
+									});
+
+								});
+							}
+
+				function startVideo(){
+
+
+					sEEEEEEEEEEEE.stop();
+					rocketSound.stop();
+					Vstatus = 1;
+					container.style.display = 'none';
+					video.style.display = 'block';
+					nuclearSound.play();
+					nuclearSound.volume = .2;
+					video.play();
+					setTimeout( stopVideo, 7000 );
+				}
+
+				function stopVideo(){
+					const overlay_video = document.getElementById('overlay_video');
+					overlay_video.remove();
+					nuclearSound.pause();
+					container.style.display = 'block';
+					while (scene.children.length)
+					    scene.remove(scene.children[0]);
+
+					Volcan();
+				}
+
+				function onWindowResize() {
+
+					camera.aspect = window.innerWidth / window.innerHeight;
+					camera.updateProjectionMatrix();
+
+					renderer.setSize( window.innerWidth, window.innerHeight );
+
+				}
+
+				//
+
+				function setup_keys(){
+					document.addEventListener( 'keydown', ( event ) => {
+
+						keyStates[ event.code ] = true;
+
+					} );
+
+					document.addEventListener( 'keyup', ( event ) => {
+
+						keyStates[ event.code ] = false;
+
+					} );
+
+					document.addEventListener( 'mousedown', () => {
+
+						document.body.requestPointerLock();
+
+						mouseTime = performance.now();
+
+					} );
+
+					document.body.addEventListener( 'mousemove', ( event ) => {
+
+						if ( document.pointerLockElement === document.body ) {
+
+							camera.rotation.y -= event.movementX / 500;
+							camera.rotation.x -= event.movementY / 500;
+
+						}
+
+					} );
+
+					fps = true;
+				}
+
+				function playerCollisions() {
+
+					const result = worldOctree.capsuleIntersect( playerCollider );
+					playerOnFloor = false;
+					if ( result ) {
+						playerOnFloor = result.normal.y > 0;
+
+						if ( ! playerOnFloor ) {
+
+							playerVelocity.addScaledVector( result.normal, - result.normal.dot( playerVelocity ) );
+
+						}
+
+						playerCollider.translate( result.normal.multiplyScalar( result.depth ) );
+
+					}
+
+				}
+
+				function updatePlayer( deltaTime ) {
+
+					let damping = Math.exp( - 4 * deltaTime ) - 1;
+
+					if ( ! playerOnFloor ) {
+
+						playerVelocity.y -= GRAVITY * deltaTime;
+
+						// small air resistance
+						damping *= 0.1;
+
+					}
+
+					playerVelocity.addScaledVector( playerVelocity, damping );
+
+					const deltaPosition = playerVelocity.clone().multiplyScalar( deltaTime );
+					playerCollider.translate( deltaPosition );
+
+					playerCollisions();
+
+					camera.position.copy( playerCollider.end );
+
+				}
+
+				function getForwardVector() {
+
+					camera.getWorldDirection( playerDirection );
+					playerDirection.y = 0;
+					playerDirection.normalize();
+
+					return playerDirection;
+
+				}
+
+				function getSideVector() {
+
+					camera.getWorldDirection( playerDirection );
+					playerDirection.y = 0;
+					playerDirection.normalize();
+					playerDirection.cross( camera.up );
+
+					return playerDirection;
+
+				}
+
+				function controls_2( deltaTime ) {
+
+					const speedDelta = deltaTime * ( playerOnFloor ? floorSpeed : airSpeed );
+
+					if ( keyStates[ 'KeyW' ] ) {
+						playerVelocity.add( getForwardVector().multiplyScalar( speedDelta ) );
+
+					}
+
+					if ( keyStates[ 'KeyS' ] ) {
+						playerVelocity.add( getForwardVector().multiplyScalar( - speedDelta ) );
+
+					}
+
+					if ( keyStates[ 'KeyA' ] ) {
+						playerVelocity.add( getSideVector().multiplyScalar( - speedDelta ) );
+
+					}
+
+					if ( keyStates[ 'KeyD' ] ) {
+						playerVelocity.add( getSideVector().multiplyScalar( speedDelta ) );
+
+					}
+
+					if ( playerOnFloor ) {
+
+						if ( keyStates[ 'Space' ] ) {
+
+							playerVelocity.y = jumpHeight;
+
+						}
+
+					}
+
+				}
+
+				function teleportPlayerIfOob(){
+					if (camera.position.y <= -125){
+						playerCollider.start.set( 0, 100, 0 );
+						playerCollider.end.set( 0, 100, 0 );
+						playerCollider.radius =  100;
+						camera.position.copy( playerCollider.end );
+						camera.rotation.set( 0, 0, 0 );
+					}
+				}
+
+				//
+
+				function onPointerMove( event ) {
+
+					pointer.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1 );
+
+					raycaster.setFromCamera( pointer, camera );
+
+					const intersects = raycaster.intersectObjects( objects, false );
+
+					if (intersects.length > 0){
+							scene.add(Rbridge);
+							activate = true;
+					}
+
+				}
+
+				function bridge(){
+					const cubeGeometry = new THREE.BoxGeometry(70,50,70);
+					const cylinderGeometry = new THREE.CylinderGeometry( 30, 30, 40, 32 );
+					const material = new THREE.MeshPhongMaterial( {color: 0xA9A9A9} );
+
+					const cylinder = new THREE.Mesh(cylinderGeometry, material);
+					cylinder.receiveShadow = true;
+					cylinder.castShadow = true;
+					cylinder.position.set(-150, 0, -350);
+					scene.add(cylinder);
+					objects.push(cylinder);
+
+					const loader = new FBXLoader();
+					loader.load( 'models/bridge/bridge.fbx', ( bridge ) => {
+						bridge.scale.set(.5,.5,.5);
+						bridge.position.set(0,-1100, -1150);
+						bridge.rotation.y = Math.PI / 2;
+						Rbridge = bridge;
+						bridge.traverse( child => {
+
+							if ( child.isMesh ) {
+
+								child.castShadow = true;
+								child.receiveShadow = true;
+
+								if ( child.material.map ) {
+
+									child.material.map.anisotropy = 8;
+
+								}
+
+							}
+
+						} );
+
+					} );
+				}
+
+				//
+
+				function buildGui(){
+
+                const params = {
+										'gravity' : GRAVITY,
+										'player speed on floor' : floorSpeed,
+										'player speed on air' : airSpeed,
+										'jump height' : jumpHeight,
+                    'fog': fog,
+                    'fog_color': scene.fog.color.getHex()
+                };
+
+                gui = new GUI();
+
+            		const folderPlayer = gui.addFolder('Player');
+								folderPlayer.add( params, 'gravity', 0, 1000).step(1).onChange( function (val) {
+												GRAVITY = val;
+								});
+								folderPlayer.add( params, 'player speed on floor', 0, 10000).step(10).onChange( function (val) {
+												floorSpeed = val;
+								});
+								folderPlayer.add( params, 'player speed on air', 0, 1000).step(1).onChange( function (val) {
+												airSpeed = val;
+								});
+								folderPlayer.add( params, 'jump height', 0, 1000).step(1).onChange( function (val) {
+												jumpHeight = val;
+								});
+                const folderFog = gui.addFolder('Fog');
+                folderFog.add( params, 'fog', 0, .0007).step(.00001).onChange( function ( val ) {
+                        scene.fog.density = val;
+                } );
+                folderFog.addColor( params, 'fog_color').onChange( function ( val ) {
+                        scene.fog.color.setHex(val)
+                } );
+
+            }
+
+				//
+
+				function animate() {
+
+					requestAnimationFrame( animate );
+
+					if (Rbridge && activate == true){
+						if ( Rbridge.position.y < -860) {
+							Rbridge.position.y += 1;
+						}
+						else {
+							activate = false;
+							worldOctree.fromGraphNode( Rbridge );
+						}
+					}
+					const delta = clock.getDelta();
+					const deltaTime = Math.min( 0.05, delta ) / STEPS_PER_FRAME;
+					if ( mixer ) mixer.update( delta );
+
+					if (Rshrek){
+						Rshrek.position.y -= 20;
+						if(Vstatus == 0){
+							if(Rshrek.position.y < 100){
+								startVideo();
+							}
+						}
+					}
+					if (Rmissile) Rmissile.position.y -= 20, camera.position.y -= 2;
+					if (fps == true){
+						for ( let i = 0; i < STEPS_PER_FRAME; i ++ ) {
+
+							controls_2( deltaTime );
+
+							updatePlayer( deltaTime );
+
+							teleportPlayerIfOob();
+
+						}
+					}
+
+					renderer.render( scene, camera );
+
+					stats.update();
+
+				}
+
+			</script>
+		</div>
+	</body>
+</html>
