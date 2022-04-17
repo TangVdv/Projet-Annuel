@@ -1,2 +1,10 @@
 vente:
+	nom: Produit en rupture de stock
+		prix: 1144.0
+	nom: Produit en rupture de stock
+		prix: 1144.0
 approvisionnement:
+	nom: Produit
+		prix: 12.0
+	nom: Produit en rupture de stock
+		prix: 1144.0

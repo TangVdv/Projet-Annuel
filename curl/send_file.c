@@ -2,69 +2,127 @@
 #include <stdio.h>
 #include <string.h>
 #include <sqlite3.h>
+#include <sys/stat.h>
+#include <time.h>
 
-CURL *curl;
+
+#define UPLOAD_FILE_AS "data.yaml"
+#define REMOTE_URL "file:///home/tangvdv/Documents/receive_data/" UPLOAD_FILE_AS
+
 sqlite3 *db;
 sqlite3_stmt *res;
 char *err_msg = 0;
 FILE *yaml_file;
+time_t t;
+struct tm tm;
+char date[10];
+
 
 int getData(void *NotUsed, int rowCount, char **rowValue, char **rowName){
-  char name[2][50] = {"nom", "prix"};
-	yaml_file = fopen("data.yaml", "a+");
-  for (int i = 0; i < strlen(name[0]); ++i)
-  {
-    fprintf(yaml_file, "%s: %s", name[i], rowValue[i]);
+  char tab = '\t';
+  for (int i = 0; i < rowCount; i++){
+    if (i%2 == 0){
+      fprintf(yaml_file, "%c%s: %s\n", tab, rowName[i], rowValue[i]);
+    }
+    else
+      fprintf(yaml_file, "%c%c%s: %s\n", tab, tab, rowName[i], rowValue[i]);
   }
+
+  return 0;
 }
 
-int main(){
-	int rc = sqlite3_open("loyaltycard.db", &db); // Ouvre la base de donnée
-	// Check si la base de donnée existe
-    if (rc != SQLITE_OK) {
-        fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(db));
-        sqlite3_close(db);
-        return 1;
+void getSupply(){
+  fprintf(yaml_file, "approvisionnement:\n");
+
+  char sql[157] = "SELECT nom, prix FROM PRODUIT INNER JOIN STOCK ON stock.id_produit = produit.id_produit WHERE stock.date_ajout = '";
+  
+  strcat(sql, date);
+  strcat(sql, "'");
+
+  sqlite3_exec(db, sql, getData, 0,&err_msg);
+}
+
+void getSale(){
+  fprintf(yaml_file, "vente:\n");
+
+  char sql[157] = "SELECT nom, prix FROM PRODUIT INNER JOIN HISTORIQUE_ACHAT ON historique_achat.id_produit  = produit.id_produit WHERE historique_achat.date_achat = '";
+  
+  strcat(sql, date);
+  strcat(sql, "'");
+
+  sqlite3_exec(db, sql, getData, 0,&err_msg);
+}
+
+int curl(){
+    yaml_file = fopen("data.yaml", "r");
+
+    CURL *curl = curl_easy_init();
+    CURLcode res;
+    struct stat file_info;
+    curl_off_t speed_upload, total_time;
+
+    if(curl){
+   
+      // Dis à curl d'envoyer un fichier à un url donné
+      curl_easy_setopt(curl, CURLOPT_UPLOAD, 1L);
+   
+      // Enverra le fichier à cette url
+      curl_easy_setopt(curl, CURLOPT_URL, REMOTE_URL);
+
+      // Le fichier qui va être envoyé
+      curl_easy_setopt(curl, CURLOPT_READDATA, yaml_file);
+
+      // Taille du fichier à envoyer
+      curl_easy_setopt(curl, CURLOPT_INFILESIZE_LARGE,
+                     (curl_off_t)file_info.st_size);
+   
+      res = curl_easy_perform(curl);
+      // Regarde s'il y a des erreurs
+      if(res != CURLE_OK) {
+        fprintf(stderr, "curl_easy_perform() failed: %s\n",
+                curl_easy_strerror(res));
+      }
+      // Nettoie curl à la fin de son utilisation
+      curl_easy_cleanup(curl);
     }
-    yaml_file = fopen("data.yaml", "w");
+    fclose(yaml_file);
+
+    return 0;
+}
+
+int main(int argc, char **argv){
+
+  t = time(NULL);
+  tm = *localtime(&t);
+  sprintf(date, "%d-%02d-%02d", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday);
+
+  // OPEN
+  yaml_file = fopen("data.yaml", "w");
+
+	int rc = sqlite3_open("loyaltycard", &db); // Ouvre la base de donnée
+	// Check si la base de donnée existe
+  if (rc != SQLITE_OK) {
+      fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(db));
+      sqlite3_close(db);
+      return 1;
+  }
 
 
 	//VENTE
-	fprintf(yaml_file, "vente:\n");
-
-    char *sql = "SELECT nom, prix FROM PRODUIT INNER JOIN HISTORIQUE_ACHAT ON historique_achat.id_produit  = produit.id_produit WHERE CAST(date_achat AS DATE) = CAST( GETDATE() AS DATE)";
-    sqlite3_exec(db, sql, getData, 0,&err_msg);
+	getSale();
 
 
-    //APPROVISIONNEMENT
-    fprintf(yaml_file, "approvisionnement:\n");
+  //APPROVISIONNEMENT
+  getSupply();
 
-    sql = "SELECT nom, prix FROM PRODUIT INNER JOIN STOCK ON stock.id_produit = produit.id_produit WHERE CAST(stock.date_ajout AS DATE) = CAST( GETDATE() AS DATE)";
-    sqlite3_exec(db, sql, getData, 0,&err_msg);
+  // CLOSE
+  fclose(yaml_file);
+
+  //CURL
+  curl();
 
 
-	curl = curl_easy_init();
-    if(curl){
-
-        curl_easy_perform(curl);
-        curl_easy_cleanup(curl);
-    }
-
-    //upload to this place 
-    curl_easy_setopt(curl, CURLOPT_URL,"./");
- 
-    //tell it to "upload" to the URL 
-    curl_easy_setopt(curl, CURLOPT_UPLOAD, 1L);
- 
-    //set where to read from (on Windows you need to use READFUNCTION too)
-    curl_easy_setopt(curl, CURLOPT_READDATA, yaml_file);
- 
-    //enable verbose for easier tracing
-    curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
- 
-    curl_easy_perform(curl);
-
-    sqlite3_finalize(res); // Supprime le "statement" de la base de donnée
-    sqlite3_close(db); // Ferme la base de donnée
-    return 0;
+  sqlite3_finalize(res); // Supprime le "statement" de la base de donnée
+  sqlite3_close(db); // Ferme la base de donnée
+  return 0;
 }
