@@ -7,7 +7,7 @@ include("checkAdmin.php");
     <meta charset="utf-8">
     <link href="../../lib/bootstrap.min.css" rel="stylesheet">
     <script src="../../lib/bootstrap.min.js" charset="utf-8"></script>
-    <script src="/admin/lib/languageAdminScript.js" charset="utf-8"></script>
+    <script type="module" src="/admin/lib/languageAdminScript.js" charset="utf-8"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   </head>
   <body>
@@ -16,9 +16,7 @@ include("checkAdmin.php");
         <img src="../../img/logo_loyaltycard.png" width="20%">
       </div>
       <div class="d-flex flex-row-reverse mx-4">
-        <select translate-switcher class="form-select-sm">
-          <option value="en-US">English</option>
-          <option value="fr-FR">Français</option>
+        <select id="select-language" switch-key translate-switcher class="form-select-sm">
         </select>
       </div>
     </header>

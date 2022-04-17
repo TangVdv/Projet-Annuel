@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <link href="/lib/bootstrap.min.css" rel="stylesheet">
     <script src="/lib/bootstrap.min.js" charset="utf-8"></script>
-    <script src="/lib/languageScript.js" charset="utf-8"></script>
+    <script type="module" src="/lib/languageScript.js" charset="utf-8"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <title>Header</title>
     <style>
@@ -36,10 +36,7 @@
             ?>
         </ul>
         <div class="navbar-right">
-          <!-- ... -->
-          <select translate-switcher class="form-select-sm">
-            <option value="en-US">English</option>
-            <option value="fr-FR">Français</option>
+          <select id="select-language" switch-key translate-switcher class="form-select-sm">
           </select>
         </div>
         <form class="w-100 me-3">
