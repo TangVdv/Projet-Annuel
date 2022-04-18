@@ -2,9 +2,9 @@
 
 class SignModel {
 
-  public static function HashNTrim() {
+  public static function HashNTrim($value) {
     // Trim et hash
-    $trimword = trim($_POST['mot_de_passe']);
+    $trimword = trim($value);
     $hashword = hash('sha256', $trimword);
 
     return $hashword;
@@ -28,18 +28,16 @@ class SignModel {
   public static function AddAccount() {
     include("../includes/bdd.php");
 
-
-
     // On récup les valeurs dans des variables
     $nom =	$_POST['nom'];
     $prenom = trim($_POST['prenom']);
     $numero = trim($_POST['numero']);
     $email = $_POST['email'];
-    $password = SignModel::HashNTrim();
+    $password = SignModel::HashNTrim($_POST['mot_de_passe']);
     $adresse = $_POST['adresse'];
 
     $req = $db->prepare('INSERT INTO utilisateur(admin, nom, prenom, numero, email, mot_de_passe, adresse, pts_fidelite, solde_euro)
-                              VALUES(0, :nom, :prenom, :numero, :email, :mot_de_passe, :adresse, :pts_fidelite, :solde_euro)');
+                              VALUES(0,:nom, :prenom, :numero, :email, :mot_de_passe, :adresse, :pts_fidelite, :solde_euro)');
 
     $res = $req->execute([
       "nom" => $nom,
@@ -53,7 +51,7 @@ class SignModel {
     ]);
 
     if(!$res){
-      header('Location:sign_up.php?message=Erreur lors de la création du compte ; '. print_r($db->errorInfo()));
+      header('Location:sign_up.php?message=Erreur lors de la création du compte');
     }
     else {
       $req = $db->prepare('SELECT id_utilisateur, admin FROM UTILISATEUR WHERE email = :email AND mot_de_passe = :password');
@@ -62,6 +60,15 @@ class SignModel {
         "password" => $password
       ]);
       $row = $req->fetch(PDO::FETCH_OBJ);
+
+      $hashId = SignModel::HashNTrim($row->id_utilisateur);
+
+      $req = $db->prepare('UPDATE utilisateur SET hash_id = :hashId WHERE email = :email AND mot_de_passe = :password');
+      $req->execute([
+        "hashId" => $hashId,
+        "email" => $email,
+        "password" => $password
+      ]);
 
       SignModel::CreateSession($row->id_utilisateur, $row->admin);
       header('Location:../index.php?Compte créé avec succès&type=success');
@@ -83,7 +90,7 @@ class SignModel {
     $req = $db->prepare('SELECT id_utilisateur, admin, email FROM utilisateur WHERE email = :email AND mot_de_passe = :password');
     $req->execute([
       "email" => $_POST['email'],
-      "password" => SignModel::HashNTrim()
+      "password" => SignModel::HashNTrim($_POST["mot_de_passe"])
     ]);
 
     if ($req->rowCount() == 1) {

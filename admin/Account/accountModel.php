@@ -19,6 +19,11 @@ class accountModel{
 
       $id = $_GET["id"];
 
+      $query = $db->prepare("DELETE FROM historique_achat WHERE id_utilisateur = :id");
+      $query->execute([
+        "id" => $id
+      ]);
+
       $query = $db->prepare("DELETE FROM achete WHERE id_utilisateur = :id");
       $query->execute([
         "id" => $id

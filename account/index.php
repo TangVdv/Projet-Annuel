@@ -67,7 +67,7 @@
                 <b translate-key="information-button-title"></b><br><p translate-key="information-button-desc"></p>
               </li>
             </a>
-            <a class="text-decoration-none" href="fidelityCard.php">
+            <a class="text-decoration-none" href="loyaltycard.php">
               <li class="list-group-item">
                 <b translate-key="loyaltycard-button-title"></b><br><p translate-key="loyaltycard-button-desc"></p>
               </li>

@@ -49,7 +49,7 @@ class AccountPageModel {
   public static function DisplayAccountInfos() {
     include("../includes/bdd.php");
 
-    $req = $db->prepare("SELECT nom, prenom, numero, email, adresse
+    $req = $db->prepare("SELECT hash_id, nom, prenom, numero, email, adresse
                         FROM utilisateur
                         WHERE id_utilisateur = :id_utilisateur");
     $req->execute([
@@ -77,6 +77,37 @@ class AccountPageModel {
       ]);
   }
 
+  public static function qrCode() {
+      $res = AccountPageModel::DisplayAccountInfos();
+      $row = $res->fetch(PDO::FETCH_OBJ);
+
+      $url = "https://api.qrserver.com/v1/create-qr-code/";
+      $strPost = "data=". $row->hash_id ."&size=120x120&bgcolor=004579";
+      $ch = curl_init();
+      curl_setopt($ch, CURLOPT_URL, $url);
+      curl_setopt($ch, CURLOPT_POST, true);
+      curl_setopt($ch, CURLOPT_POSTFIELDS, $strPost);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+      curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+      curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+      curl_setopt($ch, CURLOPT_HEADER, false);
+      curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+      $img = curl_exec($ch);
+      if(curl_error($ch)) {
+          echo curl_error($ch);
+      }
+
+      curl_close($ch);
+
+      if($img) {
+        $filename = "../img/qrcode/qrcode-".$row->hash_id.".png";
+        if(!preg_match("#\.png$#i", $filename)) {
+            $filename .= ".png";
+        }
+        return file_put_contents($filename, $img);
+      }
+      return false;
+    }
 }
 
 ?>
