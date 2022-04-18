@@ -24,7 +24,7 @@
           <h1 class="h3 mb-3 font-weight-normal" translate-key="loginPage-title"></h1>
 
           <br>
-          <input type="email" id="inputEmail" class="form-control" placeholder="" name="email" translate-key="email-input">
+          <input type="email" id="inputCompanyName" class="form-control" placeholder="Nom de l'entreprise" name="email">
 
           <br>
           <input type="password" id="inputPassword" class="form-control" placeholder="" name="mot_de_passe" translate-key="password-input">

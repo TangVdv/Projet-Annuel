@@ -18,10 +18,6 @@
             <h1 class="h3 mb-3 font-weight-normal" translate-key="form-id-title"></h1>
 
             <div class="form-row">
-              <div class="form-group col-md-6">
-                <br>
-                <input type="email" class="form-control" id="inputEmail4" placeholder="" name="email" translate-key="email-input">
-              </div>
 
               <div class="form-group col-md-6">
                 <br>
@@ -31,25 +27,17 @@
           </div>
 
           <div class="mt-2 form-group">
-            <h1 class="h3 mb-3 font-weight-normal" translate-key="form-personalInfo-title"></h1>
+            <h1 class="h3 mb-3 font-weight-normal">Informations générales</h1>
             <br>
-            <input type="text" class="form-control w-50" id="inputFamName" placeholder="" name="nom" translate-key="lastname-input">
+            <input type="text" class="form-control w-50" id="inputCompanyName" placeholder="Nom de l'entreprise" name="nom">
           </div>
 
-          <div class="form-group">
-            <br>
-            <input type="text" class="form-control w-50" id="inputName" placeholder="" name="prenom" translate-key="firstname-input">
-          </div>
 
           <div class="form-row">
-            <div class="form-group w-25">
-              <br>
-              <input type="text" class="form-control" id="inputNumber" placeholder="" name="numero" translate-key="phone-input">
-            </div>
 
-            <div class="form-group w-100">
+            <div class="form-group">
               <br>
-              <input type="text" class="form-control" id="inputAddress" placeholder="" name="adresse" translate-key="address-input">
+              <input type="text" class="form-control w-50" id="inputCA" name="CA" placeholder="Dernier chiffre d'affaire">
             </div>
             <div>
               <p class="text-danger">
@@ -66,11 +54,11 @@
       </div>
       <div class="bg-light py-1 container text-center border-top">
         <h1 class="h3 mb-3 font-weight-normal" translate-key="alreadyregisted-question"></h1>
-        <a style="background-color: #004579" class="btn btn-lg btn-primary btn-block" href="sign_in.php" translate-key="login-title"></a>
+        <a style="background-color: #004579" class="btn btn-lg btn-primary btn-block" href="sign_in_company.php" translate-key="login-title"></a>
       </div>
       <div class="bg-light py-1 container text-center border-top">
-        <h1 class="h3 mb-3 font-weight-normal">Accéder à l'espace entreprise</h1>
-        <a style="background-color: #004579" class="btn btn-lg btn-primary btn-block" href="../SignIn-Up-company/sign_up_company.php" translate-key="register-button"></a>
+        <h1 class="h3 mb-3 font-weight-normal">Accéder à l'espace utilisateur</h1>
+        <a style="background-color: #004579" class="btn btn-lg btn-primary btn-block" href="../SignIn-Up/sign_up.php" translate-key="register-button"></a>
       </div>
     </div>
 
