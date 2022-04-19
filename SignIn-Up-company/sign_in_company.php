@@ -19,12 +19,12 @@
     <div style="width: 60rem" class="container">
       <div class="bg-light py-5 container text-center border-bottom">
 
-        <form class="form-signin" action="checkSign.php" method="post">
+        <form class="form-signin" action="checkSignCompany.php" method="post">
 
           <h1 class="h3 mb-3 font-weight-normal" translate-key="loginPage-title"></h1>
 
           <br>
-          <input type="email" id="inputCompanyName" class="form-control" placeholder="Nom de l'entreprise" name="email">
+          <input type="text" id="inputCompanyName" class="form-control" placeholder="Nom de l'entreprise" name="nom">
 
           <br>
           <input type="password" id="inputPassword" class="form-control" placeholder="" name="mot_de_passe" translate-key="password-input">
@@ -34,7 +34,7 @@
             <label translate-key="connected-checkbox"></label>
           </div>
 
-          <button class="btn btn-lg btn-primary btn-block" style="background-color: #004579" type="submit" name="sign_in" translate-key="login-title"></button>
+          <button class="btn btn-lg btn-primary btn-block" style="background-color: #004579" type="submit" name="sign_in_company" translate-key="login-title"></button>
           <div class="py-4">
             <a style="color: #004579;" href="#" translate-key="password-forgotten-text"></a>
           </div>
@@ -44,11 +44,11 @@
       </div>
       <div class="bg-light py-5 container text-center">
         <h1 class="h3 mb-3 font-weight-normal" translate-key="notregisted-question"></h1>
-        <a style="background-color: #004579" class="btn btn-lg btn-primary btn-block" href="sign_up.php" translate-key="register-button"></a>
+        <a style="background-color: #004579" class="btn btn-lg btn-primary btn-block" href="sign_up_company.php" translate-key="register-button"></a>
       </div>
       <div class="bg-light py-5 container text-center">
-        <h1 class="h3 mb-3 font-weight-normal">Accéder à l'espace entreprise</h1>
-        <a style="background-color: #004579" class="btn btn-lg btn-primary btn-block" href="../SignIn-Up-company/sign_in_company.php" translate-key="login-title"></a>
+        <h1 class="h3 mb-3 font-weight-normal">Accéder à l'espace utilisateur</h1>
+        <a style="background-color: #004579" class="btn btn-lg btn-primary btn-block" href="../SignIn-Up/sign_in.php" translate-key="login-title"></a>
       </div>
     </div>
   </body>
