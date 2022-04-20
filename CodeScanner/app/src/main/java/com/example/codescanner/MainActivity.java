@@ -6,10 +6,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.budiyev.android.codescanner.CodeScanner;
@@ -21,7 +25,10 @@ import com.google.zxing.Result;
 public class MainActivity extends AppCompatActivity {
     private CodeScanner mCodeScanner;
     private static final int MY_CAMERA_REQUEST_CODE = 100;
+    private Button btn_test;
 
+    SQLiteHelper myDb;
+    Cursor resultQuery;
 
     // Demande de permission
     @Override
@@ -38,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        myDb = new SQLiteHelper(this);
+        //myDb.setInfos();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         CodeScannerView scannerView = findViewById(R.id.scanner_view);
@@ -55,7 +65,19 @@ public class MainActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(MainActivity.this, result.getText(), Toast.LENGTH_SHORT).show();
+
+                        Cursor test = myDb.getUsers(Integer.parseInt(result.getText()));
+
+                            if (test.getCount() == 0) {
+                                Toast.makeText(MainActivity.this, "Ce n'est pas un client de LoyaltyCard !", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(MainActivity.this, "Decode "+result.getText() +"|"+ "Db "+resultQuery.getString(0), Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(MainActivity.this, "Client d'Id n°"+result.getText(), Toast.LENGTH_SHORT).show();
+                                Intent i = new Intent(MainActivity.this,InfoActivity.class);
+                                i.putExtra("id", Integer.parseInt(result.getText()));
+                                startActivity(i);
+                            }
+
                     }
                 });
             }
@@ -66,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
                 mCodeScanner.startPreview();
             }
         });
+
     }
 
     // Enlève la pause avec interraction avec l'app
