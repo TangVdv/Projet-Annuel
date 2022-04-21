@@ -31,8 +31,8 @@
       			}
             elseif (isset($_SESSION['nom'])) {
               echo "<li class='nav-item'><a href='/signIn-Up/logOut.php' class='nav-link text-white px-2' translate-key='logout-title'></a> </li>";
-      				echo "<li class='nav-item'><a href='/account/' class='nav-link text-white px-2'>Compte</a> </li>";
-              echo "<li class='nav-item'><a href='/panier/' class='nav-link text-white px-2'>Produits</a> </li>";
+      				echo "<li class='nav-item'><a href='/account_company/account.php' class='nav-link text-white px-2'>Compte</a> </li>";
+              echo "<li class='nav-item'><a href='/account_company/products.php' class='nav-link text-white px-2'>Produits</a> </li>";
             }
       		else{
       				echo "<li class='nav-item'><a href='/signIn-Up/sign_in.php' class='nav-link text-white px-2' translate-key='login-title'></a> </li>";

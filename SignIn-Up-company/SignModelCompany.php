@@ -34,38 +34,37 @@
       $nom =	$_POST['nom'];
       $CA = $_POST['CA'];
       $password = SignModelCompany::HashNTrim();
-      $cotisation = compagnyModel::CalculContribution($CA);
+      //$cotisation = compagnyModel::CalculContribution($CA);
 
-      $req = $db->prepare('INSERT INTO ENTREPRISE(nom, mot_de_passe, cotisation, statut_cotisation)
-                                VALUES(:nom, :mot_de_passe, :cotisation, 0)');
+      $req = $db->prepare('INSERT INTO ENTREPRISE(nom, mot_de_passe, chiffre_affaire, statut_cotisation)
+                                VALUES(:nom, :mot_de_passe, :chiffre_affaire, 0)');
 
       $res = $req->execute([
         "nom" => $nom,
         "mot_de_passe" => $password,
-        "cotisation" => $cotisation
+        "chiffre_affaire" => $CA
       ]);
 
       if(!$res){
         header('Location:sign_up_company.php?message=Erreur lors de la création du compte ; '. print_r($db->errorInfo()));
       }
       else {
-        $req = $db->prepare('SELECT id_entreprise, cotisation FROM ENTREPRISE WHERE nom = :nom AND mot_de_passe = :password');
+        $req = $db->prepare('SELECT id_entreprise FROM ENTREPRISE WHERE nom = :nom AND mot_de_passe = :password');
         $req->execute([
           "nom" => $nom,
           "password" => $password
         ]);
         $row = $req->fetch(PDO::FETCH_OBJ);
 
-        SignModelCompany::CreateSession($row->id_entreprise, $row->cotisation);
+        SignModelCompany::CreateSession($row->id_entreprise);
         header('Location:../index.php?Compte créé avec succès&type=success');
       }
     }
 
-    public static function CreateSession($id, $cotisation) {
+    public static function CreateSession($id) {
       session_start();
       $_SESSION['nom'] = $_POST['nom'];
       $_SESSION['id_entreprise'] = $id;
-      $_SESSION['cotisation'] = $cotisation;
       setcookie('nom', $row->nom, time() + 365*24*3600);
     }
 
@@ -73,7 +72,7 @@
       include("../includes/bdd.php");
 
       /* SELECT les identifiants*/
-      $req = $db->prepare('SELECT id_entreprise, nom, cotisation FROM ENTREPRISE WHERE nom = :nom AND mot_de_passe = :password');
+      $req = $db->prepare('SELECT id_entreprise, nom FROM ENTREPRISE WHERE nom = :nom AND mot_de_passe = :password');
       $req->execute([
         "nom" => $_POST['nom'],
         "password" => SignModelCompany::HashNTrim()
@@ -81,7 +80,7 @@
 
       if ($req->rowCount() == 1) {
         $row = $req->fetch(PDO::FETCH_OBJ);
-        SignModelCompany::CreateSession($row->id_utilisateur, $row->cotisation);
+        SignModelCompany::CreateSession($row->id_utilisateur);
 
     		header('location:../index.php?message=Vous êtes connecté&type=success');
     		exit;

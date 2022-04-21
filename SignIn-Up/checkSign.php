@@ -13,7 +13,7 @@ if(isset($_POST["sign_in"])) {
   }
 
   // Rejète si email ou mdp vide, pas besoin techniquement
-  if ( !isset($email) || empty($email) || ()) ){
+  if ( !isset($email) || empty($email) || (!isset($password) || empty($password)) ){
     header('location:sign_in.php?message=Vous devez remplir les 2 champs.&type=danger');
     exit;
   }

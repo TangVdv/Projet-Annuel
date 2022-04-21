@@ -46,15 +46,22 @@ class CompagnyModel{
   }
 
   public static function CalculContribution($turnover){
-    if($turnover > 200000) $contribution = 0;
-    if($turnover < 800000) $contribution = 0.8;
-    if($turnover < 1500000) $contribution = 0.6;
-    if($turnover < 3000000) $contribution = 0.4;
-    else $contribution = 0.3;
 
-    $contribution = $contribution * $turnover / 100;
+    if($turnover < 200000){
+      $contribution = 0;
+    }elseif ($turnover < 800000) {
+      $contribution = 0.8;
+    }elseif ($turnover < 1500000) {
+      $contribution = 0.6;
+    }elseif ($turnover < 3000000) {
+      $contribution = 0.4;
+    }else {
+      $contribution = 0.3;
+    }
 
-    return $contribution;
+    //$contribution = $contribution * $turnover / 100;
+
+    return $contribution * $turnover / 100;
   }
 
   public static function AddCompagny(){
