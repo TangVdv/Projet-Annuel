@@ -8,7 +8,7 @@
   <body>
     <div class="w-50 col flex-wrap" id="article_reload"style="margin: auto;">
       <div class="d-flex justify-content-center">
-        <a class="btn btn-success btn-lg m-4" href="addProduct.php" translate-key="addproduct-title"></a>
+        <a class="btn btn-success btn-lg m-4" href="addProductCompany.php" translate-key="addproduct-title"></a>
       </div>
     </div>
     <div class="d-flex flex-wrap row border m-4">
@@ -73,7 +73,7 @@
                         <button type="button" class="btn btn-primary" id="modify_submit" name=<?php echo $row->id_produit; ?> translate-key="modify-button"></button>
                       </div>
                       <div>
-                        <form action=<?php echo "checkProduct.php?id=".$row->id_produit; ?> method="post">
+                        <form action=<?php echo "checkProductCompany.php?id=".$row->id_produit; ?> method="post">
                           <button type="submit" class="btn btn-danger" name="delete_submit" translate-key="delete-button"></button>
                         </form>
                       </div>
@@ -148,7 +148,7 @@
                         <button type="button" class="btn btn-primary" id="modify_submit" name=<?php echo $row->id_produit; ?> translate-key="modify-button"></button>
                       </div>
                       <div>
-                        <form action=<?php echo "checkProduct.php?id=".$row->id_produit; ?> method="post">
+                        <form action=<?php echo "checkProductCompany.php?id=".$row->id_produit; ?> method="post">
                           <button type="submit" class="btn btn-danger" name="delete_submit" translate-key="delete-button"></button>
                         </form>
                       </div>
@@ -223,7 +223,7 @@
                         <button type="button" class="btn btn-primary" id="modify_submit" name=<?php echo $row->id_produit; ?> translate-key="modify-button"></button>
                       </div>
                       <div>
-                        <form action=<?php echo "checkProduct.php?id=".$row->id_produit; ?> method="post">
+                        <form action=<?php echo "checkProductCompany.php?id=".$row->id_produit; ?> method="post">
                           <button type="submit" class="btn btn-danger" name="delete_submit" translate-key="delete-button"></button>
                         </form>
                       </div>

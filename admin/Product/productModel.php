@@ -3,6 +3,7 @@ include("../includes/checkAdmin.php");
 class productModel{
   public static function AddProduct($ProductToAdd){
     include("../../includes/bdd.php");
+    
 
     $query = $db->prepare( "INSERT INTO Produit(image, nom, description, prix, reduction, stock, type) VALUES(:image, :name, :description, :price, :reduction, :stock, :type);" );
     $res = $query->execute([

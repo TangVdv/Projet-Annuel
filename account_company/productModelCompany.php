@@ -2,7 +2,7 @@
 //include("../includes/checkAdmin.php");
 class productModelCompany{
   public static function AddProduct($ProductToAdd){
-    include("../../includes/bdd.php");
+    include("../includes/bdd.php");
 
     $query = $db->prepare( "INSERT INTO Produit(image, nom, description, prix, reduction, stock, type) VALUES(:image, :name, :description, :price, :reduction, :stock, :type);" );
     $res = $query->execute([
@@ -21,7 +21,7 @@ class productModelCompany{
         "name" => $_POST["name"]
     ]);
 
-    header('location:./');
+    header('location:./products.php');
   }
 
   public static function SelectProduct($value){
@@ -106,7 +106,7 @@ class productModelCompany{
 
     $res = productModelCompany::SelectSpecificProduct($id);
     $row = $res->fetch(PDO::FETCH_OBJ);
-    $path = "../../img/products/".$row->image;
+    $path = "../img/products/".$row->image;
     unlink($path);
 
     $query = $db->prepare("DELETE FROM stock WHERE id_produit = :id");
@@ -124,7 +124,7 @@ class productModelCompany{
       "id" => $id
     ]);
 
-    header("location:./");
+    header("location:./products.php");
   }
 
 
@@ -153,6 +153,19 @@ class productModelCompany{
 
     return $req;
   }
+
+  public static function updateChiffreAffaire($CA){
+    include("../includes/bdd.php");
+
+    $req = $db->prepare("UPDATE ENTREPRISE
+                          SET chiffre_affaire = :chiffre_affaire
+                          WHERE id_entreprise = :id_entreprise");
+    $req->execute([
+      "chiffre_affaire" => $CA,
+      "id_entreprise" => $_SESSION['id_entreprise']
+    ]);
+  }
+
 
 }
 
