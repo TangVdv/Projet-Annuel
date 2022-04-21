@@ -30,19 +30,19 @@ class productModelCompany{
     if($value){
       //$query = $db->query("SELECT id_produit, image, nom, description, prix, stock, reduction FROM Produit WHERE EXISTS (SELECT id_produit FROM Stock WHERE Stock.id_produit = Produit.id_produit) AND type='product'");
 
-      $req = $db->prepare("SELECT id_produit, image, nom, description, prix, stock, reduction
+      $req = $db->prepare("SELECT produit.id_produit, image, nom, description, prix, stock, reduction
                             FROM PRODUIT
                             INNER JOIN DISPOSE ON produit.id_produit = dispose.id_produit
                             WHERE dispose.id_entreprise = :id_entreprise
                             AND EXISTS (SELECT id_produit
                                         FROM Stock
                                         WHERE Stock.id_produit = Produit.id_produit)
-                            AND type = :type");
+                            AND produit.type = :type");
 
     }
     else {
       //$query = $db->query("SELECT id_produit, image, nom, description, prix, stock, reduction FROM Produit WHERE NOT EXISTS (SELECT id_produit FROM Stock WHERE Stock.id_produit = Produit.id_produit) AND type='product'");
-      $req = $db->prepare("SELECT id_produit, image, nom, description, prix, stock, reduction
+      $req = $db->prepare("SELECT produit.id_produit, image, nom, description, prix, stock, reduction
                             FROM PRODUIT
                             INNER JOIN DISPOSE ON produit.id_produit = dispose.id_produit
                             WHERE dispose.id_entreprise = :id_entreprise
@@ -70,7 +70,7 @@ class productModelCompany{
                           INNER JOIN DISPOSE ON produit.id_produit = dispose.id_produit
                           WHERE type='service'");*/
 
-    $req = $db->prepare("SELECT id_produit, image, nom, description, prix, stock, reduction
+    $req = $db->prepare("SELECT produit.id_produit, image, nom, description, prix, stock, reduction
                           FROM PRODUIT
                           INNER JOIN DISPOSE ON produit.id_produit = dispose.id_produit
                           WHERE type = :type

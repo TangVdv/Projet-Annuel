@@ -2,7 +2,7 @@
 <html lang="fr" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Admin site</title>
+    <title>Company site</title>
   </head>
   <?php include("../includes/header.php"); ?>
   <body>
