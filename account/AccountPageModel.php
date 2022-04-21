@@ -1,4 +1,7 @@
 <?php
+require_once 'dompdf/autoload.inc.php';
+// reference the Dompdf namespace
+use Dompdf\Dompdf;
 
 class AccountPageModel {
 
@@ -108,6 +111,38 @@ class AccountPageModel {
       }
       return false;
     }
+
+  public static function pdf(){
+    $res = AccountPageModel::DisplayAccountInfos();
+    $row = $res->fetch(PDO::FETCH_OBJ);
+
+    $content = '
+    <div>
+       <p>'.$row->prenom.' '.$row->nom.'</p>
+       <p>'.$row->adresse.'</p>
+       <p>'.$row->email.'</p>
+       <p>'.$row->numero.'</p>
+    </div>
+    <div>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Android_robot.svg" height="200" width="200">
+      <img src="../img/qrcode/qrcode-'.$row->hash_id.'.png" height="120", width="120">
+    </div>
+
+    ';
+
+    // instantiate and use the dompdf class
+    $dompdf = new Dompdf(["isRemoteEnabled" => true]);
+    $dompdf->loadHtml($content);
+
+    // (Optional) Setup the paper size and orientation
+    $dompdf->setPaper('A4', 'portrait');
+
+    // Render the HTML as PDF
+    $dompdf->render();
+
+    // Output the generated PDF to Browser
+    $dompdf->stream();
+  }
 }
 
 ?>

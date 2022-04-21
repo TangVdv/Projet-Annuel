@@ -80,7 +80,9 @@
 
             </div>
             <div class="m-4 text-end">
-              <button type="button" class="btn btn-primary" name="button">Télécharger au format pdf</button>
+              <form action="updateAccount.php" method="post">
+                <button type="submit" class="btn btn-primary" name="submit-pdf">Télécharger au format pdf</button>
+              </form>
             </div>
 
            </div>

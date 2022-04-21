@@ -11,11 +11,19 @@ if (isset($_POST["submit-button"])) {
   $numero = trim($_POST['numero']);
   $adresse = $_POST['adresse'];
   $email = $_POST['email'];
-  $password = SignModel::HashNTrim();
+  $password = SignModel::HashNTrim($_POST["mot_de_passe"]);
 
 
   AccountPageModel::UpdateAccountInfos($nom, $prenom, $numero, $adresse, $email, $password);
 
 }
+
+if (isset($_POST["submit-pdf"])) {
+  include("AccountPageModel.php");
+  session_start();
+
+  AccountPageModel::pdf();
+}
+
 header('location:./');
 ?>

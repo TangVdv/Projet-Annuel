@@ -3,3 +3,4 @@ stripe
 
 *.jpg
 *.png
+account/dompdf/
