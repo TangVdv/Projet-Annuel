@@ -84,7 +84,7 @@ class productModelCompany{
   }
 
   public static function SelectSpecificProduct($id){
-    include("../../includes/bdd.php");
+    include("../includes/bdd.php");
 
     $query = $db->prepare("SELECT id_produit, image, nom, description, prix, stock, reduction FROM produit WHERE id_produit = :id");
     $query->execute([
@@ -95,7 +95,7 @@ class productModelCompany{
   }
 
   public static function DeleteProduct(){
-    include("../../includes/bdd.php");
+    include("../includes/bdd.php");
 
     if (!isset($_GET["id"]) || empty($_GET["id"])){
       header("location:./?message=Aucun id trouvé");
@@ -126,6 +126,34 @@ class productModelCompany{
 
     header("location:./");
   }
+
+
+  public static function checkPaymentStatus(){
+    include("../includes/bdd.php");
+
+    $req = $db->prepare("SELECT statut_cotisation
+                          FROM ENTREPRISE
+                          WHERE id_entreprise = :id_entreprise");
+    $req->execute([
+      "id_entreprise" => $_SESSION['id_entreprise']
+    ]);
+
+    return $req;
+  }
+
+  public static function getChiffreAffaire(){
+    include("../includes/bdd.php");
+
+    $req = $db->prepare("SELECT chiffre_affaire
+                          FROM ENTREPRISE
+                          WHERE id_entreprise = :id_entreprise");
+    $req->execute([
+      "id_entreprise" => $_SESSION['id_entreprise']
+    ]);
+
+    return $req;
+  }
+
 }
 
 ?>

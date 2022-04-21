@@ -80,7 +80,7 @@
 
       if ($req->rowCount() == 1) {
         $row = $req->fetch(PDO::FETCH_OBJ);
-        SignModelCompany::CreateSession($row->id_utilisateur);
+        SignModelCompany::CreateSession($row->id_entreprise);
 
     		header('location:../index.php?message=Vous êtes connecté&type=success');
     		exit;
