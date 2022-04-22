@@ -18,7 +18,7 @@
               ?>
               <h3 class="text-warning">Vous n'avez pas encore réglé votre paiment de cotisation annuel.</h3>
               <div class="d-flex justify-content-center">
-                <button type="button" class="btn btn-success">Accéder au paiment</button>
+                <button type="button" onclick="startStripe()" class="btn btn-success">Accéder au paiment</button>
               </div>
               <?php
             }elseif ($row->statut_cotisation == 1) { //L'entreprise a payé
@@ -28,6 +28,9 @@
             }else { //==2, L'entreprise a raté une échéance et doit donc payer
               ?>
               <h2 class="text-danger">Vous n'êtes pas à jour sur le paiment de la cotisation annuel, veuillez procéder au paiment pour accéder de nouveau à nos services.</h2>
+              <div class="d-flex justify-content-center">
+                <button type="button" onclick="startStripe()" class="btn btn-success">Accéder au paiment</button>
+              </div>
               <?php
             }
           }
@@ -52,6 +55,11 @@
 
 
     </div>
+    <script>
+      function startStripe(){
+        window.location.href='loadStripeCompany.php';
+      }
+    </script>
   </body>
   <?php
   //include("../includes/footer.php");
