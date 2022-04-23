@@ -30,9 +30,16 @@
               echo "<li class='nav-item'><a href='/panier/' class='nav-link text-white px-2' translate-key='cart-title'>Panier</a> </li>";
       			}
             elseif (isset($_SESSION['nom'])) {
-              echo "<li class='nav-item'><a href='/signIn-Up/logOut.php' class='nav-link text-white px-2' translate-key='logout-title'></a> </li>";
-      				echo "<li class='nav-item'><a href='/account_company/account.php' class='nav-link text-white px-2'>Compte</a> </li>";
-              echo "<li class='nav-item'><a href='/account_company/products.php' class='nav-link text-white px-2'>Produits</a> </li>";
+              require_once("productModelCompany.php");
+              $req = productModelCompany::checkPaymentStatus();
+              while ($row = $req->fetch(PDO::FETCH_OBJ)){
+                $status = $row->statut_cotisation;
+                echo "<li class='nav-item'><a href='/signIn-Up/logOut.php' class='nav-link text-white px-2' translate-key='logout-title'></a> </li>";
+                echo "<li class='nav-item'><a href='/account_company/account.php' class='nav-link text-white px-2'>Compte</a> </li>";
+                if($status == 0 || $status == 1){
+                  echo "<li class='nav-item'><a href='/account_company/products.php' class='nav-link text-white px-2'>Produits</a> </li>";
+                }
+              }
             }
       		else{
       				echo "<li class='nav-item'><a href='/signIn-Up/sign_in.php' class='nav-link text-white px-2' translate-key='login-title'></a> </li>";

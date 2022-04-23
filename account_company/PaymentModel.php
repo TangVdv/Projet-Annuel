@@ -8,12 +8,8 @@ class PaymentModel{
     $req = productModelCompany::checkPaymentStatus();
     while ($row = $req->fetch(PDO::FETCH_OBJ)){
       $status = $row->statut_cotisation;
-      if($status == 0){
+      if($status == 0 || $status == 2){
         PaymentModel::UpdateContributionStatus(1);
-        header("location:account.php");
-
-      }elseif ($status == 2) {
-        PaymentModel::UpdateContributionStatus(0);
         header("location:account.php");
 
       }else{
@@ -37,7 +33,7 @@ class PaymentModel{
       "id" => $id
     ]);
 
-    die;
+    //die;
   }
 
 

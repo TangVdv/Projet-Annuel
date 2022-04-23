@@ -1,6 +1,6 @@
 <?php
 require_once("productModelCompany.php");
-require_once("../admin/compagny/compagnyModel.php");
+//require_once("../admin/compagny/compagnyModel.php");
 
 $products = [];
 
@@ -10,7 +10,7 @@ while ($row = $req->fetch(PDO::FETCH_OBJ)){
     [
       'price_data' => [
         'currency' => 'eur',
-        'unit_amount' => CompagnyModel::CalculContribution($row->chiffre_affaire) * 100,
+        'unit_amount' => productModelCompany::CalculContribution($row->chiffre_affaire) * 100,
         'product_data' => [
           'name' => 'Cotisation annuel',
         ],

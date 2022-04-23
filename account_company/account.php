@@ -11,7 +11,7 @@
     <div class="d-flex justify-content-center">
       <div class="">
         <?php
-          include("productModelCompany.php");
+          require_once("productModelCompany.php");
           $res = productModelCompany::checkPaymentStatus();
           while ($row = $res->fetch(PDO::FETCH_OBJ)){
             if($row->statut_cotisation == 0){ //L'entreprise n'a pas encore payé
@@ -27,7 +27,7 @@
               <?php
             }else { //==2, L'entreprise a raté une échéance et doit donc payer
               ?>
-              <h2 class="text-danger">Vous n'êtes pas à jour sur le paiment de la cotisation annuel, veuillez procéder au paiment pour accéder de nouveau à nos services.</h2>
+              <h3 class="text-danger">Vous n'êtes pas à jour sur le paiment de la cotisation annuel, veuillez procéder au paiment pour accéder de nouveau à nos services.</h2>
               <div class="d-flex justify-content-center">
                 <button type="button" onclick="startStripe()" class="btn btn-success">Accéder au paiment</button>
               </div>

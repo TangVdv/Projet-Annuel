@@ -4,7 +4,16 @@
     <meta charset="utf-8">
     <title>Company site</title>
   </head>
-  <?php include("../includes/header.php"); ?>
+  <?php include("../includes/header.php");
+  require_once("productModelCompany.php");
+  $req = productModelCompany::checkPaymentStatus();
+  while ($row = $req->fetch(PDO::FETCH_OBJ)){
+    $status = $row->statut_cotisation;
+    if($status != 0 && $status != 1){
+      header("location:account.php?message=Vous n'avez plus accès à ce service");
+    }
+  }
+  ?>
   <body>
     <div class="w-50 col flex-wrap" id="article_reload"style="margin: auto;">
       <div class="d-flex justify-content-center">
@@ -15,7 +24,7 @@
       <h4 class="border-bottom text-primary p-2" translate-key="service-title"></h4>
       <div class="mx-4">
             <?php
-            include("productModelCompany.php");
+            require_once("productModelCompany.php");
             $res = productModelCompany::SelectService();
             while ($row = $res->fetch(PDO::FETCH_OBJ)) {
             ?>
