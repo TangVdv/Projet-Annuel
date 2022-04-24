@@ -37,6 +37,7 @@
                 echo "<li class='nav-item'><a href='/signIn-Up/logOut.php' class='nav-link text-white px-2' translate-key='logout-title'></a> </li>";
                 echo "<li class='nav-item'><a href='/account_company/account.php' class='nav-link text-white px-2'>Compte</a> </li>";
                 if($status == 0 || $status == 1){
+                  echo "<li class='nav-item'><a href='/account_company/dashboard.php' class='nav-link text-white px-2'>Tableau de bord</a> </li>";
                   echo "<li class='nav-item'><a href='/account_company/products.php' class='nav-link text-white px-2'>Produits</a> </li>";
                 }
               }

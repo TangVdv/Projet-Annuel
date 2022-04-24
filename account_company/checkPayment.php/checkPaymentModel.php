@@ -18,7 +18,7 @@ class checkPaymentModel{
   public static function updatePaidStatus($id,  $status){
     include("../../includes/bdd.php");
 
-    $newStatus = 0;
+    $newStatus = 2;
     if($status == 0){
       $newStatus = 2;
     }elseif ($status == 1) {
