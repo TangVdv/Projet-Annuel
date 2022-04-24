@@ -187,7 +187,17 @@ class productModelCompany{
     return $contribution * $turnover / 100;
   }
 
+  public static function DisplayName() {
+    include("../includes/bdd.php");
 
+    $req = $db->prepare('SELECT nom FROM entreprise
+                        WHERE id_entreprise = :id_entreprise');
+           $req->execute([
+            "id_entreprise" => $_SESSION['id_entreprise']
+           ]);
+
+    return $req;
+  }
 
 }
 
