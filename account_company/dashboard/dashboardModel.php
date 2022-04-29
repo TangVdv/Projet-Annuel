@@ -76,6 +76,9 @@ X-Jour avant la prochaine date de paiement
 
     $result = 0;
     while ($row = $req->fetch(PDO::FETCH_OBJ)){
+      if ($row->total == 0) {
+        return 0;
+      }
       $result = ($unique_sales / $row->total) * 100;
     }
 

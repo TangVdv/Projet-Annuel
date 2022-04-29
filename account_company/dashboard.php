@@ -12,6 +12,7 @@
       <h1>Tableau de bord : </h1>
       <br><br>
       <div class="row">
+
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-primary h-100 py-2">
                 <div class="card-body">
@@ -89,7 +90,9 @@
             </div>
         </div>
 
-          <div class="col-xl-3 col-md-6 mb-4 text-center">
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-xl-3 col-md-6 mb-4">
               <div class="card border-left-warning h-100 py-2">
                   <div class="card-body">
                       <div class="row no-gutters align-items-center">
@@ -107,8 +110,7 @@
                   </div>
               </div>
           </div>
-
-      </div>
+        </div>
 
     </div>
 
