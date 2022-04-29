@@ -75,7 +75,7 @@ class CompagnyModel{
     $res = $query->execute([
         "name" => $_POST["name"],
         "contribution" => $contribution,
-        "contribution_status" => 0,
+        "contribution_status" => 2
     ]);
   }
 

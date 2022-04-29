@@ -37,7 +37,7 @@
       //$cotisation = compagnyModel::CalculContribution($CA);
 
       $req = $db->prepare('INSERT INTO ENTREPRISE(nom, mot_de_passe, chiffre_affaire, statut_cotisation)
-                                VALUES(:nom, :mot_de_passe, :chiffre_affaire, 0)');
+                                VALUES(:nom, :mot_de_passe, :chiffre_affaire, 2)');
 
       $res = $req->execute([
         "nom" => $nom,
