@@ -57,7 +57,7 @@
         </form>
 
 
-        <a href="account.php" class="nav-link my-4 p-0" style="width:10%" translate-key="back-button"></a>
+        <a href="./" class="nav-link my-4 p-0" style="width:10%" translate-key="back-button"></a>
 
     </div>
   </body>

@@ -39,7 +39,8 @@
                 <tbody>
                   <?php
                     $res = AccountPageModel::DisplayLastOrder();
-                    $row = $res->fetch(PDO::FETCH_OBJ); ?>
+                    $row = $res->fetch(PDO::FETCH_OBJ);
+                    if ($row){?>
                   <tr>
                     <td><img src=<?php echo "/img/products/".$row->image; ?> width="100" height="100"></td>
                     <td><?php echo $row->nom?></td>
@@ -54,6 +55,7 @@
                       </form>
                     </td>
                   </tr>
+                <?php } ?>
                 </tbody>
               </table>
           </div>
