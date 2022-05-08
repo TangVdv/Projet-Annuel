@@ -21,16 +21,15 @@ void read_json(){
 	parsed_json = json_tokener_parse(buffer);
 	printf("json : %s\n\n", json_object_get_string(parsed_json));
 
-		for(struct lh_entry *entry = json_object_get_object(parsed_json)->head; 
+		for(struct lh_entry *entry = json_object_get_object(parsed_json)->head;
 		({
 			if (entry){
-				key = ( char * ) entry->k; 
+				key = ( char * ) entry->k;
 				value = ( struct json_object * ) entry->v;
 			}entry -> v;
 		}); entry = entry->next)
 		{
 			fprintf(yaml_file, "%s: %s\n", key, json_object_get_string(value));
-			//printf("%s : %s\n", key, json_object_get_string(value));
 		}
 
 
@@ -49,7 +48,6 @@ size_t got_data(char *buffer, size_t itemsize, size_t nitems, void* ignorethis){
     	}
     	else{
     		fprintf(json_file, "%c", buffer[i]);
-    		//printf("%c", buffer[i]);
     	}
     }
     fclose(json_file);

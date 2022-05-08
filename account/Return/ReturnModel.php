@@ -14,7 +14,7 @@ class ReturnModel{
       "id_produit" => $id_produit,
       "id_historique" => $id_historique
     ]);
-    //while ($row = $req->fetch(PDO::FETCH_OBJ))
+    
     $row = $req->fetch(PDO::FETCH_OBJ);
     return $row->prix_achat * $row->quantite;
   }

@@ -4,7 +4,7 @@ class checkPaymentModel{
 
   public static function selectDatesToUpdate(){
     include("../../includes/bdd.php");
-
+    //Sélectionne les entreprises dont la date de paiement est arrivée
     $req = $db->prepare("SELECT id_entreprise, statut_cotisation
                           FROM ENTREPRISE
                           WHERE date_paiement = :currentDate");
@@ -17,7 +17,7 @@ class checkPaymentModel{
 
   public static function updatePaidStatus($id,  $status){
     include("../../includes/bdd.php");
-
+    //Met à jour les status de paiment
     $newStatus = 2;
     if($status == 0){
       $newStatus = 2;

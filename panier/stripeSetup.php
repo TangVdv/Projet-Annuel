@@ -2,7 +2,6 @@
 require_once("PanierModel.php");
 
 if(PanierModel::tryWithLocalMoney($_SESSION["id_utilisateur"]) == 0){
-  //echo "oui";
   header("location:./");
 }
 

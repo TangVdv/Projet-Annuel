@@ -6,6 +6,7 @@
   </head>
   <?php
   include("../includes/header.php");
+  include("verifCompanyLogin.php");
    ?>
   <body>
     <div style="width: 100rem" class="container bg-light py-4 container">
@@ -116,6 +117,6 @@
 
   </body>
   <?php
-  //include("../includes/footer.php");
+  include("../includes/footer.php");
   ?>
 </html>

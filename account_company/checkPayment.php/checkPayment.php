@@ -4,6 +4,9 @@
   /*Vérifier leur statut puis modifier:
   -->0 => 2
   -->1 => 0
+  0 -> En attente de paiment (accès autorisé)
+  1 -> Paiment effectué (accès autorisé)
+  2 -> Paiment non effectué (accès refusé)
   */
   include("checkPaymentModel");
 

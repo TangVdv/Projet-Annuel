@@ -6,6 +6,7 @@
   </head>
   <?php
   include("../includes/header.php");
+  include("verifUserLogin.php");
    ?>
   <body>
     <div style="width: 100rem" class="container">

@@ -8,6 +8,7 @@
   <body class="gap-3" style="background: #EAF9FF">
     <?php
       include("../includes/header.php");
+      include("../account/verifUserLogin.php");
     ?>
     <div class="mx-auto" style="width: 60rem; height: 500px; display: block;">
 

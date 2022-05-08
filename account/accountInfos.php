@@ -4,7 +4,10 @@
     <meta charset="utf-8">
     <title>Vos informations personnelles</title>
   </head>
-  <?php include("../includes/header.php"); ?>
+  <?php
+  include("../includes/header.php");
+  include("verifUserLogin.php");
+  ?>
   <body>
     <div class="w-50" style="margin: auto;">
         <h3 class="my-4" translate-key="form-title"></h3>

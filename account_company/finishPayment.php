@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-
+//Le paiment a été effectué
 include("PaymentModel.php");
 PaymentModel::updatePaymentStatus();
 

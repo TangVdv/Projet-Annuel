@@ -6,6 +6,7 @@
   </head>
   <?php
   include("../includes/header.php");
+  include("verifUserLogin.php");
    ?>
 
 

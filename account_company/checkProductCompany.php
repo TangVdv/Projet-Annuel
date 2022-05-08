@@ -1,5 +1,5 @@
 <?php
-//include("../includes/checkAdmin.php");
+
 include('productModelCompany.php');
 
 // ADD

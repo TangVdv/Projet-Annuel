@@ -1,7 +1,5 @@
-//import * as THREE from 'three.js-master/build/three.module.js';
 import * as THREE from 'three';
 import { Capsule } from './three.js-master/examples/jsm/math/Capsule.js';
-//import { Capsule } from 'three.js-master/examples/jsm/math/Capsule.js';
 import { FontLoader } from './three.js-master/examples//jsm/loaders/FontLoader.js';
 
 let camera, scene, renderer;
@@ -51,19 +49,13 @@ function init(){
   camera.position.set( 0, 3, - 6 );
   camera.rotation.order = 'YXZ';
   camera.lookAt( 0, 1, 0 );
-  //console.log(camera.position.y);
 
 
   scene = new THREE.Scene();
 
   scene.background = new THREE.Color( 0x057dc2 );
 
-  /*
-  const texture = new THREE.TextureLoader().load( 'textures/grass.png' );
 
-  const geometry = new THREE.BoxGeometry( 200, 200, 200 );
-  const material = new THREE.MeshBasicMaterial( { map: texture } );
-  */
   setupLights();
 
   setupMap();
@@ -111,7 +103,6 @@ function setupMap(){
   ground.receiveShadow = true;
   scene.add( ground );
 
-  //console.log("oui");
   spawnProduct();
   spawnWalls();
   spawnButton();
@@ -125,10 +116,8 @@ function spawnButton(){
   button = new THREE.Mesh( geometry, material );
   button.position.y = 7;
   button.position.z = 9;
-  //ground.receiveShadow = true;
   objects.push(button);
   scene.add(button);
-  //console.log("bouton");
 }
 
 function onPointerMove( event ) {
@@ -140,7 +129,6 @@ function onPointerMove( event ) {
   const intersects = raycaster.intersectObjects( objects, false );
 
   if (intersects.length > 0){
-      //console.log("YEEEEEEEEEEEEEES");
       playVideo();
   }
 
@@ -263,7 +251,6 @@ function spawnProduct(){
 
   productImg.position.y = 9.5;
   productImg.position.z = 10;
-  //console.log(product.position.x);
 
   scene.add( productImg );
 
@@ -419,8 +406,6 @@ function onWindowResize() {
 function animate() {
 
   requestAnimationFrame( animate );
-  //wall.rotation.x +=  0.01;
-  //console.log(wall.rotation.x);
 
   const delta = clock.getDelta();
   const deltaTime = Math.min( 0.05, delta ) / STEPS_PER_FRAME;
@@ -437,6 +422,5 @@ function animate() {
 
   renderer.render( scene, camera );
 
-  //console.log(camera.position.x);
 
 }

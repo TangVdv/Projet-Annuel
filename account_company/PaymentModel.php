@@ -4,7 +4,7 @@ class PaymentModel{
 
   public static function updatePaymentStatus(){
     include("productModelCompany.php");
-
+    //Met à jour le statut de paiement
     $req = productModelCompany::checkPaymentStatus();
     while ($row = $req->fetch(PDO::FETCH_OBJ)){
       $status = $row->statut_cotisation;
@@ -39,7 +39,7 @@ class PaymentModel{
 
   public static function UpdateContributionDate(){
     include("../includes/bdd.php");
-
+    //Met à jour la date de contribution
     $id = $_SESSION['id_entreprise'];
 
     $query = $db->prepare("UPDATE entreprise SET date_paiement = :value WHERE id_entreprise = :id");
@@ -64,7 +64,7 @@ class PaymentModel{
 
   public static function getPaymentDate(){
     include("../includes/bdd.php");
-
+    //Récupère la date du prochain paiement
     $req = $db->prepare("SELECT date_paiement
                           FROM ENTREPRISE
                           WHERE id_entreprise = :id_entreprise");

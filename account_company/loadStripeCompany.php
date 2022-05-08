@@ -9,7 +9,6 @@
   <body>
     <?php
     include("stripeSetupCompany.php");
-    //PanierModel::UpdateBuyingStatus($_SESSION["id_utilisateur"]);
     ?>
   </body>
   <script type="text/javascript">

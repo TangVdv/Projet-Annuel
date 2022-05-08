@@ -27,8 +27,6 @@ class ItemModel{
   public static function MinusQuantity($UserId){
     include("../includes/bdd.php");
     $actualQuantity = ItemModel::GetQuantity($UserId);
-    //echo $actualQuantity;
-    //ItemModel::GetQuantity($UserId);
 
     if($actualQuantity < 2){
       //Supprime la ligne du produit dans le panier

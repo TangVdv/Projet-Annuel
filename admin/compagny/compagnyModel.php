@@ -59,8 +59,6 @@ class CompagnyModel{
       $contribution = 0.3;
     }
 
-    //$contribution = $contribution * $turnover / 100;
-
     return $contribution * $turnover / 100;
   }
 

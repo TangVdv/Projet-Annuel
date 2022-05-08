@@ -2,21 +2,10 @@
 
 class dashboardModel{
 
-/*
-Informations à récupérer:
-X-Nombre de commandes/vente unique sur le site
-X-Nombre de clients unique
-X-% de vente de l'entreprise sur l'ensemble du site
-X-Nombre de produit/prestation en vente
-X-Nombre de stock total
-X-Jour avant la prochaine date de paiement
-
-
-*/
 
   public static function getNumberOfUniqueSales(){
     include("../includes/bdd.php");
-
+    //Nombre de commandes/vente unique sur le site
 
     $req = $db->prepare("SELECT COUNT(*) as total
                           FROM HISTORIQUE_ACHAT
@@ -39,7 +28,7 @@ X-Jour avant la prochaine date de paiement
 
   public static function getNumberOfUniqueCustomers(){
     include("../includes/bdd.php");
-
+    //Nombre de clients unique
 
     $req = $db->prepare("SELECT COUNT(DISTINCT id_utilisateur) as total
                           FROM HISTORIQUE_ACHAT
@@ -62,15 +51,14 @@ X-Jour avant la prochaine date de paiement
 
   public static function getPourcentageFromTotalSales(){
     include("../includes/bdd.php");
+    //% de vente de l'entreprise sur l'ensemble du site
 
     $req = $db->prepare("SELECT COUNT(*) as total
                           FROM HISTORIQUE_ACHAT");
 
 
 
-    $req->execute([
-      //"id_entreprise" => $_SESSION['id_entreprise']
-    ]);
+    $req->execute([]);
 
     $unique_sales = dashboardModel::getNumberOfUniqueSales();
 
@@ -88,7 +76,7 @@ X-Jour avant la prochaine date de paiement
 
   public static function getNumberOfProductsAvailable(){
     include("../includes/bdd.php");
-    //Select number of products from the company
+    //Nombre de produit/prestation en vente
     $req = $db->prepare("SELECT COUNT(*) as total
                           FROM DISPOSE
                           WHERE id_entreprise = :id_entreprise");
@@ -109,7 +97,7 @@ X-Jour avant la prochaine date de paiement
 
   public static function getNumberOfTotalStock(){
     include("../includes/bdd.php");
-
+    //Nombre de stock total
 
     $req = $db->prepare("SELECT stock
                           FROM PRODUIT
@@ -135,6 +123,7 @@ X-Jour avant la prochaine date de paiement
   public static function getDaysBeforeNextPayment(){
     include("../includes/bdd.php");
     require_once("productModelCompany.php");
+    //Jour avant la prochaine date de paiement
 
     $req = productModelCompany::checkPaymentStatus();
     $result = 0;

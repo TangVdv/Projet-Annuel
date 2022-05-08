@@ -5,6 +5,7 @@
     <title>Company site</title>
   </head>
   <?php include("../includes/header.php");
+  include("verifCompanyLogin.php");
   require_once("productModelCompany.php");
   $req = productModelCompany::checkPaymentStatus();
   while ($row = $req->fetch(PDO::FETCH_OBJ)){

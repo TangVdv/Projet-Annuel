@@ -3,6 +3,7 @@
 class productModelCompany{
   public static function AddProduct($ProductToAdd){
     include("../includes/bdd.php");
+    //Ajoute un produit
 
     $query = $db->prepare( "INSERT INTO Produit(image, nom, description, prix, reduction, stock, type) VALUES(:image, :name, :description, :price, :reduction, :stock, :type);" );
     $res = $query->execute([
@@ -26,9 +27,8 @@ class productModelCompany{
 
   public static function SelectProduct($value){
     include("../includes/bdd.php");
-
+    //Sélectionne des produits
     if($value){
-      //$query = $db->query("SELECT id_produit, image, nom, description, prix, stock, reduction FROM Produit WHERE EXISTS (SELECT id_produit FROM Stock WHERE Stock.id_produit = Produit.id_produit) AND type='product'");
 
       $req = $db->prepare("SELECT produit.id_produit, image, nom, description, prix, stock, reduction
                             FROM PRODUIT
@@ -41,7 +41,6 @@ class productModelCompany{
 
     }
     else {
-      //$query = $db->query("SELECT id_produit, image, nom, description, prix, stock, reduction FROM Produit WHERE NOT EXISTS (SELECT id_produit FROM Stock WHERE Stock.id_produit = Produit.id_produit) AND type='product'");
       $req = $db->prepare("SELECT produit.id_produit, image, nom, description, prix, stock, reduction
                             FROM PRODUIT
                             INNER JOIN DISPOSE ON produit.id_produit = dispose.id_produit
@@ -64,11 +63,7 @@ class productModelCompany{
   public static function SelectService(){
     include("../includes/bdd.php");
 
-    /*
-    $query = $db->query("SELECT id_produit, image, nom, description, prix, stock, reduction
-                          FROM PRODUIT
-                          INNER JOIN DISPOSE ON produit.id_produit = dispose.id_produit
-                          WHERE type='service'");*/
+    //Sélectionne une prestation
 
     $req = $db->prepare("SELECT produit.id_produit, image, nom, description, prix, stock, reduction
                           FROM PRODUIT
@@ -85,6 +80,7 @@ class productModelCompany{
 
   public static function SelectSpecificProduct($id){
     include("../includes/bdd.php");
+    //Sélectionne un produit particulier
 
     $query = $db->prepare("SELECT id_produit, image, nom, description, prix, stock, reduction FROM produit WHERE id_produit = :id");
     $query->execute([
@@ -96,6 +92,7 @@ class productModelCompany{
 
   public static function DeleteProduct(){
     include("../includes/bdd.php");
+    //Supprime un produit
 
     if (!isset($_GET["id"]) || empty($_GET["id"])){
       header("location:./?message=Aucun id trouvé");
@@ -131,6 +128,7 @@ class productModelCompany{
   public static function checkPaymentStatus(){
     //include("../includes/bdd.php");
     include(__ROOT__.'/includes/bdd.php');
+    //Sélectionne le statut de paiement
 
     $req = $db->prepare("SELECT statut_cotisation
                           FROM ENTREPRISE
@@ -144,6 +142,7 @@ class productModelCompany{
 
   public static function getChiffreAffaire(){
     include("../includes/bdd.php");
+    //Sélectionne le chiffre d'affaire
 
     $req = $db->prepare("SELECT chiffre_affaire
                           FROM ENTREPRISE
@@ -157,6 +156,7 @@ class productModelCompany{
 
   public static function updateChiffreAffaire($CA){
     include("../includes/bdd.php");
+    //Met à jour le chiffre d'affaire
 
     $req = $db->prepare("UPDATE ENTREPRISE
                           SET chiffre_affaire = :chiffre_affaire
@@ -169,7 +169,7 @@ class productModelCompany{
 
 
   public static function CalculContribution($turnover){
-
+    //Calcul et renvoie la contribution d'une entreprise
     if($turnover < 200000){
       $contribution = 0;
     }elseif ($turnover < 800000) {
@@ -182,13 +182,12 @@ class productModelCompany{
       $contribution = 0.3;
     }
 
-    //$contribution = $contribution * $turnover / 100;
-
     return $contribution * $turnover / 100;
   }
 
   public static function DisplayName() {
     include("../includes/bdd.php");
+    //Sélectionne le nom d'une entreprise
 
     $req = $db->prepare('SELECT nom FROM entreprise
                         WHERE id_entreprise = :id_entreprise');

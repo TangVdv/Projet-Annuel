@@ -2,9 +2,12 @@
 <html lang="fr" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Admin site</title>
+    <title>Produits</title>
   </head>
-  <?php include("../includes/header.php"); ?>
+  <?php
+  include("../includes/header.php");
+  include("verifCompanyLogin.php");
+  ?>
   <body>
     <a href="products.php" class="nav-link ms-4" style="width:10%" translate-key="back-button"></a>
     <div class="w-50" style="margin: auto;">

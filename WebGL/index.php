@@ -5,9 +5,7 @@
     <title>Magasin 3D</title>
   </head>
   <body>
-    <?php
-      //include("../includes/header.php");
-    ?>
+    
     <!-- Import maps polyfill -->
 		<!-- Remove this when import maps will be widely supported -->
 		<script async src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script>

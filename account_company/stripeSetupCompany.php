@@ -1,7 +1,6 @@
 <?php
 require_once("productModelCompany.php");
-//require_once("../admin/compagny/compagnyModel.php");
-
+//Tableau contenant tous les produits en cours d'achat
 $products = [];
 
 $req = productModelCompany::getChiffreAffaire();

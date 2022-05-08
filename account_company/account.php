@@ -6,6 +6,7 @@
   </head>
   <?php
   include("../includes/header.php");
+  include("verifCompanyLogin.php");
    ?>
   <body>
     <div class="container bg-light py-4 border-bottom">
@@ -51,7 +52,6 @@
 
     <div class="container bg-light py-4 border-bottom">
       <?php
-      //include("productModelCompany.php");
       $res = productModelCompany::getChiffreAffaire();
       while ($row = $res->fetch(PDO::FETCH_OBJ)){
         ?>
@@ -77,6 +77,6 @@
     </script>
   </body>
   <?php
-  //include("../includes/footer.php");
+  include("../includes/footer.php");
   ?>
 </html>

@@ -18,7 +18,6 @@
       ]);
       $row = $req->fetch(PDO::FETCH_OBJ);
       if($row->total != 0){
-        //header('Location:sign_up_company.php?message=Email déja existant&type=danger');
         return true;
       }
       return false;
