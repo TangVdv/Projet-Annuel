@@ -20,8 +20,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table if not exists Utilisateurs(" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "name VARCHAR(255), " +
-                "lastname VARCHAR(255))");
+                "hash_id VARCHAR(255)," +
+                "nom VARCHAR(255), " +
+                "prenom VARCHAR(255))");
     }
 
     @Override
@@ -30,10 +31,10 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public Cursor getUsers(int id){
+    public Cursor getUsers(String id){
         SQLiteDatabase db = this.getWritableDatabase();
 
-        Cursor res = db.rawQuery("select id, name, lastname from Utilisateurs WHERE id ="+id,null);
+        Cursor res = db.rawQuery("select id, nom, prenom from Utilisateurs WHERE hash_id ='"+id+"'",null);
 
         return res;
     }
@@ -41,6 +42,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public void setInfos() {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        db.execSQL("INSERT into UTILISATEURS (name, lastname) VALUES ('tom', 'tam')");
+        onUpgrade(db, 0, 1);
+
+        db.execSQL("INSERT into UTILISATEURS (id, hash_id, nom, prenom) VALUES (7, '7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451', 'Vandevoorde', 'Tanguy')");
     }
 }

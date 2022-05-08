@@ -10,7 +10,7 @@ import android.widget.TextView;
 public class InfoActivity extends AppCompatActivity {
     SQLiteHelper myDb;
     Cursor resultQuery;
-    int idR;
+    String idR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,9 +19,9 @@ public class InfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_info);
 
         Intent intent = getIntent();
-        idR = intent.getIntExtra("id", -1);
+        idR = intent.getStringExtra("id");
 
-        if (idR >= 0) {
+        if (idR != null) {
             resultQuery = myDb.getUsers(idR);
             printInfos();
             getInfos();

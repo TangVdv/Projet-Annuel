@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
 
-                        Cursor test = myDb.getUsers(Integer.parseInt(result.getText()));
+                        Cursor test = myDb.getUsers(result.getText());
 
                             if (test.getCount() == 0) {
                                 Toast.makeText(MainActivity.this, "Ce n'est pas un client de LoyaltyCard !", Toast.LENGTH_SHORT).show();
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                             } else {
                                 Toast.makeText(MainActivity.this, "Client d'Id n°"+result.getText(), Toast.LENGTH_SHORT).show();
                                 Intent i = new Intent(MainActivity.this,InfoActivity.class);
-                                i.putExtra("id", Integer.parseInt(result.getText()));
+                                i.putExtra("id", result.getText());
                                 startActivity(i);
                             }
 
