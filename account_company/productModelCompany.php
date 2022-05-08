@@ -127,7 +127,9 @@ class productModelCompany{
 
   public static function checkPaymentStatus(){
     //include("../includes/bdd.php");
-    include(__ROOT__.'/includes/bdd.php');
+    //include(__ROOT__.'/includes/bdd.php');
+    include(dirname(dirname(__FILE__)).'/includes/bdd.php');
+
     //Sélectionne le statut de paiement
 
     $req = $db->prepare("SELECT statut_cotisation

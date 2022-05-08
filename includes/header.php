@@ -23,7 +23,6 @@
         <ul class="nav">
           <?php
           session_start();
-          define('__ROOT__', dirname(dirname(__FILE__)));
 
           if (isset($_SESSION['email'])) {
               echo "<li class='nav-item'><a href='/signIn-Up/logOut.php' class='nav-link text-white px-2' translate-key='logout-title'></a> </li>";
@@ -31,6 +30,7 @@
               echo "<li class='nav-item'><a href='/panier/' class='nav-link text-white px-2' translate-key='cart-title'>Panier</a> </li>";
       			}
             elseif (isset($_SESSION['nom'])) {
+              define('__ROOT__', dirname(dirname(__FILE__)));
               require_once(__ROOT__.'/account_company/productModelCompany.php');
               $req = productModelCompany::checkPaymentStatus();
               while ($row = $req->fetch(PDO::FETCH_OBJ)){
