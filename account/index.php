@@ -21,7 +21,11 @@
             <img src="../img/icon.jpg" class="img-fluid rounded-circle" width="200" height="200"><br>
             <div class="d-flex justify-content-center">
               <h3 class="mx-2" translate-key="hello-title"></h3>
-              <p class="h3 mx-2"><b><?php echo $row->nom?></b></p>
+              <p class="h3"><b><?php echo $row->nom?></b></p>
+            </div>
+            <div class="d-flex justify-content-center">
+              <h5 class="mx-2" translate-key="balance-title"></h5>
+              <p class="h5"><?php echo $row->solde_euro." €"?></p>
             </div>
           </div>
 

@@ -70,9 +70,6 @@
                       <button type="button" class="btn btn-secondary" id="cancel_submit" data-bs-dismiss="modal" aria-label="Close" translate-key="cancel-button"></button>
                     </div>
                     <div class="d-flex">
-                      <div class="mx-4">
-                        <button type="button" class="btn btn-primary" id="modify_submit" name=<?php echo $row->id_produit; ?> translate-key="modify-button"></button>
-                      </div>
                       <div>
                         <form action=<?php echo "checkProduct.php?id=".$row->id_produit; ?> method="post">
                           <button type="submit" class="btn btn-danger" name="delete_submit" translate-key="delete-button"></button>
@@ -145,9 +142,6 @@
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close" translate-key="cancel-button"></button>
                     </div>
                     <div class="d-flex">
-                      <div class="mx-4">
-                        <button type="button" class="btn btn-primary" id="modify_submit" name=<?php echo $row->id_produit; ?> translate-key="modify-button"></button>
-                      </div>
                       <div>
                         <form action=<?php echo "checkProduct.php?id=".$row->id_produit; ?> method="post">
                           <button type="submit" class="btn btn-danger" name="delete_submit" translate-key="delete-button"></button>
@@ -220,9 +214,6 @@
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close" translate-key="cancel-button"></button>
                     </div>
                     <div class="d-flex">
-                      <div class="mx-4">
-                        <button type="button" class="btn btn-primary" id="modify_submit" name=<?php echo $row->id_produit; ?> translate-key="modify-button"></button>
-                      </div>
                       <div>
                         <form action=<?php echo "checkProduct.php?id=".$row->id_produit; ?> method="post">
                           <button type="submit" class="btn btn-danger" name="delete_submit" translate-key="delete-button"></button>
@@ -237,6 +228,5 @@
             <?php } ?>
       </div>
     </div>
-    <script src="/admin/lib/modifyProduct.js" charset="utf-8"></script>
   </body>
 </html>

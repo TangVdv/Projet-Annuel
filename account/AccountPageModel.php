@@ -24,7 +24,7 @@ class AccountPageModel {
   public static function DisplayName() {
     include("../includes/bdd.php");
 
-    $req = $db->prepare('SELECT nom FROM utilisateur
+    $req = $db->prepare('SELECT nom, solde_euro FROM utilisateur
                         WHERE id_utilisateur = :id_utilisateur');
            $req->execute([
             "id_utilisateur" => $_SESSION['id_utilisateur']

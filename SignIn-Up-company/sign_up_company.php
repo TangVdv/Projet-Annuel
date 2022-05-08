@@ -27,9 +27,9 @@
           </div>
 
           <div class="mt-2 form-group">
-            <h1 class="h3 mb-3 font-weight-normal">Informations générales</h1>
+            <h1 class="h3 mb-3 font-weight-normal" translate-key="form-personalInfo-title"></h1>
             <br>
-            <input type="text" class="form-control w-50" id="inputCompanyName" placeholder="Nom de l'entreprise" name="nom">
+            <input type="text" class="form-control w-50" id="inputCompanyName" placeholder="" name="nom" translate-key="company-name-input">
           </div>
 
 
@@ -37,7 +37,7 @@
 
             <div class="form-group">
               <br>
-              <input type="text" class="form-control w-50" id="inputCA" name="CA" placeholder="Dernier chiffre d'affaire">
+              <input type="text" class="form-control w-50" id="inputCA" name="CA" placeholder="" translate-key="company-turnover-input">
             </div>
             <div>
               <p class="text-danger">
@@ -57,7 +57,7 @@
         <a style="background-color: #004579" class="btn btn-lg btn-primary btn-block" href="sign_in_company.php" translate-key="login-title"></a>
       </div>
       <div class="bg-light py-1 container text-center border-top">
-        <h1 class="h3 mb-3 font-weight-normal">Accéder à l'espace utilisateur</h1>
+        <h1 class="h3 mb-3 font-weight-normal" translate-key="user-login-side"></h1>
         <a style="background-color: #004579" class="btn btn-lg btn-primary btn-block" href="../SignIn-Up/sign_up.php" translate-key="register-button"></a>
       </div>
     </div>

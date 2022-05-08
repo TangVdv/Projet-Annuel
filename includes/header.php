@@ -36,10 +36,10 @@
               while ($row = $req->fetch(PDO::FETCH_OBJ)){
                 $status = $row->statut_cotisation;
                 echo "<li class='nav-item'><a href='/signIn-Up/logOut.php' class='nav-link text-white px-2' translate-key='logout-title'></a> </li>";
-                echo "<li class='nav-item'><a href='/account_company/account.php' class='nav-link text-white px-2'>Compte</a> </li>";
+                echo "<li class='nav-item'><a href='/account_company/account.php' class='nav-link text-white px-2' translate-key='account-title'></a> </li>";
                 if($status == 0 || $status == 1){
-                  echo "<li class='nav-item'><a href='/account_company/dashboard.php' class='nav-link text-white px-2'>Tableau de bord</a> </li>";
-                  echo "<li class='nav-item'><a href='/account_company/products.php' class='nav-link text-white px-2'>Produits</a> </li>";
+                  echo "<li class='nav-item'><a href='/account_company/dashboard.php' class='nav-link text-white px-2' translate-key='dashboard-title'></a> </li>";
+                  echo "<li class='nav-item'><a href='/account_company/products.php' class='nav-link text-white px-2' translate-key='product-title'></a> </li>";
                 }
               }
             }
@@ -53,9 +53,6 @@
           <select id="select-language" switch-key translate-switcher class="form-select-sm">
           </select>
         </div>
-        <form class="w-100 me-3">
-          <input type="search" class="form-control" translate-key="search-bar" aria-label="Search">
-        </form>
       </div>
     </header>
 
@@ -64,7 +61,7 @@
         <ul class="nav">
           <li class="nav-item"><a href="/" class="nav-link link-dark px-2 active" aria-current="page" translate-key="home-title"></a></li>
           <li class="nav-item"><a href="/market/" class="nav-link link-dark px-2" translate-key="market-title"></a></li>
-          <li class="nav-item"><a href="/WebGL/" class="nav-link link-dark px-2">Magasin 3D</a></li>
+          <li class="nav-item"><a href="/WebGL/" class="nav-link link-dark px-2" translate-key="3dMarket-title"></a></li>
         </ul>
 
       </div>

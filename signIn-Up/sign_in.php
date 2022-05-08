@@ -29,15 +29,8 @@
           <br>
           <input type="password" id="inputPassword" class="form-control" placeholder="" name="mot_de_passe" translate-key="password-input">
 
-          <div class="checkbox mt-3 mb-3">
-            <input type="checkbox" value="remember-me" translate-key="connected-checkbox">
-            <label translate-key="connected-checkbox"></label>
-          </div>
-
+          <br>
           <button class="btn btn-lg btn-primary btn-block" style="background-color: #004579" type="submit" name="sign_in" translate-key="login-title"></button>
-          <div class="py-4">
-            <a style="color: #004579;" href="#" translate-key="password-forgotten-text"></a>
-          </div>
 
 
         </form>
@@ -47,7 +40,7 @@
         <a style="background-color: #004579" class="btn btn-lg btn-primary btn-block" href="sign_up.php" translate-key="register-button"></a>
       </div>
       <div class="bg-light py-5 container text-center">
-        <h1 class="h3 mb-3 font-weight-normal">Accéder à l'espace entreprise</h1>
+        <h1 class="h3 mb-3 font-weight-normal" translate-key="company-login-side"></h1>
         <a style="background-color: #004579" class="btn btn-lg btn-primary btn-block" href="../SignIn-Up-company/sign_in_company.php" translate-key="login-title"></a>
       </div>
     </div>

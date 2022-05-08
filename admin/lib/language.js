@@ -99,14 +99,7 @@ const translations = {
     "compagny-desc": "Choisir une entreprise",
     // COMPAGNY
     "addcompagny-title": "Ajouter une entreprise",
-    "turnover-title": "Chiffre d'affaire",
-    "contributioncompagny-title": "Cette entreprise a payée sa cotisation",
-    "notcontributioncompagny-title": "Cette entreprise n'a pas enore payée sa cotisation",
-    "contributionamount-title": "Montant de la cotisation : ",
-    "change-button": "Changer",
     "productcompagny-title": "Tous les articles dont dispose l'entreprise :",
-    "contributionquestion-title": "L'entreprise a-t-elle payée la cotisation ?",
-    "setnewturnover-title": "Renseignez le nouveau chiffre d'affaire de l'entreprise",
     // WAREHOUSE
     "addwarehouse-title": "Ajouter un entrepôt",
     "address-title": "Adresse",

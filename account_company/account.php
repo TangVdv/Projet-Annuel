@@ -17,7 +17,7 @@
         $row = $res->fetch(PDO::FETCH_OBJ)
         ?>
         <h1 class="h3">
-          <span>Votre entreprise :</span>
+          <span translate-key="your-company"></span>
           <span><b><?php echo $row->nom?></b></span>
         </h1>
         <?php
@@ -26,22 +26,22 @@
             if($row->statut_cotisation == 0){ //L'entreprise n'a pas encore payé
               ?>
               <div class="container text-center rounded-3 py-3">
-                <h5 class="text-warning">Vous n'avez pas encore réglé votre paiment de cotisation annuel.</h5>
+                <h5 class="text-warning" translate-key="notcontributioncompagny-title"></h5>
               </div>
 
               <div class="d-flex justify-content-center">
-                <button type="button" onclick="startStripe()" class="btn btn-success">Accéder au paiment</button>
+                <button type="button" onclick="startStripe()" class="btn btn-success" translate-key="payment-access"></button>
               </div>
               <?php
             }elseif ($row->statut_cotisation == 1) { //L'entreprise a payé
               ?>
-              <h3 class="text-success">Vous êtes à jour sur le paiment annuel.</h3>
+              <h3 class="text-success" translate-key="contributioncompagny-title"></h3>
               <?php
             }else { //==2, L'entreprise a raté une échéance et doit donc payer
               ?>
-              <h3 class="text-danger">Vous n'êtes pas à jour sur le paiment de la cotisation annuel, veuillez procéder au paiment pour accéder de nouveau à nos services.</h2>
+              <h3 class="text-danger" translate-key="danger-contribution"></h2>
               <div class="d-flex justify-content-center">
-                <button type="button" onclick="startStripe()" class="btn btn-success">Accéder au paiment</button>
+                <button type="button" onclick="startStripe()" class="btn btn-success" translate-key="payment-access"></button>
               </div>
               <?php
             }
@@ -57,15 +57,15 @@
         ?>
         <div class="container text-center rounded-3 py-3">
           <h3>
-            <span class="text-primary">Votre dernier chiffre d'affaires déclaré est de : </span>
+            <span class="text-primary" translate-key="lastturnover-title"></span>
             <span><b><?php echo $row->chiffre_affaire; ?> €</b></span>
           </h3>
         </div>
       <?php } ?>
 
       <form class="text-center" action="updateCA.php" method="post">
-        <input type="text" name="CA" value="" placeholder="Dernier chiffre d'affaires">
-        <button type="submit" class="btn btn-success">Modifier</button>
+        <input type="text" name="CA" value="" placeholder="" translate-key="turnover-title">
+        <button type="submit" class="btn btn-success" translate-key="modify-button"></button>
       </form>
 
     </div>

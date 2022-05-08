@@ -10,7 +10,7 @@
    ?>
   <body>
     <div style="width: 100rem" class="container bg-light py-4 container">
-      <h1>Tableau de bord : </h1>
+      <h1 translate-key="dashboard-title"></h1>
       <br><br>
       <div class="row">
 
@@ -20,7 +20,7 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Nombre de ventes uniques : </div>
+                                <p translate-key="single-sale"></p></div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800"><?php
                               include("dashboard/dashboardModel.php");
                               echo dashboardModel::getNumberOfUniqueSales();
@@ -40,7 +40,7 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                Pourcentage de ventes de LoyaltyCard : </div>
+                                <p translate-key="percentage-sale"></p></div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800"><?php
                               echo dashboardModel::getPourcentageFromTotalSales() . "%";
                             ?></div>
@@ -59,7 +59,7 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                Nombre de produits disponibles : </div>
+                                <p translate-key="available-product"></p></div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800"><?php
                               echo dashboardModel::getNumberOfProductsAvailable();
                             ?></div>
@@ -78,7 +78,7 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                Nombre de stock total : </div>
+                                <p translate-key="stock-number"></p></div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800"><?php
                               echo dashboardModel::getNumberOfTotalStock();
                             ?></div>
@@ -99,7 +99,7 @@
                       <div class="row no-gutters align-items-center">
                           <div class="col mr-2">
                               <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                  Nombre de jours avant le prochain paiement : </div>
+                                 <p translate-key="next-payment"></p></div>
                               <div class="h5 mb-0 font-weight-bold text-gray-800"><?php
                                 echo dashboardModel::getDaysBeforeNextPayment();
                               ?></div>
