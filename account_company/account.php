@@ -64,7 +64,7 @@
       <?php } ?>
 
       <form class="text-center" action="updateCA.php" method="post">
-        <input type="text" class="form-text" name="CA" value="" placeholder="Dernier chiffre d'affaires">
+        <input type="text" name="CA" value="" placeholder="Dernier chiffre d'affaires">
         <button type="submit" class="btn btn-success">Modifier</button>
       </form>
 

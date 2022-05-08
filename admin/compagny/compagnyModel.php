@@ -19,7 +19,7 @@ class CompagnyModel{
 
     $id = $_GET["id"];
 
-    $query = $db->prepare("SELECT nom, cotisation, statut_cotisation from entreprise where id_entreprise = :id");
+    $query = $db->prepare("SELECT nom, chiffre_affaire, statut_cotisation from entreprise where id_entreprise = :id");
     $query->execute([
       "id" => $id
     ]);
@@ -45,38 +45,6 @@ class CompagnyModel{
     return $query;
   }
 
-  public static function CalculContribution($turnover){
-
-    if($turnover < 200000){
-      $contribution = 0;
-    }elseif ($turnover < 800000) {
-      $contribution = 0.8;
-    }elseif ($turnover < 1500000) {
-      $contribution = 0.6;
-    }elseif ($turnover < 3000000) {
-      $contribution = 0.4;
-    }else {
-      $contribution = 0.3;
-    }
-
-    return $contribution * $turnover / 100;
-  }
-
-  public static function AddCompagny(){
-    include("../../includes/bdd.php");
-
-    $turnover = $_POST["turnover"];
-
-    $contribution = CompagnyModel::CalculContribution($turnover);
-
-    $query = $db->prepare( "INSERT INTO Entreprise(nom, cotisation, statut_cotisation) VALUES(:name, :contribution, :contribution_status);" );
-    $res = $query->execute([
-        "name" => $_POST["name"],
-        "contribution" => $contribution,
-        "contribution_status" => 2
-    ]);
-  }
-
   public static function IfCompagnyAlreadyExist($name){
     include("../../includes/bdd.php");
 
@@ -89,48 +57,6 @@ class CompagnyModel{
       return true;
     }
     return false;
-  }
-
-  public static function UpdateContributionStatus(){
-    include("../../includes/bdd.php");
-
-    if (!isset($_GET["id"]) || empty($_GET["id"])){
-      header("location:./?message=Aucun id trouvé");
-      die;
-    }
-
-    $id = $_GET["id"];
-
-    $query = $db->prepare("UPDATE entreprise SET statut_cotisation = :value WHERE id_entreprise = :id");
-    $query->execute([
-      "value" => $_POST["status"],
-      "id" => $id
-    ]);
-
-    header("location:compagnyShow.php?id=".$_GET["id"]);
-    die;
-  }
-
-  public static function UpdateContribution(){
-    include("../../includes/bdd.php");
-
-    if (!isset($_GET["id"]) || empty($_GET["id"])){
-      header("location:./?message=Aucun id trouvé");
-      die;
-    }
-
-    $id = $_GET["id"];
-
-    $contribution = CompagnyModel::CalculContribution($_POST["turnover"]);
-
-    $query = $db->prepare("UPDATE entreprise SET cotisation = :value WHERE id_entreprise = :id");
-    $query->execute([
-      "value" => $contribution,
-      "id" => $id
-    ]);
-
-    header("location:compagnyShow.php?id=".$_GET["id"]);
-    die;
   }
 
   public static function DeleteCompagny(){

@@ -8,9 +8,6 @@
   <body>
     <a href=".." class="nav-link ms-4" style="width:10%" translate-key="back-button"></a>
     <div class="w-50 col flex-wrap" id="article_reload"style="margin: auto;">
-      <div class="d-flex justify-content-center">
-        <a class="btn btn-success btn-lg m-4" href="addCompagny.php" translate-key="addcompagny-title"></a>
-      </div>
     </div>
     <div class="w-50 col flex-wrap" style="margin: auto;">
       <?php
